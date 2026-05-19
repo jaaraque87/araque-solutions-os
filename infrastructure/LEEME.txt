@@ -1,0 +1,90 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ARAQUE SOLUTIONS — LTX 2.3 Instalador v2.3                                ║
+║  Kenza UGC Pipeline · RunPod / Vast.ai                                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+ARCHIVOS EN ESTA CARPETA:
+─────────────────────────────────────────────────────────────────────────────
+  00_config.sh            → Configuración compartida + helpers (NO ejecutar)
+  01_sistema_comfyui.sh   → Sistema + ComfyUI + PyTorch + Patches   (~5 min)
+  02_nodos_custom.sh      → 15 nodos custom + stack pip              (~10 min)
+  03_modelos_base.sh      → Modelos base LTX 2.3                    (~40 min | ~55 GB)
+  04_modelos_mvc.sh       → Music Video Creator models              (~60 min | ~70 GB)
+  05_modelos_todoenuno.sh → Modelos TODOENUNO                       (~80 min | ~58 GB)
+  06_loras.sh             → LoRAs estilo + voice ID                 (~20 min | ~15 GB)
+  07_workflows.sh         → Instalar + parchear workflows            (<2 min)
+  08_arranque.sh          → Generar start_comfyui.sh + arrancar      (<1 min)
+  09_verificacion.sh      → Verificar todo lo instalado             (<1 min)
+  run_all.sh              → Ejecuta todos los scripts en orden      (~200 GB total)
+  LEEME.txt               → Este archivo
+
+ARCHIVOS QUE DEBES AGREGAR A ESTA CARPETA (tienes que ponerlos tú):
+─────────────────────────────────────────────────────────────────────────────
+  LTXREALISM.json          → workflow LTXREALISM v3 (ya lo tienes)
+  LTX2.3TODOENUNO.json     → workflow TODOENUNO (en C:\Users\SOPORTE2\Downloads\)
+
+─────────────────────────────────────────────────────────────────────────────
+CÓMO USAR — OPCIÓN 1: Instalación completa (recomendado para pod nuevo)
+─────────────────────────────────────────────────────────────────────────────
+1. Subir TODA la carpeta al pod:
+   En RunPod → pod → "File Browser" → subir carpeta
+   O por SCP desde tu PC:
+     scp -r LTX23_Scripts/ root@{pod-ip}:/workspace/
+
+2. En la terminal del pod:
+   cd /workspace/LTX23_Scripts
+   bash run_all.sh
+
+3. Esperar ~3-5 horas (depende de la velocidad del pod y del disco)
+
+4. Abrir en el browser:
+   https://{POD_ID}-8888.proxy.runpod.net/proxy/8188/
+
+─────────────────────────────────────────────────────────────────────────────
+CÓMO USAR — OPCIÓN 2: Scripts individuales (si algo falla o quieres parcial)
+─────────────────────────────────────────────────────────────────────────────
+  bash 01_sistema_comfyui.sh   → PRIMERO, siempre
+  bash 02_nodos_custom.sh
+  bash 03_modelos_base.sh      → mínimo para que funcione LTXREALISM
+  bash 04_modelos_mvc.sh       → para Music Video Creator
+  bash 05_modelos_todoenuno.sh → para el workflow TODOENUNO
+  bash 06_loras.sh
+  bash 07_workflows.sh
+  bash 08_arranque.sh          → siempre al final
+
+─────────────────────────────────────────────────────────────────────────────
+OPCIONES run_all.sh:
+─────────────────────────────────────────────────────────────────────────────
+  bash run_all.sh              → instalación completa (~200 GB)
+  bash run_all.sh --base       → solo scripts 01-03 (mínimo funcional)
+  bash run_all.sh --skip-tod   → todo excepto TODOENUNO (~140 GB)
+  bash run_all.sh --from=04    → empezar desde script 04 (si 01-03 ya están)
+
+─────────────────────────────────────────────────────────────────────────────
+VERIFICAR LO INSTALADO:
+─────────────────────────────────────────────────────────────────────────────
+  bash 09_verificacion.sh
+
+─────────────────────────────────────────────────────────────────────────────
+NOTA IMPORTANTE — TODOENUNO y Q4_0:
+─────────────────────────────────────────────────────────────────────────────
+  El workflow TODOENUNO pide el modelo "Q4_0.gguf" pero ese modelo NO existe
+  públicamente en ningún repo de HuggingFace.
+
+  El script 07_workflows.sh parchea automáticamente el JSON del workflow para
+  usar Q4_K_M en su lugar (que sí instalamos en script 05).
+
+  Si ComfyUI muestra error de modelo, edita manualmente el nodo UnetLoaderGGUF
+  y selecciona: LTX-2.3-22B-distilled-1.1-Q4_K_M.gguf
+
+─────────────────────────────────────────────────────────────────────────────
+ESPECIFICACIONES DEL POD RECOMENDADO:
+─────────────────────────────────────────────────────────────────────────────
+  Template: RunPod Pytorch 2.x.x (NO el de ComfyUI)
+  GPU: A6000 48GB mínimo / A100 80GB ideal
+  Disco: 300 GB mínimo
+  Acceso a ComfyUI: https://{POD_ID}-8888.proxy.runpod.net/proxy/8188/
+
+─────────────────────────────────────────────────────────────────────────────
+CONTACTO: ARAQUE SOLUTIONS — Kenza UGC Pipeline 2026
+─────────────────────────────────────────────────────────────────────────────

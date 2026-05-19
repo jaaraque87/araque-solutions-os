@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARAQUE SOLUTIONS — Sistema UGC con IA</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:       #09090b;
+    --bg2:      #111113;
+    --bg3:      #18181b;
+    --border:   #27272a;
+    --text:     #fafafa;
+    --muted:    #71717a;
+    --lime:     #a3e635;
+    --lime-dim: #84cc16;
+    --red:      #f87171;
+    --blue:     #60a5fa;
+    --amber:    #fbbf24;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 32px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-area { flex: 1; }
+  .logo {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 8px;
+  }
+  .headline {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .headline span { color: var(--lime); }
+  .tagline {
+    margin-top: 8px;
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 480px;
+  }
+  .badge-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .badge {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-align: right;
+  }
+  .badge-num {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--lime);
+    line-height: 1;
+  }
+  .badge-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* ── PROBLEM BAR ── */
+  .problem-bar {
+    background: #1c0a0a;
+    border: 1px solid #3f1c1c;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .problem-bar .icon { font-size: 20px; flex-shrink: 0; }
+  .problem-bar strong { color: var(--red); }
+  .problem-bar span { font-size: 14px; color: #fca5a5; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── PIPELINE ── */
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-bottom: 40px;
+  }
+  .p-step {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 14px 12px;
+    position: relative;
+  }
+  .p-step:first-child { border-radius: 8px 0 0 8px; }
+  .p-step:last-child  { border-radius: 0 8px 8px 0; }
+  .p-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--lime);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .p-name {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .p-tool {
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .p-cost {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--lime-dim);
+  }
+  .p-step.highlight { border-color: var(--lime); background: #0f1a04; }
+
+  /* ── COST TABLE ── */
+  .cost-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .cost-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .cost-card.accent { border-color: var(--lime); background: #0c160a; }
+  .cost-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .cost-row:last-child { border-bottom: none; }
+  .cost-row .name { color: var(--muted); }
+  .cost-row .val  { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .cost-row.total { margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .cost-row.total .name { color: var(--text); font-weight: 600; }
+  .cost-row.total .val  { color: var(--lime); font-size: 16px; font-weight: 800; }
+  .cost-row.margin .val { color: #4ade80; font-size: 15px; }
+
+  /* ── CAPABILITIES ── */
+  .caps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .cap {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .cap-icon { font-size: 22px; margin-bottom: 8px; }
+  .cap-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .cap-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── WORKFLOW MODES ── */
+  .modes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  .mode {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .mode.best { border-color: var(--lime); background: #0c160a; }
+  .mode-badge {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    flex-shrink: 0;
+    color: var(--lime);
+  }
+  .mode-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+  .mode-desc  { font-size: 11px; color: var(--muted); line-height: 1.4; }
+  .mode .tag  {
+    display: inline-block;
+    background: var(--lime);
+    color: #000;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  /* ── PRODUCTS ── */
+  .products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .product {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .product.featured {
+    border-color: var(--lime);
+    background: #0c160a;
+    position: relative;
+  }
+  .product-tag {
+    position: absolute;
+    top: -1px; right: 16px;
+    background: var(--lime);
+    color: #000;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border-radius: 0 0 6px 6px;
+    text-transform: uppercase;
+  }
+  .product-tier {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .product-name {
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .product-price {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--lime);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .product-price-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .product-items {
+    list-style: none;
+    flex: 1;
+    margin-bottom: 16px;
+  }
+  .product-items li {
+    font-size: 12px;
+    color: #a1a1aa;
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .product-items li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--lime);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .product-cta {
+    background: var(--border);
+    border: none;
+    border-radius: 7px;
+    padding: 9px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    transition: background 0.15s;
+  }
+  .product.featured .product-cta {
+    background: var(--lime);
+    color: #000;
+  }
+
+  /* ── PITCH ── */
+  .pitch {
+    background: linear-gradient(135deg, #0c160a 0%, #0f1a10 100%);
+    border: 1px solid var(--lime);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pitch::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 120px;
+    color: var(--lime);
+    opacity: 0.08;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .pitch-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.7;
+    color: #d4f7a0;
+    position: relative;
+  }
+  .pitch-text strong { color: var(--lime); font-weight: 800; }
+  .pitch-author {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--muted);
+    position: relative;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .footer-logo {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--lime);
+    text-transform: uppercase;
+  }
+  .footer-contact {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+  }
+  .footer-contact a { color: var(--lime); text-decoration: none; }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--border); margin: 32px 0; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .pipeline  { grid-template-columns: repeat(2, 1fr); }
+    .cost-section { grid-template-columns: 1fr; }
+    .caps { grid-template-columns: 1fr 1fr; }
+    .modes { grid-template-columns: 1fr 1fr; }
+    .products { grid-template-columns: 1fr; }
+    .header { flex-direction: column; }
+    .badge-area { flex-direction: row; align-items: flex-start; }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; color: #111; }
+    .page { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo-area">
+      <div class="logo">ARAQUE SOLUTIONS</div>
+      <h1 class="headline">Producción de Video UGC<br><span>con IA — a escala industrial</span></h1>
+      <p class="tagline">Un sistema completo que cualquier agencia puede operar desde el día 1. Costo real: $3.27 por video. Sin freelancers. Sin cuellos de botella.</p>
+    </div>
+    <div class="badge-area">
+      <div class="badge">
+        <div class="badge-num">$3.27</div>
+        <div class="badge-label">costo por video</div>
+      </div>
+      <div class="badge">
+        <div class="badge-num">4h</div>
+        <div class="badge-label">setup en pod nuevo</div>
+      </div>
+      <div class="badge">
+        <div class="badge-num">60</div>
+        <div class="badge-label">videos/mes por cliente</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROBLEM -->
+  <div class="problem-bar">
+    <div class="icon">⚠️</div>
+    <span><strong>El problema que resuelve este sistema:</strong> Las agencias pierden horas y dinero produciendo video UGC manualmente — freelancers caros, resultados inconsistentes, sin escalabilidad. Las herramientas SaaS como HeyGen cuestan $500+/mes, tienen personajes genéricos y no permiten personalización real.</span>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="section-title">Pipeline de producción — 12 pasos automatizados</div>
+  <div class="pipeline">
+    <div class="p-step">
+      <div class="p-num">01</div>
+      <div class="p-name">Análisis de marca</div>
+      <div class="p-tool">brand_analyzer.py</div>
+      <div class="p-cost">$0.00</div>
+    </div>
+    <div class="p-step">
+      <div class="p-num">02</div>
+      <div class="p-name">Guión UGC</div>
+      <div class="p-tool">Gemini Pro</div>
+      <div class="p-cost">$0.01</div>
+    </div>
+    <div class="p-step">
+      <div class="p-num">03–04</div>
+      <div class="p-name">Personaje + Escena</div>
+      <div class="p-tool">GPT Image 2</div>
+      <div class="p-cost">$0.82</div>
+    </div>
+    <div class="p-step highlight">
+      <div class="p-num">05</div>
+      <div class="p-name">Video LTX 2.3</div>
+      <div class="p-tool">ComfyUI / Kling Pro</div>
+      <div class="p-cost">$1.20 ⭐</div>
+    </div>
+    <div class="p-step">
+      <div class="p-num">06</div>
+      <div class="p-name">Voz TTS</div>
+      <div class="p-tool">Gemini Flash TTS</div>
+      <div class="p-cost">$0.02</div>
+    </div>
+    <div class="p-step">
+      <div class="p-num">07</div>
+      <div class="p-name">Voice Change</div>
+      <div class="p-tool">ElevenLabs STS</div>
+      <div class="p-cost">$0.06</div>
+    </div>
+    <div class="p-step">
+      <div class="p-num">08</div>
+      <div class="p-name">Lip Sync</div>
+      <div class="p-tool">Sync-3 fal.ai</div>
+      <div class="p-cost">$0.60</div>
+    </div>
+    <div class="p-step">
+      <div class="p-num">09–12</div>
+      <div class="p-name">Música + Montaje</div>
+      <div class="p-tool">Suno v4.5 + FFmpeg</div>
+      <div class="p-cost">$0.06</div>
+    </div>
+  </div>
+
+  <!-- COSTOS -->
+  <div class="section-title">Economía del sistema</div>
+  <div class="cost-section">
+    <div class="cost-card">
+      <div class="cost-title">Costo de producción por video</div>
+      <div class="cost-row"><span class="name">Guión + Imágenes</span><span class="val">$0.83</span></div>
+      <div class="cost-row"><span class="name">Video (Kling Pro)</span><span class="val">$1.20</span></div>
+      <div class="cost-row"><span class="name">Voz + Lip Sync</span><span class="val">$0.68</span></div>
+      <div class="cost-row"><span class="name">Música + Montaje</span><span class="val">$0.06</span></div>
+      <div class="cost-row"><span class="name">Pod GPU (RunPod)</span><span class="val">$0.50</span></div>
+      <div class="cost-row total"><span class="name">TOTAL POR VIDEO</span><span class="val">$3.27</span></div>
+    </div>
+    <div class="cost-card accent">
+      <div class="cost-title">Margen mensual por cliente</div>
+      <div class="cost-row"><span class="name">Precio al cliente</span><span class="val">$497 / mes</span></div>
+      <div class="cost-row"><span class="name">60 videos × $3.27</span><span class="val">— $196</span></div>
+      <div class="cost-row"><span class="name">Pod + herramientas</span><span class="val">— $30</span></div>
+      <div class="cost-row margin total"><span class="name">MARGEN NETO</span><span class="val">~$270/mes</span></div>
+      <div class="cost-row"><span class="name">Con 5 clientes</span><span class="val" style="color:#4ade80">$1,350/mes</span></div>
+      <div class="cost-row"><span class="name">Con 10 clientes</span><span class="val" style="color:#4ade80">$2,700/mes</span></div>
+    </div>
+  </div>
+
+  <!-- CAPABILITIES -->
+  <div class="section-title">Capacidades del sistema</div>
+  <div class="caps">
+    <div class="cap">
+      <div class="cap-icon">🎭</div>
+      <div class="cap-title">Personaje propio</div>
+      <div class="cap-desc">LoRA entrenada sobre el personaje del cliente. Identidad visual consistente en cada video.</div>
+    </div>
+    <div class="cap">
+      <div class="cap-icon">🎙️</div>
+      <div class="cap-title">Voz clonada</div>
+      <div class="cap-desc">ID LoRA de voz + ElevenLabs STS. El personaje siempre suena igual, en cualquier idioma.</div>
+    </div>
+    <div class="cap">
+      <div class="cap-icon">👄</div>
+      <div class="cap-title">Lip Sync automático</div>
+      <div class="cap-desc">Sync-3 sincroniza labios con el audio generado. No se nota que es IA.</div>
+    </div>
+    <div class="cap">
+      <div class="cap-icon">🎬</div>
+      <div class="cap-title">LTX 2.3 — 22B parámetros</div>
+      <div class="cap-desc">Modelo de video más avanzado disponible. Hasta 45s por clip, 1080p, control por keyframes.</div>
+    </div>
+    <div class="cap">
+      <div class="cap-icon">⚡</div>
+      <div class="cap-title">Instalación en 4 horas</div>
+      <div class="cap-desc">Un comando instala todo en cualquier pod RunPod: modelos, nodos, workflows. Cero configuración manual.</div>
+    </div>
+    <div class="cap">
+      <div class="cap-icon">📊</div>
+      <div class="cap-title">Pipeline documentado</div>
+      <div class="cap-desc">Costos auditados paso a paso. Cada dólar está justificado. Reproducible en cualquier equipo.</div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW MODES -->
+  <div class="section-title">Modos de generación (workflow TODOENUNO)</div>
+  <div class="modes">
+    <div class="mode best">
+      <div class="mode-badge">1</div>
+      <div>
+        <div class="mode-title">Lipsync <span class="tag">IDEAL UGC</span></div>
+        <div class="mode-desc">Foto del personaje + audio TTS. El personaje habla con su voz en video.</div>
+      </div>
+    </div>
+    <div class="mode best">
+      <div class="mode-badge">2</div>
+      <div>
+        <div class="mode-title">Image to Video <span class="tag">KENZA</span></div>
+        <div class="mode-desc">Una foto de referencia genera movimiento natural. Identidad preservada.</div>
+      </div>
+    </div>
+    <div class="mode">
+      <div class="mode-badge">3</div>
+      <div>
+        <div class="mode-title">Voice Clone</div>
+        <div class="mode-desc">5s de audio referencia clona la voz. Sin necesidad de grabar nada.</div>
+      </div>
+    </div>
+    <div class="mode">
+      <div class="mode-badge">4</div>
+      <div>
+        <div class="mode-title">Text to Video</div>
+        <div class="mode-desc">Solo prompt. Rápido para variaciones de contenido en escala.</div>
+      </div>
+    </div>
+    <div class="mode">
+      <div class="mode-badge">5</div>
+      <div>
+        <div class="mode-title">Keyframe Control</div>
+        <div class="mode-desc">Hasta 8 keyframes. Control total del inicio, medio y final del video.</div>
+      </div>
+    </div>
+    <div class="mode">
+      <div class="mode-badge">6</div>
+      <div>
+        <div class="mode-title">ControlNet</div>
+        <div class="mode-desc">El personaje imita los movimientos de un video de referencia.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PITCH -->
+  <div class="pitch">
+    <div class="pitch-text">
+      "Le doy a tu agencia un sistema completo de producción de video UGC con IA — instalado en cualquier servidor en <strong>4 horas</strong>, costo documentado de <strong>$3.27 por video</strong>, con personaje propio, voz clonada y lip sync automático. La competencia te cobra <strong>$500/mes por una herramienta que no puedes controlar</strong>. Con este sistema cobras <strong>$497/mes a tu cliente</strong> y produces 60 videos al mes. Se paga solo con el primer cliente."
+    </div>
+    <div class="pitch-author">— Argumento de venta de 30 segundos</div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="section-title">Lo que ofrecemos a otras agencias</div>
+  <div class="products">
+    <div class="product">
+      <div class="product-tier">Tier 1</div>
+      <div class="product-name">Agency Starter Kit</div>
+      <div class="product-price">$2,997</div>
+      <div class="product-price-note">pago único</div>
+      <ul class="product-items">
+        <li>Scripts instalación RunPod (run_all.sh)</li>
+        <li>12 scripts Python pipeline UGC</li>
+        <li>Workflow TODOENUNO documentado</li>
+        <li>Guía operador interactiva (HTML)</li>
+        <li>Personaje genérico de arranque</li>
+        <li>1h onboarding call</li>
+        <li>Soporte 30 días</li>
+      </ul>
+      <a href="#contacto" class="product-cta">Solicitar info</a>
+    </div>
+    <div class="product featured">
+      <div class="product-tag">MÁS POPULAR</div>
+      <div class="product-tier">Tier 2</div>
+      <div class="product-name">Agency OS</div>
+      <div class="product-price">$197<span style="font-size:14px;font-weight:500">/mes</span></div>
+      <div class="product-price-note">todo incluido</div>
+      <ul class="product-items">
+        <li>Todo del Tier 1</li>
+        <li>Dashboard NORA white label</li>
+        <li>Panel clientes + videos + reportes</li>
+        <li>Actualizaciones de modelos incluidas</li>
+        <li>Soporte continuo por chat</li>
+        <li>Nuevos workflows al salir</li>
+        <li>Acceso a comunidad de agencias</li>
+      </ul>
+      <a href="#contacto" class="product-cta">Empezar ahora</a>
+    </div>
+    <div class="product">
+      <div class="product-tier">Tier 3</div>
+      <div class="product-name">Done For You</div>
+      <div class="product-price">$4,997</div>
+      <div class="product-price-note">setup + $297/mes operación</div>
+      <ul class="product-items">
+        <li>Nosotros operamos todo</li>
+        <li>Tú revendes a tu cliente</li>
+        <li>Tu precio sugerido: $997+/mes</li>
+        <li>Markup garantizado: 3–4×</li>
+        <li>Personaje custom creado</li>
+        <li>SLA de entrega: 48h por video</li>
+        <li>Reportes mensuales para tu cliente</li>
+      </ul>
+      <a href="#contacto" class="product-cta">Solicitar info</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div id="contacto" class="footer">
+    <div>
+      <div class="footer-logo">ARAQUE SOLUTIONS</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;">AI-Powered UGC Infrastructure</div>
+    </div>
+    <div class="footer-contact">
+      <div>Documento confidencial · 2026</div>
+      <div style="margin-top:4px;">Contacto: <a href="mailto:hola@araquesolutions.com">hola@araquesolutions.com</a></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

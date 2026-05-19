@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARAQUE SOLUTIONS — Guía Interactiva del Sistema IA</title>
+<style>
+  :root {
+    --bg: #09090b;
+    --surface: #111113;
+    --surface2: #18181b;
+    --border: #27272a;
+    --accent: #a3e635;
+    --accent2: #3b82f6;
+    --accent3: #f59e0b;
+    --accent4: #ec4899;
+    --text: #fafafa;
+    --text2: #a1a1aa;
+    --text3: #71717a;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  /* ── SIDEBAR ── */
+  .layout { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-logo {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .logo-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .logo-sub { font-size: 12px; color: var(--text3); margin-top: 4px; }
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 16px 20px 6px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 0;
+    color: var(--text2);
+    font-size: 13.5px;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active {
+    background: var(--surface2);
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  .nav-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+  .nav-badge {
+    margin-left: auto;
+    font-size: 10px;
+    background: var(--accent);
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+  .progress-ring {
+    padding: 16px 20px;
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+  }
+  .progress-label { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
+  .progress-bar-wrap { background: var(--surface2); border-radius: 20px; height: 6px; }
+  .progress-bar { background: var(--accent); height: 6px; border-radius: 20px; width: 0%; transition: width 0.5s; }
+  .progress-pct { font-size: 12px; color: var(--accent); font-weight: 700; margin-top: 4px; }
+
+  /* ── MAIN CONTENT ── */
+  .main { margin-left: 260px; flex: 1; }
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .topbar-path { font-size: 13px; color: var(--text3); }
+  .topbar-path span { color: var(--text); font-weight: 600; }
+  .topbar-right { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+  .btn {
+    padding: 7px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+  .btn-accent { background: var(--accent); color: #000; }
+  .btn-accent:hover { background: #bef264; }
+  .btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); }
+  .btn-ghost:hover { background: var(--surface2); color: var(--text); }
+  .content { padding: 40px 40px 80px; max-width: 960px; }
+
+  /* ── SECTION PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--surface2) 0%, #0f1a0a 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(163,230,53,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero-title { font-size: 32px; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
+  .hero-sub { font-size: 16px; color: var(--text2); max-width: 600px; }
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .stat { }
+  .stat-value { font-size: 28px; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .mini-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .mini-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .mini-card-icon { font-size: 24px; margin-bottom: 8px; }
+  .mini-card-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .mini-card-desc { font-size: 12px; color: var(--text3); }
+
+  /* ── STEP LIST ── */
+  .step-list { display: flex; flex-direction: column; gap: 12px; }
+  .step-item {
+    display: flex;
+    gap: 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .step-item:hover { border-color: var(--accent); background: #111a0a; }
+  .step-item.expanded { border-color: var(--accent); }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-num.free { background: rgba(163,230,53,0.15); color: var(--accent); }
+  .step-num.paid { background: rgba(59,130,246,0.15); color: var(--accent2); }
+  .step-num.optional { background: rgba(245,158,11,0.15); color: var(--accent3); }
+  .step-body { flex: 1; }
+  .step-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .step-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .tag-api { background: rgba(59,130,246,0.15); color: var(--accent2); }
+  .tag-cost { background: rgba(245,158,11,0.15); color: var(--accent3); }
+  .tag-free { background: rgba(163,230,53,0.15); color: var(--accent); }
+  .tag-optional { background: rgba(113,113,122,0.2); color: var(--text3); }
+  .step-detail {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .step-detail p { font-size: 13.5px; color: var(--text2); margin-bottom: 10px; }
+  .step-detail ul { padding-left: 20px; }
+  .step-detail li { font-size: 13.5px; color: var(--text2); margin-bottom: 6px; }
+  .step-detail li strong { color: var(--text); }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: #0a0a0b;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 13px;
+    color: #a3e635;
+    position: relative;
+    overflow-x: auto;
+    margin: 10px 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+  .copy-btn.copied { background: var(--success); color: #000; border-color: var(--success); }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+  .tab {
+    padding: 10px 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text3);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── ALERTS / CALLOUTS ── */
+  .callout {
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    margin: 14px 0;
+    font-size: 13.5px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-title { font-weight: 700; margin-bottom: 4px; }
+  .callout.info { background: rgba(59,130,246,0.1); border-left: 3px solid var(--accent2); }
+  .callout.tip { background: rgba(163,230,53,0.08); border-left: 3px solid var(--accent); }
+  .callout.warning { background: rgba(245,158,11,0.1); border-left: 3px solid var(--accent3); }
+  .callout.danger { background: rgba(239,68,68,0.1); border-left: 3px solid var(--error); }
+
+  /* ── COST TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+  th {
+    background: var(--surface2);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    font-size: 13.5px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+  }
+  td strong { color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(163,230,53,0.03); }
+
+  /* ── YAML BUILDER ── */
+  .yaml-section {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .yaml-header {
+    background: var(--surface2);
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .yaml-header .layer-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #000;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yaml-body { padding: 16px; display: none; }
+  .yaml-body.open { display: block; }
+
+  /* ── DECISION TREE ── */
+  .decision-tree { margin: 20px 0; }
+  .decision-node {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .decision-q {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .decision-answers { display: flex; gap: 10px; flex-wrap: wrap; }
+  .answer-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+  .answer-yes { background: rgba(163,230,53,0.15); color: var(--accent); border: 1px solid rgba(163,230,53,0.3); }
+  .answer-yes:hover { background: var(--accent); color: #000; }
+  .answer-no { background: rgba(113,113,122,0.15); color: var(--text3); border: 1px solid var(--border); }
+  .answer-no:hover { background: var(--surface2); color: var(--text); }
+  .result-box {
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-weight: 700;
+    margin-top: 10px;
+    display: none;
+  }
+  .result-claude { background: rgba(163,230,53,0.1); color: var(--accent); border: 1px solid rgba(163,230,53,0.3); }
+  .result-codex { background: rgba(59,130,246,0.1); color: var(--accent2); border: 1px solid rgba(59,130,246,0.3); }
+  .result-gemini { background: rgba(245,158,11,0.1); color: var(--accent3); border: 1px solid rgba(245,158,11,0.3); }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--text2);
+    border-bottom: 1px solid rgba(39,39,42,0.5);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .check-box.checked { background: var(--accent); border-color: var(--accent); }
+  .check-box.checked::after { content: '✓'; font-size: 11px; color: #000; font-weight: 900; }
+  .checklist li.done { color: var(--text3); text-decoration: line-through; }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 20px 0;
+  }
+  .flow-step {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .flow-line-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40px;
+    flex-shrink: 0;
+  }
+  .flow-dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+    flex-shrink: 0;
+    margin-top: 16px;
+  }
+  .flow-vert {
+    width: 2px;
+    background: var(--border);
+    flex: 1;
+    min-height: 16px;
+  }
+  .flow-card {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    margin: 8px 0 8px 12px;
+    transition: border-color 0.15s;
+  }
+  .flow-card:hover { border-color: var(--accent); }
+  .flow-card-title { font-size: 13px; font-weight: 700; color: var(--text); }
+  .flow-card-desc { font-size: 12px; color: var(--text3); margin-top: 3px; }
+  .flow-card-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 6px;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-260px); transition: transform 0.3s; }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .content { padding: 20px 16px 80px; }
+    .hero { padding: 24px; }
+    .hero-title { font-size: 24px; }
+    .mobile-menu-btn { display: flex; }
+  }
+
+  /* ── SECTION HEADINGS ── */
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-sub { font-size: 14px; color: var(--text3); margin-bottom: 28px; }
+  h3 { font-size: 16px; font-weight: 700; margin: 20px 0 10px; }
+  h4 { font-size: 14px; font-weight: 700; margin: 14px 0 8px; color: var(--text2); }
+
+  /* ── KEY GRID ── */
+  .key-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+  .key-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+  }
+  .key-name { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .key-desc { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
+  .key-link { font-size: 11px; color: var(--accent2); text-decoration: none; }
+  .key-link:hover { text-decoration: underline; }
+
+  /* ── PRICING ── */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+  .pricing-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+  }
+  .pricing-card.featured { border-color: var(--accent); background: rgba(163,230,53,0.05); }
+  .pricing-tier { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); }
+  .pricing-price { font-size: 36px; font-weight: 900; color: var(--text); margin: 10px 0; }
+  .pricing-price span { font-size: 14px; color: var(--text3); font-weight: 400; }
+  .pricing-features { list-style: none; text-align: left; margin-top: 16px; }
+  .pricing-features li { font-size: 13px; padding: 5px 0; color: var(--text2); display: flex; gap: 8px; }
+  .pricing-features li::before { content: '✓'; color: var(--accent); font-weight: 900; flex-shrink: 0; }
+
+  /* ── NOTIFICATION ── */
+  .notification {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--success);
+    color: #000;
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 9999;
+    pointer-events: none;
+  }
+  .notification.show { opacity: 1; }
+
+  /* ── QUICK REF ── */
+  .quick-ref {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  .qr-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+  }
+  .qr-title { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .qr-item { font-size: 13px; color: var(--text2); padding: 4px 0; display: flex; align-items: center; gap: 6px; }
+  .qr-item::before { content: '›'; color: var(--accent); font-weight: 900; }
+</style>
+</head>
+<body>
+
+<div id="notification" class="notification">✓ Copiado al portapapeles</div>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-tag">Sistema IA</div>
+    <div class="logo-title">ARAQUE<br>SOLUTIONS</div>
+    <div class="logo-sub">Guía del Operador v1.0</div>
+  </div>
+
+  <div class="nav-section-label">Inicio</div>
+  <div class="nav-item active" onclick="showPage('home', this)">
+    <span class="nav-icon">🏠</span> Dashboard
+  </div>
+  <div class="nav-item" onclick="showPage('setup', this)">
+    <span class="nav-icon">⚙️</span> Configuración Inicial
+    <span class="nav-badge">PRIMERO</span>
+  </div>
+
+  <div class="nav-section-label">Pipeline Principal</div>
+  <div class="nav-item" onclick="showPage('pipeline', this)">
+    <span class="nav-icon">🎬</span> Kenza UGC Pipeline
+    <span class="nav-badge">12</span>
+  </div>
+  <div class="nav-item" onclick="showPage('flujo', this)">
+    <span class="nav-icon">🔄</span> Flujo Completo
+  </div>
+  <div class="nav-item" onclick="showPage('costs', this)">
+    <span class="nav-icon">💰</span> Costos por Video
+  </div>
+
+  <div class="nav-section-label">Herramientas IA</div>
+  <div class="nav-item" onclick="showPage('seedance', this)">
+    <span class="nav-icon">🎥</span> Seedance Storyboard
+  </div>
+  <div class="nav-item" onclick="showPage('threebrain', this)">
+    <span class="nav-icon">🧠</span> Three-Brain Router
+  </div>
+  <div class="nav-item" onclick="showPage('prompts', this)">
+    <span class="nav-icon">📝</span> Prompts Listos para Usar
+  </div>
+
+  <div class="nav-section-label">Negocio</div>
+  <div class="nav-item" onclick="showPage('pricing', this)">
+    <span class="nav-icon">📊</span> Precios de Mercado
+  </div>
+  <div class="nav-item" onclick="showPage('checklist', this)">
+    <span class="nav-icon">✅</span> Checklist Operador
+  </div>
+
+  <div class="progress-ring">
+    <div class="progress-label">Progreso de configuración</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progressBar" style="width:0%"></div>
+    </div>
+    <div class="progress-pct" id="progressPct">0% completado</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-path">ARAQUE SOLUTIONS › <span id="currentSection">Dashboard</span></div>
+    <div class="topbar-right">
+      <button class="btn btn-ghost" onclick="showPage('checklist', document.querySelector('[onclick*=checklist]'))">✅ Mi Checklist</button>
+      <button class="btn btn-accent" onclick="showPage('pipeline', document.querySelector('[onclick*=pipeline]'))">▶ Iniciar Pipeline</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ══════════════ HOME ══════════════ -->
+    <div id="page-home" class="page active">
+      <div class="hero">
+        <div class="hero-label">🚀 ARAQUE SOLUTIONS — Sistema IA Completo</div>
+        <div class="hero-title">Tu fábrica de videos<br>con IA, automatizada.</div>
+        <div class="hero-sub">Genera influencers virtuales, videos UGC, anuncios estáticos y contenido de marca — desde cero hasta publicado — sin tocar terminal.</div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-value">12</div><div class="stat-label">Pasos del pipeline</div></div>
+          <div class="stat"><div class="stat-value">~$1.20</div><div class="stat-label">Costo por video</div></div>
+          <div class="stat"><div class="stat-value">4/día</div><div class="stat-label">Videos posibles</div></div>
+          <div class="stat"><div class="stat-value">$997</div><div class="stat-label">Precio de venta / mes</div></div>
+        </div>
+      </div>
+
+      <div class="card-grid">
+        <div class="mini-card" onclick="showPage('setup', document.querySelector('[onclick*=setup]'))">
+          <div class="mini-card-icon">⚙️</div>
+          <div class="mini-card-title">Configuración Inicial</div>
+          <div class="mini-card-desc">Configura tus API keys y el proyecto en 10 minutos.</div>
+        </div>
+        <div class="mini-card" onclick="showPage('pipeline', document.querySelector('[onclick*=pipeline]'))">
+          <div class="mini-card-icon">🎬</div>
+          <div class="mini-card-title">Kenza Pipeline</div>
+          <div class="mini-card-desc">12 pasos automatizados de guión a video terminado.</div>
+        </div>
+        <div class="mini-card" onclick="showPage('seedance', document.querySelector('[onclick*=seedance]'))">
+          <div class="mini-card-icon">🎥</div>
+          <div class="mini-card-title">Seedance Storyboard</div>
+          <div class="mini-card-desc">Crea prompts YAML para videos cinematográficos.</div>
+        </div>
+        <div class="mini-card" onclick="showPage('threebrain', document.querySelector('[onclick*=threebrain]'))">
+          <div class="mini-card-icon">🧠</div>
+          <div class="mini-card-title">Three-Brain Router</div>
+          <div class="mini-card-desc">Sabe cuándo usar Claude, Codex o Gemini.</div>
+        </div>
+        <div class="mini-card" onclick="showPage('prompts', document.querySelector('[onclick*=prompts]'))">
+          <div class="mini-card-icon">📝</div>
+          <div class="mini-card-title">Prompts Listos</div>
+          <div class="mini-card-desc">Copia y pega prompts probados para cada situación.</div>
+        </div>
+        <div class="mini-card" onclick="showPage('pricing', document.querySelector('[onclick*=pricing]'))">
+          <div class="mini-card-icon">💰</div>
+          <div class="mini-card-title">Modelo de Negocio</div>
+          <div class="mini-card-desc">Precios, márgenes y cómo vender el servicio.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🗺️ ¿Cómo empezar?</div>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-line-col"><div class="flow-dot"></div><div class="flow-vert"></div></div>
+            <div class="flow-card">
+              <div class="flow-card-title">1. Configuración Inicial (10 min)</div>
+              <div class="flow-card-desc">Consigue tus API keys y llena el archivo .env</div>
+              <span class="flow-card-tag tag tag-free">Gratis para empezar</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-line-col"><div class="flow-dot"></div><div class="flow-vert"></div></div>
+            <div class="flow-card">
+              <div class="flow-card-title">2. Crea tu primera marca (30 min)</div>
+              <div class="flow-card-desc">Define el personaje, tono y referencias visuales de Kenza</div>
+              <span class="flow-card-tag tag tag-api">Gemini API</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-line-col"><div class="flow-dot"></div><div class="flow-vert"></div></div>
+            <div class="flow-card">
+              <div class="flow-card-title">3. Corre el pipeline completo (20 min)</div>
+              <div class="flow-card-desc">python run.py --brand kenza --steps all</div>
+              <span class="flow-card-tag tag tag-cost">~$1.20</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-line-col"><div class="flow-dot"></div></div>
+            <div class="flow-card">
+              <div class="flow-card-title">4. Revisa y publica ✓</div>
+              <div class="flow-card-desc">El video terminado estará en outputs/&lt;run_id&gt;/</div>
+              <span class="flow-card-tag tag tag-free">Manual — 5 min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div class="callout-body">
+          <div class="callout-title">Tip para no técnicos</div>
+          Nunca necesitas tocar el código. Solo editas el archivo <code>.env</code> (con Notepad) y usas el Dashboard web para correr el pipeline. Este manual te explica todo paso a paso.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ SETUP ══════════════ -->
+    <div id="page-setup" class="page">
+      <div class="section-title">⚙️ Configuración Inicial</div>
+      <div class="section-sub">Sigue estos pasos en orden. Una sola vez, y listo para producir.</div>
+
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this,'tab-keys')">1. API Keys</div>
+        <div class="tab" onclick="switchTab(this,'tab-env')">2. Archivo .env</div>
+        <div class="tab" onclick="switchTab(this,'tab-install')">3. Instalación</div>
+        <div class="tab" onclick="switchTab(this,'tab-test')">4. Prueba</div>
+      </div>
+
+      <div id="tab-keys" class="tab-content active">
+        <div class="callout info">
+          <div class="callout-icon">ℹ️</div>
+          <div class="callout-body">
+            <div class="callout-title">¿Qué es una API Key?</div>
+            Es una "contraseña" que te da cada plataforma para que el pipeline pueda usar sus servicios. Cada una es diferente. Nunca la compartas con nadie.
+          </div>
+        </div>
+
+        <div class="key-grid">
+          <div class="key-item">
+            <div class="key-name">GEMINI_API_KEY</div>
+            <div class="key-desc">Para guiones (gratis hasta cierto límite)</div>
+            <a class="key-link" href="https://aistudio.google.com/app/apikey" target="_blank">→ aistudio.google.com/app/apikey</a>
+          </div>
+          <div class="key-item">
+            <div class="key-name">FAL_KEY</div>
+            <div class="key-desc">Para generar imágenes y videos (fal.ai)</div>
+            <a class="key-link" href="https://fal.ai/dashboard/keys" target="_blank">→ fal.ai/dashboard/keys</a>
+          </div>
+          <div class="key-item">
+            <div class="key-name">ELEVENLABS_API_KEY</div>
+            <div class="key-desc">Para cambiar la voz del personaje</div>
+            <a class="key-link" href="https://elevenlabs.io/app/settings/api-keys" target="_blank">→ elevenlabs.io/settings/api-keys</a>
+          </div>
+          <div class="key-item">
+            <div class="key-name">KIE_API_KEY</div>
+            <div class="key-desc">Música de fondo (Suno) — ya configurada</div>
+            <a class="key-link" href="https://kie.ai/dashboard" target="_blank">→ kie.ai/dashboard</a>
+          </div>
+          <div class="key-item">
+            <div class="key-name">SUBMAGIC_API_KEY</div>
+            <div class="key-desc">Para subtítulos y finishing del video</div>
+            <a class="key-link" href="https://submagic.co" target="_blank">→ submagic.co (settings)</a>
+          </div>
+          <div class="key-item">
+            <div class="key-name">OPENAI_API_KEY</div>
+            <div class="key-desc">Opcional — para GPT Image 2 directo</div>
+            <a class="key-link" href="https://platform.openai.com/api-keys" target="_blank">→ platform.openai.com/api-keys</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-env" class="tab-content">
+        <p style="color:var(--text2); margin-bottom:14px;">Abre el archivo <strong>.env.example</strong> en la carpeta del proyecto, renómbralo a <strong>.env</strong> y rellena tus keys:</p>
+        <div class="code-block" id="code-env"># ─── ARAQUE SOLUTIONS — Kenza UGC Pipeline ───
+# Rellena TODAS las keys antes de correr el pipeline
+
+# IA — REQUERIDAS
+GEMINI_API_KEY=AIzaSy...          ← pega tu key aquí
+FAL_KEY=0a1b2c3d-...             ← pega tu key aquí
+ELEVENLABS_API_KEY=sk_...         ← pega tu key aquí
+KIE_API_KEY=426c134b1ac3697c...   ← ya incluida, verifica
+
+# IA — OPCIONALES
+OPENAI_API_KEY=sk-proj-...        ← solo si usas GPT Image directo
+SUBMAGIC_API_KEY=...              ← para subtítulos automáticos
+
+# PIPELINE — NO CAMBIAR (defaults correctos)
+DEFAULT_NUM_SCENES=6
+DEFAULT_FORMAT=9:16
+DEFAULT_GEMINI_VOICE=Leda</div>
+        <button class="copy-btn" onclick="copyCode('code-env', this)" style="position:relative;top:0;right:0;display:block;margin-top:8px;">📋 Copiar</button>
+
+        <div class="callout warning">
+          <div class="callout-icon">⚠️</div>
+          <div class="callout-body">
+            <div class="callout-title">Importante</div>
+            El archivo .env NUNCA se sube a internet (GitHub, etc.). Está en la lista de .gitignore automáticamente. Es solo para tu máquina.
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-install" class="tab-content">
+        <p style="color:var(--text2); margin-bottom:14px;">Abre <strong>PowerShell</strong> (busca "PowerShell" en el menú Inicio) y ejecuta estos comandos en orden:</p>
+
+        <h4>Paso 1 — Ir a la carpeta del proyecto</h4>
+        <div class="code-block" id="code-cd">cd "C:\Users\SOPORTE2\Documents\Kenza UGC Pipeline"</div>
+        <button class="copy-btn" onclick="copyCode('code-cd', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+
+        <h4>Paso 2 — Instalar dependencias</h4>
+        <div class="code-block" id="code-install">python setup.py</div>
+        <button class="copy-btn" onclick="copyCode('code-install', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+
+        <div class="callout tip">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">Si ves un error de "python no reconocido", instala Python 3.11 desde <strong>python.org</strong> y marca ✓ "Add to PATH".</div>
+        </div>
+      </div>
+
+      <div id="tab-test" class="tab-content">
+        <p style="color:var(--text2); margin-bottom:14px;">Verifica que todo funciona con una prueba en seco (sin gastar dinero):</p>
+        <div class="code-block" id="code-dryrun">python run.py --brand kenza --steps all --dry-run</div>
+        <button class="copy-btn" onclick="copyCode('code-dryrun', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+
+        <div class="callout tip">
+          <div class="callout-icon">✅</div>
+          <div class="callout-body">
+            <div class="callout-title">¿Qué deberías ver?</div>
+            Una tabla verde con los 12 pasos listados, el costo estimado ($0.00 en modo dry-run), y "LISTO — 0 errores". Si hay errores rojos, revisa que las API keys estén correctas en el .env.
+          </div>
+        </div>
+
+        <h4>Verificar lista de pasos disponibles</h4>
+        <div class="code-block" id="code-liststeps">python run.py --list-steps</div>
+        <button class="copy-btn" onclick="copyCode('code-liststeps', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+      </div>
+    </div>
+
+    <!-- ══════════════ PIPELINE ══════════════ -->
+    <div id="page-pipeline" class="page">
+      <div class="section-title">🎬 Kenza UGC Pipeline</div>
+      <div class="section-sub">12 pasos automáticos de guión a video terminado. Haz clic en cada paso para ver los detalles.</div>
+
+      <div class="callout info">
+        <div class="callout-icon">🔵</div>
+        <div class="callout-body">
+          <strong>Leyenda:</strong>
+          <span class="tag tag-free" style="margin:0 6px">Verde = sin costo de API</span>
+          <span class="tag tag-api" style="margin:0 6px">Azul = requiere API key</span>
+          <span class="tag tag-optional" style="margin:0 6px">Gris = opcional</span>
+        </div>
+      </div>
+
+      <div class="step-list" style="margin-top:20px">
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num free">00</div>
+          <div class="step-body">
+            <div class="step-title">Brand Analyzer — Análisis de Marca</div>
+            <div class="step-meta">
+              <span class="tag tag-api">Gemini API</span>
+              <span class="tag tag-free">$0.00</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Analiza el nombre, producto y tono de tu marca. Genera el "brief" creativo que usarán todos los demás pasos como base.</p>
+              <p><strong>Input:</strong> Nombre de marca + descripción en brands/kenza.json</p>
+              <p><strong>Output:</strong> outputs/&lt;run_id&gt;/brief.json — el cerebro del video</p>
+              <ul>
+                <li><strong>Tiempo:</strong> ~15 segundos</li>
+                <li><strong>Costo:</strong> Gratis (Gemini Flash)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num free">01</div>
+          <div class="step-body">
+            <div class="step-title">Guión — Script Completo UGC</div>
+            <div class="step-meta">
+              <span class="tag tag-api">Gemini API</span>
+              <span class="tag tag-free">$0.01</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Genera el guión completo del video con estructura HOOK → HISTORIA → PLOT TWIST → CTA. Incluye el texto que dirá Kenza y las indicaciones visuales por escena.</p>
+              <p><strong>Estructura del video generado:</strong></p>
+              <ul>
+                <li><strong>Escena 1 — HOOK:</strong> Los primeros 3 segundos que enganchan</li>
+                <li><strong>Escena 2 — STORY 1:</strong> El problema o situación</li>
+                <li><strong>Escena 3 — STORY 2:</strong> La solución o proceso</li>
+                <li><strong>Escena 4 — PLOT TWIST:</strong> El giro inesperado (firma de Morfeo)</li>
+                <li><strong>Escena 5 — CTA:</strong> Llamada a la acción final</li>
+              </ul>
+              <p><strong>Output:</strong> outputs/&lt;run_id&gt;/guion.json</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num paid">02</div>
+          <div class="step-body">
+            <div class="step-title">Personaje — Generación con GPT Image 2</div>
+            <div class="step-meta">
+              <span class="tag tag-api">FAL.ai</span>
+              <span class="tag tag-cost">$0.41/imagen</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Genera la imagen del personaje Kenza usando GPT Image 2 a través de fal.ai. Parte de una imagen de referencia y la adapta al contexto de la escena.</p>
+              <p><strong>Modelo usado:</strong> <code>openai/gpt-image-2/edit</code></p>
+              <ul>
+                <li><strong>Resolución:</strong> 1024×1792px (9:16 para vertical)</li>
+                <li><strong>Tiempo:</strong> ~30-45 segundos</li>
+                <li><strong>Referencia base:</strong> assets/kenza/BANANA_PRO_00006_.png</li>
+              </ul>
+              <div class="callout tip" style="margin-top:10px">
+                <div class="callout-icon">💡</div>
+                <div class="callout-body">Si tienes imágenes de referencia de tu influencer, ponlas en <strong>assets/kenza/</strong> y el sistema las usará automáticamente.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num paid">03</div>
+          <div class="step-body">
+            <div class="step-title">Locación — Fondo / Escenario</div>
+            <div class="step-meta">
+              <span class="tag tag-api">FAL.ai</span>
+              <span class="tag tag-cost">$0.41/imagen</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Genera el fondo o locación para cada escena. El personaje y la locación se generan por separado para tener más control artístico.</p>
+              <p><strong>Modelo:</strong> <code>openai/gpt-image-2/edit</code></p>
+              <ul>
+                <li><strong>Escenas posibles:</strong> cocina, oficina, exterior urbano, gym, etc.</li>
+                <li><strong>Se combina con el personaje</strong> en el paso 04 (Morpheus)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num paid">04</div>
+          <div class="step-body">
+            <div class="step-title">Morpheus — Fotogramas de Escena</div>
+            <div class="step-meta">
+              <span class="tag tag-api">FAL.ai</span>
+              <span class="tag tag-cost">$0.50/escena</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Combina el personaje y la locación para crear los fotogramas finales de cada escena. Morpheus "viste" al personaje con la estética de la marca.</p>
+              <p><strong>Output:</strong> 5 imágenes de alta calidad (una por escena)</p>
+              <ul>
+                <li><strong>Tiempo:</strong> ~60 segundos por escena</li>
+                <li><strong>Formato:</strong> PNG 1024×1792px</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num free">05</div>
+          <div class="step-body">
+            <div class="step-title">TTS — Voz de Kenza (Gemini)</div>
+            <div class="step-meta">
+              <span class="tag tag-api">Gemini TTS</span>
+              <span class="tag tag-free">$0.02</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Convierte el guión en voz usando Gemini TTS. Genera el audio WAV que Kenza "habla" en el video.</p>
+              <p><strong>API:</strong> <code>gemini-3.1-flash-tts-preview</code></p>
+              <ul>
+                <li><strong>Voz default:</strong> Leda (joven, natural)</li>
+                <li><strong>Otras opciones:</strong> Kore, Aoede, Charon, Fenrir</li>
+                <li><strong>Tags de emoción:</strong> [excited], [warm], [energetic]</li>
+                <li><strong>Formato:</strong> PCM 16-bit, 24kHz mono</li>
+              </ul>
+              <div class="code-block" id="code-tts">
+# Cambiar voz en .env:
+DEFAULT_GEMINI_VOICE=Leda   # opciones: Leda, Kore, Aoede, Charon</div>
+              <button class="copy-btn" onclick="copyCode('code-tts', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num paid">06</div>
+          <div class="step-body">
+            <div class="step-title">Voice Change — Cambio de Voz (ElevenLabs)</div>
+            <div class="step-meta">
+              <span class="tag tag-api">ElevenLabs</span>
+              <span class="tag tag-cost">$0.06</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Toma el audio generado por Gemini y lo transforma al tono único de Kenza usando ElevenLabs Speech-to-Speech.</p>
+              <p><strong>Endpoint:</strong> <code>eleven_multilingual_sts_v2</code></p>
+              <ul>
+                <li><strong>Tono:</strong> Define la identidad vocal de Kenza</li>
+                <li><strong>Idioma:</strong> Español (multilingual)</li>
+                <li><strong>Output:</strong> MP3 44100Hz 128kbps</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num paid">07</div>
+          <div class="step-body">
+            <div class="step-title">Kling — Clips de Video (IA)</div>
+            <div class="step-meta">
+              <span class="tag tag-api">FAL.ai / Kling</span>
+              <span class="tag tag-cost">$1.20 (paso más caro)</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Convierte cada imagen estática de escena en un clip de video de 5-10 segundos. Este es el corazón del sistema — anima a Kenza.</p>
+              <p><strong>Modelo:</strong> <code>fal-ai/kling-video/o3/pro/reference-to-video</code></p>
+              <ul>
+                <li><strong>Tiempo:</strong> 3-5 minutos por clip</li>
+                <li><strong>Resolución:</strong> 1080p (9:16)</li>
+                <li><strong>Movimiento:</strong> Controlado por el prompt de cada escena</li>
+              </ul>
+              <div class="callout warning">
+                <div class="callout-icon">⏳</div>
+                <div class="callout-body">Este paso puede tardar 15-25 minutos en total para las 5 escenas. Es normal — la IA genera video de alta calidad.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num optional">08</div>
+          <div class="step-body">
+            <div class="step-title">Sync — Lip-Sync (Sync-3) — Opcional</div>
+            <div class="step-meta">
+              <span class="tag tag-optional">Opcional</span>
+              <span class="tag tag-api">FAL.ai</span>
+              <span class="tag tag-cost">$0.60</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Sincroniza los movimientos de labios de Kenza con el audio generado. Hace que parezca que Kenza realmente está hablando.</p>
+              <p><strong>Modelo:</strong> <code>fal-ai/sync-lipsync/v3</code></p>
+              <ul>
+                <li><strong>Cuándo usarlo:</strong> Cuando el video muestra el rostro de Kenza hablando directamente</li>
+                <li><strong>Cuándo omitirlo:</strong> Videos de acción, producto, sin primer plano de cara</li>
+                <li><strong>Para omitir:</strong> <code>python run.py --steps 00-07,09-11</code></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num free">09</div>
+          <div class="step-body">
+            <div class="step-title">Music — Música de Fondo (Suno)</div>
+            <div class="step-meta">
+              <span class="tag tag-api">Kie.ai / Suno</span>
+              <span class="tag tag-cost">$0.06</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Genera música de fondo original y única para el video usando Suno V4.5 Plus a través de Kie.ai. La música se adapta al tono y género del video.</p>
+              <ul>
+                <li><strong>Duración:</strong> Se ajusta automáticamente al largo del video</li>
+                <li><strong>Estilo:</strong> Determinado por el guión (upbeat, chill, energetic, etc.)</li>
+                <li><strong>Output:</strong> MP3, se mezcla en el paso 10</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num free">10</div>
+          <div class="step-body">
+            <div class="step-title">Assembly — Ensamblado Final (FFmpeg)</div>
+            <div class="step-meta">
+              <span class="tag tag-free">Sin costo de API</span>
+              <span class="tag tag-free">$0.00</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Une todos los clips, mezcla el audio de voz con la música, aplica transiciones y genera el MP4 final.</p>
+              <ul>
+                <li><strong>Herramienta:</strong> FFmpeg (instalado localmente)</li>
+                <li><strong>Output:</strong> outputs/&lt;run_id&gt;/final.mp4</li>
+                <li><strong>Formato:</strong> MP4 H.264, AAC audio, 1080×1920px</li>
+                <li><strong>Tiempo:</strong> ~30 segundos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item" onclick="toggleStep(this)">
+          <div class="step-num optional">11</div>
+          <div class="step-body">
+            <div class="step-title">Subs — Subtítulos + Finishing (Submagic)</div>
+            <div class="step-meta">
+              <span class="tag tag-optional">Opcional pero recomendado</span>
+              <span class="tag tag-api">Submagic API</span>
+              <span class="tag tag-cost">$0.10</span>
+            </div>
+            <div class="step-detail">
+              <p><strong>¿Qué hace?</strong> Agrega subtítulos animados estilo TikTok, ajusta el color-grade final y aplica los últimos retoques de producción.</p>
+              <ul>
+                <li><strong>Subtítulos:</strong> Automáticos, sincronizados, estilo trending</li>
+                <li><strong>Output:</strong> outputs/&lt;run_id&gt;/final_subs.mp4</li>
+                <li><strong>Por qué importa:</strong> El 85% del contenido en TikTok se ve sin sonido</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card" style="margin-top:28px">
+        <div class="card-title">▶ Comandos de ejecución</div>
+        <h4>Pipeline completo</h4>
+        <div class="code-block" id="cmd1">python run.py --brand kenza --steps all</div>
+        <button class="copy-btn" onclick="copyCode('cmd1', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+
+        <h4>Solo pasos específicos</h4>
+        <div class="code-block" id="cmd2">python run.py --brand kenza --steps 05,06      # solo audio
+python run.py --brand kenza --steps 07-11      # solo video + finish
+python run.py --brand kenza --steps 00-07,09-11 # sin lip-sync</div>
+        <button class="copy-btn" onclick="copyCode('cmd2', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+
+        <h4>Correr con operador específico</h4>
+        <div class="code-block" id="cmd3">python run.py --brand havanna --operator ARAQUE_SOLUTIONS --steps all</div>
+        <button class="copy-btn" onclick="copyCode('cmd3', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+      </div>
+    </div>
+
+    <!-- ══════════════ FLUJO COMPLETO ══════════════ -->
+    <div id="page-flujo" class="page">
+      <div class="section-title">🔄 Flujo Completo — De Idea a Video</div>
+      <div class="section-sub">Así es un día de producción completo con el sistema ARAQUE SOLUTIONS.</div>
+
+      <div class="card">
+        <div class="card-title">📅 Producción Diaria — 4 videos/día</div>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-line-col"><div class="flow-dot"></div><div class="flow-vert"></div></div>
+            <div class="flow-card">
+              <div class="flow-card-title">☀️ 8:00 AM — Briefing (15 min)</div>
+              <div class="flow-card-desc">Define las 4 marcas del día en brands/. Actualiza si cambió algo.</div>
+              <span class="flow-card-tag tag tag-free">Sin costo</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-line-col"><div class="flow-dot"></div><div class="flow-vert"></div></div>
+            <div class="flow-card">
+              <div class="flow-card-title">🎬 8:15 AM — Correr los 4 pipelines</div>
+              <div class="flow-card-desc">Lanzar uno a la vez. Cada uno tarda ~35 min con los pasos de video.</div>
+              <span class="flow-card-tag tag tag-cost">~$4.80 total (4 × $1.20)</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-line-col"><div class="flow-dot"></div><div class="flow-vert"></div></div>
+            <div class="flow-card">
+              <div class="flow-card-title">👀 11:00 AM — Revisión de calidad</div>
+              <div class="flow-card-desc">Ver cada video final. Si algo no quedó bien, regenerar solo ese paso.</div>
+              <span class="flow-card-tag tag tag-free">Manual</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-line-col"><div class="flow-dot"></div><div class="flow-vert"></div></div>
+            <div class="flow-card">
+              <div class="flow-card-title">📤 11:30 AM — Subir y publicar</div>
+              <div class="flow-card-desc">Cargar a TikTok/Instagram. Usar Postiz o publicar manual.</div>
+              <span class="flow-card-tag tag tag-free">10 min</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-line-col"><div class="flow-dot"></div></div>
+            <div class="flow-card">
+              <div class="flow-card-title">📊 Final del día — Métricas</div>
+              <div class="flow-card-desc">Registrar qué guión/personaje/locación generó mejores resultados.</div>
+              <span class="flow-card-tag tag tag-free">5 min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔁 Regenerar un paso fallido</div>
+        <p style="color:var(--text2);margin-bottom:14px;">Si un paso específico no quedó bien (por ejemplo, la imagen del personaje), puedes regenerarlo sin correr todo el pipeline de nuevo:</p>
+        <div class="code-block" id="cmd-regen">
+# Regenerar solo el personaje de un run específico
+python run.py --brand kenza --steps 02 --run-id kenza_20260514_081500
+
+# Regenerar desde el paso fallido hasta el final
+python run.py --brand kenza --steps 04-11 --run-id kenza_20260514_081500</div>
+        <button class="copy-btn" onclick="copyCode('cmd-regen', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+      </div>
+    </div>
+
+    <!-- ══════════════ COSTS ══════════════ -->
+    <div id="page-costs" class="page">
+      <div class="section-title">💰 Costos por Video</div>
+      <div class="section-sub">Desglose exacto de lo que cuesta producir un video UGC con Kenza.</div>
+
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Paso</th>
+              <th>Herramienta</th>
+              <th>Costo</th>
+              <th>Obligatorio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>00 — Brand Setup</strong></td><td>Gemini Flash</td><td>$0.00</td><td>✅ Sí</td></tr>
+            <tr><td><strong>01 — Guión</strong></td><td>Gemini Pro</td><td>$0.01</td><td>✅ Sí</td></tr>
+            <tr><td><strong>02 — Personaje</strong></td><td>GPT Image 2 (fal)</td><td>$0.41</td><td>✅ Sí</td></tr>
+            <tr><td><strong>03 — Locación</strong></td><td>GPT Image 2 (fal)</td><td>$0.41</td><td>✅ Sí</td></tr>
+            <tr><td><strong>04 — Morpheus</strong></td><td>ComfyDeploy / fal</td><td>$0.50</td><td>✅ Sí</td></tr>
+            <tr><td><strong>05 — TTS</strong></td><td>Gemini TTS</td><td>$0.02</td><td>✅ Sí</td></tr>
+            <tr><td><strong>06 — Voice Change</strong></td><td>ElevenLabs STS</td><td>$0.06</td><td>✅ Sí</td></tr>
+            <tr><td><strong>07 — Video Clips</strong></td><td>Kling Pro (fal)</td><td>$1.20</td><td>✅ Sí</td></tr>
+            <tr><td><strong>08 — Lip-Sync</strong></td><td>Sync-3 (fal)</td><td>$0.60</td><td>⭕ Opcional</td></tr>
+            <tr><td><strong>09 — Música</strong></td><td>Suno via Kie.ai</td><td>$0.06</td><td>✅ Sí</td></tr>
+            <tr><td><strong>10 — Assembly</strong></td><td>FFmpeg local</td><td>$0.00</td><td>✅ Sí</td></tr>
+            <tr><td><strong>11 — Subtítulos</strong></td><td>Submagic</td><td>$0.10</td><td>⭕ Opcional</td></tr>
+          </tbody>
+        </table>
+
+        <div style="background:var(--surface2);border:1px solid var(--accent);border-radius:8px;padding:16px;margin-top:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">Costo total sin opcionales</div>
+              <div style="font-size:28px;font-weight:900;color:var(--accent)">$2.77</div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">Con todos los pasos</div>
+              <div style="font-size:28px;font-weight:900;color:var(--text)">$3.37</div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">Sin lip-sync ni subs</div>
+              <div style="font-size:28px;font-weight:900;color:var(--text)">$2.67</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📈 Rentabilidad mensual</div>
+        <table>
+          <thead>
+            <tr><th>Escenario</th><th>Videos/mes</th><th>Costo IA</th><th>Precio cliente</th><th>Margen</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Starter (1 cliente)</td><td>120</td><td>~$330</td><td>$297/mes</td><td><strong style="color:var(--error)">-$33</strong> — necesitas 2+</td></tr>
+            <tr><td>Básico (3 clientes)</td><td>360</td><td>~$990</td><td>$297 × 3 = $891</td><td><strong style="color:var(--warning)">-$99</strong> — sube precio</td></tr>
+            <tr><td>Estándar (3 clientes)</td><td>360</td><td>~$990</td><td>$497 × 3 = $1,491</td><td><strong style="color:var(--success)">+$501/mes</strong></td></tr>
+            <tr><td>Premium (5 clientes)</td><td>600</td><td>~$1,650</td><td>$997 × 5 = $4,985</td><td><strong style="color:var(--accent)">+$3,335/mes</strong></td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip" style="margin-top:14px">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <div class="callout-title">Precio recomendado para lanzamiento</div>
+            <strong>$497/mes por cliente</strong> — ofrece el influencer virtual + 30 videos/mes (1 diario). El margen por cliente es ~$350/mes. Con 3 clientes tienes $1,050/mes neto solo con el pipeline.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ SEEDANCE ══════════════ -->
+    <div id="page-seedance" class="page">
+      <div class="section-title">🎥 Seedance 2.0 Storyboard</div>
+      <div class="section-sub">Crea prompts YAML cinematográficos para videos de alta calidad. Aprende las reglas en 10 minutos.</div>
+
+      <div class="callout info">
+        <div class="callout-icon">🎬</div>
+        <div class="callout-body">
+          <div class="callout-title">¿Qué es Seedance?</div>
+          Un sistema de generación de video IA que toma tu prompt YAML y genera clips cinematográficos. El pipeline de Kenza lo usa internamente para los prompts de Kling, pero también puedes usarlo manualmente para crear contenido premium.
+        </div>
+      </div>
+
+      <h3>Las 4 capas del prompt</h3>
+
+      <div class="yaml-section">
+        <div class="yaml-header" onclick="toggleYaml(this)">
+          <div class="layer-num">1</div>
+          Identidad de Escena — title + reference_handling + style + visual_feel
+          <span style="margin-left:auto;color:var(--text3);font-size:12px">▼ ver</span>
+        </div>
+        <div class="yaml-body">
+          <p style="color:var(--text2);margin-bottom:10px"><strong>reference_handling</strong> es SIEMPRE el segundo campo. Nunca lo pongas al final.</p>
+          <div class="code-block" id="yaml1">title: "Kenza — Lanzamiento Crema Solar"
+reference_handling: "DO NOT replicate the reference image composition. DO NOT show Kenza standing frontally facing camera. DO NOT show product held at chest level in standard hero pose."
+style: "TikTok UGC, handheld feel, natural grain, warm golden hour skin tones"
+visual_feel: "Authentic, unfiltered, like a real friend sharing her routine. Subsurface skin scattering. Soft bokeh background."
+duration: "10s"</div>
+          <button class="copy-btn" onclick="copyCode('yaml1', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+        </div>
+      </div>
+
+      <div class="yaml-section">
+        <div class="yaml-header" onclick="toggleYaml(this)">
+          <div class="layer-num">2</div>
+          Character Modeling — descripción física antes del storyboard
+          <span style="margin-left:auto;color:var(--text3);font-size:12px">▼ ver</span>
+        </div>
+        <div class="yaml-body">
+          <div class="code-block" id="yaml2">character_modeling:
+  kenza:
+    base: "Latina woman, 24-28, warm olive skin, dark wavy hair past shoulders"
+    features: "Full lips, strong brows, slightly upturned nose, brown almond eyes"
+    emotional_state: "Excited but natural — the genuine excitement of finding something that works"
+    movement_in_this_scene: "Small gestures, no wide arm movements, contained energy"</div>
+          <button class="copy-btn" onclick="copyCode('yaml2', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+        </div>
+      </div>
+
+      <div class="yaml-section">
+        <div class="yaml-header" onclick="toggleYaml(this)">
+          <div class="layer-num">3</div>
+          Cinematic Storyboard — cada segundo del video
+          <span style="margin-left:auto;color:var(--text3);font-size:12px">▼ ver</span>
+        </div>
+        <div class="yaml-body">
+          <div class="callout tip" style="margin-bottom:12px">
+            <div class="callout-icon">📐</div>
+            <div class="callout-body"><strong>Regla de timestamps:</strong> NO uses intervalos iguales. 1-2s para impactos. 3-5s para acción sostenida. El ritmo desigual hace videos más dinámicos.</div>
+          </div>
+          <div class="code-block" id="yaml3">cinematic_storyboard:
+  "0s-2s":
+    camera: "Extreme close-up on Kenza's hands opening product, then tilt up slowly"
+    action: "Fingers curl around product, thumbnail traces the cap, eyes widen slightly"
+    lighting: "Warm afternoon backlight, skin glowing from behind"
+    sfx: "Soft cap pop"
+
+  "2s-5s":
+    camera: "Medium close-up, 90-degree side profile, shallow depth of field"
+    action: "Kenza applies product to cheekbone, jaw relaxes, brief closed-eye satisfaction"
+    lighting: "Single warm key light from right, golden hour tone"
+
+  "5s-10s":
+    camera: "Slight pull back to medium shot, steady, minimal movement"
+    action: "Kenza faces partial camera, holds product casually at waist level, speaks to camera"
+    dialogue: "Este fue el único que no me hizo brillar como foco."
+    lighting: "Balanced, warm but neutral — product color accurate"</div>
+          <button class="copy-btn" onclick="copyCode('yaml3', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+        </div>
+      </div>
+
+      <div class="yaml-section">
+        <div class="yaml-header" onclick="toggleYaml(this)">
+          <div class="layer-num">4</div>
+          Production Notes — constraints, audio, evitar
+          <span style="margin-left:auto;color:var(--text3);font-size:12px">▼ ver</span>
+        </div>
+        <div class="yaml-body">
+          <div class="code-block" id="yaml4">production_notes:
+  audio_design: "Soft ambient room tone, no music, voice is the only element"
+  subtext: "Kenza is a real person sharing her genuine opinion — NOT an ad performance"
+  critical_constraint: "DO NOT show Kenza in reference-image pose. DO NOT show product frontally at chest height."
+  avoid: "Jitter, bent limbs, identity drift, chaotic composition, character frozen in reference-image pose"</div>
+          <button class="copy-btn" onclick="copyCode('yaml4', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+        </div>
+      </div>
+
+      <h3>Las 7 reglas de oro de Seedance</h3>
+      <div class="card">
+        <ul class="checklist" id="seedance-rules">
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>reference_handling es SIEMPRE el segundo campo</strong> — nunca al final del prompt</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Nombra las poses específicas a evitar</strong> — no sirve decir "solo para referencia"</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Una sola instrucción de cámara por plano</strong> — máximo dos con "then"</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Velocidad asimétrica</strong> — si la acción es rápida, la cámara va lenta, y viceversa</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Stagger de timestamps</strong> — intervalos desiguales para ritmo dinámico</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Nunca usar "epic", "amazing", "beautiful"</strong> — da instrucciones visuales concretas</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div><strong>Iluminación en cada plano</strong> — aunque sean 4 palabras, cambia todo</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ══════════════ THREE BRAIN ══════════════ -->
+    <div id="page-threebrain" class="page">
+      <div class="section-title">🧠 Three-Brain Router</div>
+      <div class="section-sub">El sistema sabe cuándo delegar trabajo a diferentes IAs. Aquí aprendes la lógica.</div>
+
+      <div class="card-grid">
+        <div class="mini-card" style="border-color:var(--accent)">
+          <div class="mini-card-icon">🟢</div>
+          <div class="mini-card-title">Claude (tú)</div>
+          <div class="mini-card-desc">Constructor. Driver. Todo lo que haces normalmente — escribir, editar, planear, refactorizar.</div>
+        </div>
+        <div class="mini-card" style="border-color:var(--accent2)">
+          <div class="mini-card-icon">🔵</div>
+          <div class="mini-card-title">Codex / GPT-5.5</div>
+          <div class="mini-card-desc">Revisor. Segunda opinión. Rescate cuando algo falla 2 veces seguidas.</div>
+        </div>
+        <div class="mini-card" style="border-color:var(--accent3)">
+          <div class="mini-card-icon">🟡</div>
+          <div class="mini-card-title">Gemini 2.5 Pro</div>
+          <div class="mini-card-desc">Ojos y oídos. Video, audio, PDF largos, escaneos de repo completo.</div>
+        </div>
+      </div>
+
+      <h3>Árbol de decisión — ¿A qué IA envío esto?</h3>
+      <div class="decision-tree">
+        <div class="decision-node">
+          <div>
+            <div class="decision-q">¿Estás revisando trabajo que Claude ACABA de producir?</div>
+            <div class="decision-answers">
+              <button class="answer-btn answer-yes" onclick="showResult('res1','codex')">Sí → CODEX</button>
+              <button class="answer-btn answer-no" onclick="hideResult('res1')">No, siguiente pregunta</button>
+            </div>
+            <div id="res1" class="result-box result-codex">
+              🔵 <strong>→ CODEX review</strong><br>
+              <small>Comando: <code>git diff | codex exec --skip-git-repo-check "Review this. Find bugs."</code></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="decision-node">
+          <div>
+            <div class="decision-q">¿Hay un video, audio, PDF largo o URL de YouTube?</div>
+            <div class="decision-answers">
+              <button class="answer-btn answer-yes" onclick="showResult('res2','gemini')">Sí → GEMINI</button>
+              <button class="answer-btn answer-no" onclick="hideResult('res2')">No, siguiente pregunta</button>
+            </div>
+            <div id="res2" class="result-box result-gemini">
+              🟡 <strong>→ GEMINI multimodal</strong><br>
+              <small>Comando: <code>gemini -p "Analyze this video frame by frame." @./video.mp4</code></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="decision-node">
+          <div>
+            <div class="decision-q">¿Claude ha fallado el mismo intento 2+ veces seguidas?</div>
+            <div class="decision-answers">
+              <button class="answer-btn answer-yes" onclick="showResult('res3','codex')">Sí → CODEX rescue</button>
+              <button class="answer-btn answer-no" onclick="hideResult('res3')">No, siguiente pregunta</button>
+            </div>
+            <div id="res3" class="result-box result-codex">
+              🔵 <strong>→ CODEX rescue</strong><br>
+              <small>Comando: <code>cat context.txt | codex exec "Rescue mode. Claude failed 2x. Solve from scratch."</code></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="decision-node">
+          <div>
+            <div class="decision-q">¿Quieres escanear el repositorio completo / encontrar todos los usos de X?</div>
+            <div class="decision-answers">
+              <button class="answer-btn answer-yes" onclick="showResult('res4','gemini')">Sí → GEMINI repo scan</button>
+              <button class="answer-btn answer-no" onclick="showResult('res4','claude')">No → CLAUDE directo</button>
+            </div>
+            <div id="res4" class="result-box">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:24px">
+        <div class="card-title">⚡ Rutas de riesgo — Codex obligatorio</div>
+        <p style="color:var(--text2);font-size:13.5px;margin-bottom:12px">Si el código que editas toca cualquiera de estos paths, Codex revisa automáticamente antes de declarar "listo":</p>
+        <div class="quick-ref">
+          <div class="qr-box">
+            <div class="qr-title">Paths de riesgo</div>
+            <div class="qr-item">src/auth/**</div>
+            <div class="qr-item">src/billing/**</div>
+            <div class="qr-item">**/migrations/**</div>
+            <div class="qr-item">**/deploy/**</div>
+            <div class="qr-item">**/.env*</div>
+            <div class="qr-item">**/secrets/**</div>
+            <div class="qr-item">infra/**</div>
+          </div>
+          <div class="qr-box">
+            <div class="qr-title">Integraciones de pago</div>
+            <div class="qr-item">**/Stripe*</div>
+            <div class="qr-item">**/Plaid*</div>
+            <div class="qr-item">**/jwt*</div>
+            <div class="qr-item">**/oauth*</div>
+            <div class="qr-item">**/policy/**</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ PROMPTS ══════════════ -->
+    <div id="page-prompts" class="page">
+      <div class="section-title">📝 Prompts Listos para Usar</div>
+      <div class="section-sub">Copia, adapta y pega. Probados y optimizados para el sistema ARAQUE SOLUTIONS.</div>
+
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this,'ptab-guion')">Guiones</div>
+        <div class="tab" onclick="switchTab(this,'ptab-personaje')">Personaje</div>
+        <div class="tab" onclick="switchTab(this,'ptab-storyboard')">Storyboard</div>
+        <div class="tab" onclick="switchTab(this,'ptab-marca')">Setup de Marca</div>
+      </div>
+
+      <div id="ptab-guion" class="tab-content active">
+        <h4>Prompt para guión UGC — Estructura completa</h4>
+        <div class="code-block" id="p-guion">Eres un experto en contenido UGC viral para TikTok e Instagram.
+Genera un guión completo para una influencer llamada Kenza.
+
+MARCA: [NOMBRE_MARCA]
+PRODUCTO: [DESCRIPCIÓN_PRODUCTO]
+OBJETIVO: [vender / awareness / engagement]
+DURACIÓN: 30 segundos
+TONO: [natural/energético/emocional/educativo]
+
+ESTRUCTURA OBLIGATORIA:
+- HOOK (0-3s): Frase o acción que pare el scroll. Sin saludo.
+- STORY 1 (3-10s): El problema real que tenía antes de este producto
+- STORY 2 (10-20s): Cómo este producto lo resolvió (específico, no genérico)
+- PLOT TWIST (20-25s): Detalle inesperado o contradicción que genera curiosidad
+- CTA (25-30s): Una acción concreta (link en bio, comentar, guardar)
+
+REGLAS:
+- Kenza habla como una amiga real, no como publicidad
+- Primera persona siempre
+- Sin palabras épicas o clichés de marketing
+- Cada escena tiene texto para Kenza Y nota visual
+
+OUTPUT: JSON con campos scene_id, kenza_text, visual_note, duration_s</div>
+        <button class="copy-btn" onclick="copyCode('p-guion', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+
+        <h4 style="margin-top:20px">Ejemplo completado — Crema solar</h4>
+        <div class="code-block" id="p-guion-ex">HOOK: "Tres años aplicándome bloqueador solar y brillando como si hubiera cocinado mi cara."
+
+STORY 1: "No era el sol. Era el producto. Cada crema que probé me dejaba con esa capa blanca grasosa que a las 2 de la tarde parecía aceite."
+
+STORY 2: "Este es el único que desaparece en 30 segundos. Sin residuo. Sin blanco. Solo piel normal."
+
+PLOT TWIST: "El ingrediente activo es el mismo que usan las cremas de $200. Esta vale 12."
+
+CTA: "El nombre está en mi bio. Antes de que vuelva a agotarse."</div>
+        <button class="copy-btn" onclick="copyCode('p-guion-ex', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+      </div>
+
+      <div id="ptab-personaje" class="tab-content">
+        <h4>Prompt para imagen del personaje Kenza — GPT Image 2</h4>
+        <div class="code-block" id="p-personaje">Create a photorealistic portrait of a Latina woman named Kenza.
+
+PHYSICAL DESCRIPTION:
+- Age: 24-27 years old
+- Skin: warm olive tone, healthy, natural glow
+- Hair: dark brown wavy hair, loose, past shoulders
+- Eyes: dark almond-shaped, warm and expressive
+- Build: athletic but soft, natural posture
+
+SCENE CONTEXT: [DESCRIBE LA ESCENA]
+
+WARDROBE: [ROPA ESPECÍFICA]
+
+MOOD: [emocional / energizada / natural / pensativa]
+
+IMPORTANT:
+- Photorealistic, not AI-looking
+- Natural lighting, authentic feel
+- NOT a model pose — real person energy
+- Vertical format 1024x1792px
+- TikTok/Instagram aesthetic</div>
+        <button class="copy-btn" onclick="copyCode('p-personaje', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+      </div>
+
+      <div id="ptab-storyboard" class="tab-content">
+        <h4>Template Seedance completo — para un video de 10s</h4>
+        <div class="code-block" id="p-storyboard">title: "[NOMBRE_VIDEO]"
+reference_handling: "DO NOT replicate reference image composition. DO NOT show [PERSONAJE] in [POSE_A_EVITAR]. Describe incompatible framings only."
+style: "[TikTok UGC / Cinematic / Stop-motion / etc.]"
+visual_feel: "[textura sensorial del footage — grain, bokeh, color grade]"
+duration: "[Xs]"
+
+character_modeling:
+  [nombre]:
+    base: "[descripción física base]"
+    features: "[rasgos faciales específicos]"
+    emotional_state: "[estado emocional en esta escena]"
+    movement_in_this_scene: "[restricciones de movimiento]"
+
+cinematic_storyboard:
+  "0s-2s":
+    camera: "[una instrucción principal de cámara]"
+    action: "[movimiento físico específico y coreografiado]"
+    lighting: "[iluminación — mínimo 3-5 palabras]"
+
+  "2s-6s":
+    camera: "[diferente a la anterior — sin repetir framings]"
+    action: "[acción específica]"
+    lighting: "[iluminación]"
+    dialogue: "[texto si hay]"
+
+  "6s-10s":
+    camera: "[tercera composición diferente]"
+    action: "[acción de cierre]"
+    lighting: "[iluminación final]"
+
+production_notes:
+  audio_design: "[descripción del sonido]"
+  critical_constraint: "[repetir regla anti-drift más importante]"
+  avoid: "Jitter, bent limbs, identity drift, chaotic composition, character frozen in reference-image pose"</div>
+        <button class="copy-btn" onclick="copyCode('p-storyboard', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+      </div>
+
+      <div id="ptab-marca" class="tab-content">
+        <h4>Template JSON de marca — brands/[marca].json</h4>
+        <div class="code-block" id="p-marca">{
+  "brand_id": "kenza",
+  "name": "Kenza",
+  "industry": "lifestyle / beauty / wellness",
+  "tagline": "Auténtica. Directa. Real.",
+  "target_audience": "Mujeres 18-32, LATAM, smartphone-first",
+  "tone_of_voice": "amiga real que comparte lo que funciona, sin filtros",
+  "products": [
+    {
+      "id": "crema_solar_01",
+      "name": "Crema Solar SPF50 sin residuo",
+      "price_range": "$8-15",
+      "usp": "No deja capa blanca ni brillo grasoso"
+    }
+  ],
+  "visual_identity": {
+    "color_palette": ["#F5E6D0", "#C4956A", "#2C1810"],
+    "aesthetic": "golden hour, warm tones, natural textures",
+    "avoid": "overly polished, studio-lit, corporate look"
+  },
+  "kenza_character": {
+    "reference_image": "assets/kenza/BANANA_PRO_00006_.png",
+    "voice_id": "ELEVENLABS_VOICE_ID",
+    "personality": "directa, empática, genuinamente entusiasmada"
+  }
+}</div>
+        <button class="copy-btn" onclick="copyCode('p-marca', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+      </div>
+    </div>
+
+    <!-- ══════════════ PRICING ══════════════ -->
+    <div id="page-pricing" class="page">
+      <div class="section-title">📊 Modelo de Negocio</div>
+      <div class="section-sub">Cómo vender el sistema, qué cobrar y qué incluir en cada plan.</div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-tier">Starter</div>
+          <div class="pricing-price">$297<span>/mes</span></div>
+          <ul class="pricing-features">
+            <li>1 influencer virtual</li>
+            <li>30 videos/mes</li>
+            <li>1 marca activa</li>
+            <li>Entrega en 48h</li>
+            <li>Revisión básica incluida</li>
+          </ul>
+        </div>
+        <div class="pricing-card featured">
+          <div class="pricing-tier" style="color:var(--accent)">⭐ Recomendado</div>
+          <div class="pricing-price" style="color:var(--accent)">$497<span>/mes</span></div>
+          <ul class="pricing-features">
+            <li>1 influencer virtual premium</li>
+            <li>60 videos/mes</li>
+            <li>3 marcas activas</li>
+            <li>Entrega en 24h</li>
+            <li>Lip-sync incluido</li>
+            <li>Subtítulos automáticos</li>
+            <li>1 revisión mensual</li>
+          </ul>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-tier">Agencia</div>
+          <div class="pricing-price">$997<span>/mes</span></div>
+          <ul class="pricing-features">
+            <li>3 influencers virtuales</li>
+            <li>120 videos/mes</li>
+            <li>Marcas ilimitadas</li>
+            <li>Entrega en 12h</li>
+            <li>Dashboard dedicado</li>
+            <li>Soporte prioritario</li>
+            <li>White-label disponible</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏆 Comparativa vs. la competencia</div>
+        <table>
+          <thead>
+            <tr><th>Solución</th><th>Precio</th><th>IA propia</th><th>Influencer virtual</th><th>Pipeline completo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>ARAQUE SOLUTIONS</strong></td><td style="color:var(--accent)">$497/mes</td><td>✅</td><td>✅ Kenza</td><td>✅ 12 pasos</td></tr>
+            <tr><td>Agencia UGC tradicional</td><td>$2,000-5,000/mes</td><td>❌</td><td>❌ Humanos</td><td>❌ Manual</td></tr>
+            <tr><td>HeyGen solo</td><td>$120/mes</td><td>Parcial</td><td>Avatar genérico</td><td>❌ Solo video</td></tr>
+            <tr><td>Synthesia</td><td>$180/mes</td><td>Parcial</td><td>Avatar genérico</td><td>❌ Solo video</td></tr>
+            <tr><td>Creatify</td><td>$169/mes</td><td>Parcial</td><td>Limitado</td><td>Parcial</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout tip" style="margin-top:14px">
+          <div class="callout-icon">💎</div>
+          <div class="callout-body">
+            <div class="callout-title">Tu ventaja diferencial</div>
+            Las soluciones competidoras dan avatares genéricos. Tú das una <strong>influencer con personalidad única, voz propia, y estética consistente de marca</strong>. Nadie más puede replicar a Kenza exactamente. Eso vale 3-5x más.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📣 Script de venta — Elevator pitch</div>
+        <div class="code-block" id="p-pitch">"Creamos influencers virtuales personalizados para tu marca.
+No son avatares genéricos — es una persona con cara, voz y personalidad única tuya.
+
+El sistema produce 2 videos diarios automáticamente.
+Tú apruebas el guión, nosotros hacemos todo lo demás.
+
+El costo de producción es $3 por video. Tú lo vendes a tus seguidores por $15-50 en UGC marketplace.
+
+¿Cuánto estás gastando ahora en content creators humanos para ese mismo volumen?"</div>
+        <button class="copy-btn" onclick="copyCode('p-pitch', this)" style="position:relative;top:0;right:0;display:block;margin-top:6px;">📋 Copiar</button>
+      </div>
+    </div>
+
+    <!-- ══════════════ CHECKLIST ══════════════ -->
+    <div id="page-checklist" class="page">
+      <div class="section-title">✅ Checklist del Operador</div>
+      <div class="section-sub">Marca cada ítem al completarlo. Tu progreso se guarda en este navegador.</div>
+
+      <div class="card">
+        <div class="card-title">🔧 Configuración inicial</div>
+        <ul class="checklist" id="cl1">
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Conseguí mi <strong>GEMINI_API_KEY</strong> en aistudio.google.com</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Conseguí mi <strong>FAL_KEY</strong> en fal.ai/dashboard/keys</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Conseguí mi <strong>ELEVENLABS_API_KEY</strong></div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Creé el archivo <strong>.env</strong> con todas las keys</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Instalé Python 3.11 con "Add to PATH" marcado</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Corrí <code>python setup.py</code> sin errores</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Corrí <code>python run.py --list-steps</code> y vi los 12 pasos</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Corrí el pipeline en <strong>dry-run</strong> sin errores</div></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎬 Primer video de prueba</div>
+        <ul class="checklist" id="cl2">
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Creé el archivo <strong>brands/kenza.json</strong> con datos de mi marca</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Puse la imagen de referencia de Kenza en <strong>assets/kenza/</strong></div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Corrí los pasos 00-01 (brand + guión) y revisé el output</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Corrí los pasos 02-04 (imágenes) y aprobé los resultados</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Corrí los pasos 05-06 (audio + voz) y escuché el resultado</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Corrí el paso 07 (Kling video) — el más largo</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Corrí los pasos 09-11 (música + ensamblado + subtítulos)</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Vi el video final en outputs/ — ¡está listo!</div></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💼 Lista para vender</div>
+        <ul class="checklist" id="cl3">
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Tengo un video demo de Kenza para mostrar a clientes</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Definí mi precio de lanzamiento (recomendado: $497/mes)</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Practiqué el elevator pitch</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Tengo cuenta en al menos 1 plataforma para encontrar clientes</div></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><div>Puedo producir 2 videos por día consistentemente</div></li>
+        </ul>
+      </div>
+
+      <div id="checklist-summary" class="callout tip" style="margin-top:20px">
+        <div class="callout-icon">📊</div>
+        <div class="callout-body">
+          <div class="callout-title">Progreso total</div>
+          <div id="cl-progress-text">0 / 21 ítems completados</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+</div><!-- /layout -->
+
+<script>
+  // ── Page navigation
+  function showPage(id, el) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    if (el) el.classList.add('active');
+    const labels = {
+      home:'Dashboard', setup:'Configuración Inicial', pipeline:'Kenza UGC Pipeline',
+      flujo:'Flujo Completo', costs:'Costos por Video', seedance:'Seedance Storyboard',
+      threebrain:'Three-Brain Router', prompts:'Prompts Listos', pricing:'Precios de Mercado',
+      checklist:'Checklist Operador'
+    };
+    document.getElementById('currentSection').textContent = labels[id] || id;
+    window.scrollTo(0,0);
+  }
+
+  // ── Tab switching
+  function switchTab(el, contentId) {
+    const parent = el.closest('.card, .page');
+    parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    parent.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById(contentId).classList.add('active');
+  }
+
+  // ── Step expand/collapse
+  function toggleStep(el) {
+    const detail = el.querySelector('.step-detail');
+    const isOpen = detail.style.display === 'block';
+    document.querySelectorAll('.step-detail').forEach(d => d.style.display = 'none');
+    document.querySelectorAll('.step-item').forEach(s => s.classList.remove('expanded'));
+    if (!isOpen) {
+      detail.style.display = 'block';
+      el.classList.add('expanded');
+    }
+  }
+
+  // ── YAML accordion
+  function toggleYaml(el) {
+    const body = el.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    el.querySelector('span:last-child').textContent = isOpen ? '▼ ver' : '▲ cerrar';
+  }
+
+  // ── Copy to clipboard
+  function copyCode(id, btn) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copiado';
+      btn.classList.add('copied');
+      const notif = document.getElementById('notification');
+      notif.classList.add('show');
+      setTimeout(() => { btn.textContent = '📋 Copiar'; btn.classList.remove('copied'); }, 2000);
+      setTimeout(() => { notif.classList.remove('show'); }, 2500);
+    });
+  }
+
+  // ── Checklist
+  function toggleCheck(box) {
+    box.classList.toggle('checked');
+    const li = box.closest('li');
+    li.classList.toggle('done', box.classList.contains('checked'));
+    updateProgress();
+    saveChecklist();
+  }
+
+  function updateProgress() {
+    const total = document.querySelectorAll('.checklist .check-box').length;
+    const done = document.querySelectorAll('.checklist .check-box.checked').length;
+    const pct = Math.round(done / total * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '% completado';
+    const el = document.getElementById('cl-progress-text');
+    if (el) el.textContent = done + ' / ' + total + ' ítems completados';
+  }
+
+  function saveChecklist() {
+    const states = [];
+    document.querySelectorAll('.checklist .check-box').forEach((b,i) => states.push(b.classList.contains('checked') ? '1' : '0'));
+    try { localStorage.setItem('araque_checklist', states.join('')); } catch(e) {}
+  }
+
+  function loadChecklist() {
+    try {
+      const saved = localStorage.getItem('araque_checklist');
+      if (!saved) return;
+      document.querySelectorAll('.checklist .check-box').forEach((b, i) => {
+        if (saved[i] === '1') {
+          b.classList.add('checked');
+          b.closest('li').classList.add('done');
+        }
+      });
+      updateProgress();
+    } catch(e) {}
+  }
+
+  // ── Decision tree results
+  function showResult(id, type) {
+    const el = document.getElementById(id);
+    el.style.display = 'block';
+    el.className = 'result-box result-' + type;
+    if (type === 'claude') el.innerHTML = '🟢 <strong>→ CLAUDE directo</strong><br><small>Escribe o edita en el chat normalmente</small>';
+    if (type === 'codex') el.innerHTML = '🔵 <strong>→ CODEX review</strong><br><small>Usa el comando de Codex en la terminal</small>';
+    if (type === 'gemini') el.innerHTML = '🟡 <strong>→ GEMINI multimodal</strong><br><small>Usa el comando de Gemini con el archivo</small>';
+  }
+  function hideResult(id) {
+    document.getElementById(id).style.display = 'none';
+  }
+
+  // ── Init
+  window.addEventListener('load', () => {
+    loadChecklist();
+  });
+</script>
+</body>
+</html>

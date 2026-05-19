@@ -1,0 +1,49 @@
+# ── SECRETOS — NUNCA subir a GitHub ──────────────────────────────────────────
+secrets.sh
+.env
+.env.local
+*.env
+
+# ── MODELOS — demasiado grandes para git ─────────────────────────────────────
+*.safetensors
+*.gguf
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.pkl
+
+# ── OUTPUTS — videos y renders generados ─────────────────────────────────────
+outputs/
+renders/
+*.mp4
+*.webm
+*.mov
+*.wav
+*.mp3
+
+# ── ASSETS GRANDES — imágenes de personajes (guardar en Drive/S3) ─────────────
+characters/*/assets/
+characters/*/videos/
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+.pytest_cache/
+
+# ── Sistema ───────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.tmp
+
+# ── Node.js (para el dashboard futuro) ───────────────────────────────────────
+node_modules/
+.next/
+.vercel/

@@ -34,8 +34,11 @@ Kenza es una influencer virtual venezolano-ucraniana "Biker de Miami" con bob ne
 - Margen neto por cliente (60 videos/mes): ~$350/mes
 - Target 5 clientes = $3,335/mes neto
 
-**Scripts pendientes de escribir (12):**
-brand_analyzer.py, guion.py, personaje.py, locacion.py, morpheus.py, tts.py, voice_change.py, kling.py, sync.py, music.py, assembly.py, subs.py
+**Scripts Python COMPLETOS (2026-05-19) — commit af043ea:**
+✅ brand_analyzer.py, guion.py, personaje.py, locacion.py, morpheus.py, tts.py,
+   voice_change.py, kling.py, sync.py, music.py, assembly.py, subs.py
+**Uso:** `py run.py --brand Kenza --steps all` desde `pipeline/`
+**ESTADO ACTUAL: pipeline Python pausado — foco en RunPod + TODOENUNO**
 
 ---
 
@@ -164,17 +167,61 @@ transformers, accelerate, huggingface_hub, voxcpm, llama-cpp-python
 4. Voice clone: prompt + 5s audio referencia Kenza
 5. FFLF: prompt + hasta 8 keyframes de control
 
-**Primer test pendiente:** cargar TODOENUNO → presionar 9 → leer instrucciones → presionar 0 → presionar 2 (I2V con BANANA_PRO_00006_.png)
+**PRÓXIMO PASO — RunPod desde otro PC:**
+Ver sección "Checklist RunPod" al final de este archivo.
 
-### Cómo ejecutar en pod nuevo (v2.3):
+### ⭐ CHECKLIST RUNPOD — Ejecutar desde cualquier PC (v2.3):
+
+**Repo GitHub:** https://github.com/jaaraque87/araque-solutions-os
+**Todo está ahí** — scripts + workflows + memoria
+
+#### En RunPod.io:
+1. Crear pod: Template=**Pytorch 2.x.x** (NO ComfyUI), GPU=A6000 48GB, Disco=300GB
+2. Anotar el {POD_ID} cuando arranque
+
+#### Desde tu PC (terminal / bash):
 ```bash
-# 1. Subir toda la carpeta LTX23_Scripts/ + LTXREALISM.json + LTX2.3TODOENUNO.json
-scp -r LTX23_Scripts/ root@{pod-ip}:/workspace/
-# 2. Ejecutar:
-cd /workspace/LTX23_Scripts && bash run_all.sh
-# 3. Arrancar:
-bash /workspace/start_comfyui.sh
-# 4. Abrir: https://{POD_ID}-8888.proxy.runpod.net/proxy/8188/
+# Clonar repo
+git clone https://github.com/jaaraque87/araque-solutions-os.git
+cd araque-solutions-os/infrastructure
+
+# Crear secrets.sh con tus tokens
+cp secrets.example.sh secrets.sh
+nano secrets.sh   # poner HF_TOKEN y CIVITAI_TOKEN reales
+
+# Subir al pod (necesitas SSH key o password en RunPod)
+scp -r ../araque-solutions-os/ root@{pod-ip}:/workspace/
+
+# SSH al pod
+ssh root@{pod-ip}
+
+# En el pod:
+cd /workspace/araque-solutions-os/infrastructure
+bash secrets.sh   # cargar tokens en el entorno actual
+bash run_all.sh   # instalación completa ~4h ~200GB
+# O más rápido:
+bash run_all.sh --base  # solo LTXREALISM (~55GB, ~1h)
+```
+
+#### Abrir ComfyUI:
+```
+https://{POD_ID}-8888.proxy.runpod.net/proxy/8188/
+```
+
+#### Primer video Kenza (modo LIPSYNC ⭐⭐):
+1. Cargar `workflows/LTX2.3TODOENUNO.json`
+2. `9` → leer instrucciones
+3. `0` → DISABLE EVERYTHING
+4. `3` → subir `BANANA_PRO_00006_.png`
+5. `4` → subir audio TTS (generar con Gemini primero)
+6. `2` → duración 8-10s, 576×1024
+7. Queue Prompt → ~5-8 min
+
+#### TTS rápido (antes de RunPod, en tu PC):
+```python
+# En Gemini Studio o con script:
+# Voz: Leda, texto: un diálogo del guión
+# Guardar como audio.wav → subir al pod
 ```
 
 ---

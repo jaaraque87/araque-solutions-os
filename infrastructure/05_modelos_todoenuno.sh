@@ -130,6 +130,50 @@ hf_dl "Comfy-Org/ltx-2.3" \
       "loras" \
     || warn "CelebVHQ ID-LoRA falló"
 
+# ── [9] Dynamic LoRAs (nuevos — VideoFlow v3.0 + LTX Director v3.0) ──────────
+# Mejoran la dinámica de movimiento y fluidez del video.
+# Repos: Lightricks/LTX-2.3
+info "[9] Dynamic LoRA rank111 bf16"
+hf_dl "Lightricks/LTX-2.3" \
+      "ltx-2.3-22b-distilled-1.1_lora-dynamic_fro09_avg_rank_111_bf16.safetensors" \
+      "loras" \
+    || warn "Dynamic LoRA rank111 falló"
+
+info "[9b] Dynamic LoRA rank105 bf16"
+hf_dl "Lightricks/LTX-2.3" \
+      "ltx-2.3-22b-distilled-lora-dynamic_fro09_avg_rank_105_bf16.safetensors" \
+      "loras" \
+    || warn "Dynamic LoRA rank105 falló"
+
+# ── [10] MelBandRoformer.ckpt (versión original ckpt) ────────────────────────
+# Algunos workflows usan el .ckpt en vez del fp16.safetensors
+info "[10] MelBandRoformer.ckpt (original)"
+if [ ! -f "$MODELS_DIR/audio_separator/MelBandRoformer.ckpt" ]; then
+    wget -q --show-progress \
+        --header="Authorization: Bearer $HF_TOKEN" --continue \
+        -O "$MODELS_DIR/audio_separator/MelBandRoformer.ckpt" \
+        "https://huggingface.co/Kijai/MelBandRoFormer_comfy/resolve/main/MelBandRoformer.ckpt" \
+        && log "OK: MelBandRoformer.ckpt" \
+        || warn "MelBandRoformer.ckpt falló"
+else
+    log "Ya existe: MelBandRoformer.ckpt"
+fi
+
+# ── [11] DW Preprocessor model ────────────────────────────────────────────────
+# Para nodo DWPreprocessor (pose detection) — workflows VideoFlow v3.0
+mkdir -p "$COMFY_DIR/custom_nodes/comfyui_controlnet_aux/ckpts/yzd-v/DWPose"
+DW_DEST="$COMFY_DIR/custom_nodes/comfyui_controlnet_aux/ckpts/yzd-v/DWPose"
+info "[11] DW Preprocessor: dw-ll_ucoco_384 (pose detection)"
+if [ ! -f "$DW_DEST/dw-ll_ucoco_384_bs5.torchscript.pt" ]; then
+    wget -q --show-progress --continue \
+        -O "$DW_DEST/dw-ll_ucoco_384_bs5.torchscript.pt" \
+        "https://huggingface.co/yzd-v/DWPose/resolve/main/dw-ll_ucoco_384_bs5.torchscript.pt" \
+        && log "OK: dw-ll_ucoco_384_bs5.torchscript.pt" \
+        || warn "DW Preprocessor falló"
+else
+    log "Ya existe: dw-ll_ucoco_384_bs5.torchscript.pt"
+fi
+
 # ── Opcional: gemma abliterated sikaworld ─────────────────────────────────────
 warn "MODELO OPCIONAL — descarga manual:"
 warn "  gemma-3-12b-it-abliterated-sikaworld-high-fidelity-edition.safetensors"
@@ -148,6 +192,9 @@ check_model "llm/mmproj-BF16.gguf"                                           "mm
 check_model "loras/ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors"    "IC LoRA Union Control (654 MB)"
 check_model "loras/ltx-2-19b-ic-lora-detailer.safetensors"                  "IC LoRA Detailer 19B"
 check_model "loras/ltx-2.3-id-lora-celebvhq-3k.safetensors"                "CelebVHQ ID-LoRA ⭐ Kenza face"
+check_model "loras/ltx-2.3-22b-distilled-1.1_lora-dynamic_fro09_avg_rank_111_bf16.safetensors" "Dynamic LoRA rank111"
+check_model "loras/ltx-2.3-22b-distilled-lora-dynamic_fro09_avg_rank_105_bf16.safetensors"     "Dynamic LoRA rank105"
+check_model "audio_separator/MelBandRoformer.ckpt"                       "MelBandRoformer.ckpt (original)"
 
 echo ""
 log "05_modelos_todoenuno.sh COMPLETADO"

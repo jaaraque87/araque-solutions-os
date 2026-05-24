@@ -9,7 +9,7 @@ set -euo pipefail
 
 echo -e "${W}"
 echo "  ╔════════════════════════════════════════════╗"
-echo "  ║  02 — Nodos Custom (15 paquetes)  v2.3    ║"
+echo "  ║  02 — Nodos Custom (18 paquetes)  v2.4    ║"
 echo "  ╚════════════════════════════════════════════╝"
 echo -e "${N}"
 
@@ -82,6 +82,16 @@ install_node "comfyui-vrgamedevgirl" \
 install_node "ComfyUI-PromptRelay" \
     "https://github.com/kijai/ComfyUI-PromptRelay.git"
 
+# 17. ComfyUI_Swwan — ChatterBoxAudioAnalyzer + audio utilities
+# Requerido por workflows VideoFlow v3.0 y LTX Director v3.0
+install_node "ComfyUI_Swwan" \
+    "https://github.com/aining2022/ComfyUI_Swwan.git"
+
+# 18. ComfyUI-mxToolkit — mxSlider nodes para controles UI avanzados
+# Requerido por VideoFlow v3.0 y LTX Director v3.0
+install_node "ComfyUI-mxToolkit" \
+    "https://github.com/Smirnov75/ComfyUI-mxToolkit.git"
+
 # ── Stack pip completo vrgamedevgirl (Music Video Creator V5.1) ───────────────
 # librosa     — análisis de audio (FastFilmGrain)
 # kornia      — visión computacional
@@ -123,7 +133,7 @@ for node in \
     "was-node-suite-comfyui" "ComfyUI-GGUF" \
     "ComfyUI-Frame-Interpolation" "ComfyUI-Unload-Model" \
     "ComfyUI-MelBandRoFormer" "comfyui-vrgamedevgirl" \
-    "ComfyUI-PromptRelay"; do
+    "ComfyUI-PromptRelay" "ComfyUI_Swwan" "ComfyUI-mxToolkit"; do
     if [ -d "$NODES_DIR/$node" ]; then
         echo -e "  ${G}[✓]${N} $node"
     else

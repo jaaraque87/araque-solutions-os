@@ -27,10 +27,11 @@ MODE="full"
 FROM_SCRIPT=0
 for arg in "$@"; do
     case "$arg" in
-        --base)     MODE="base" ;;
-        --skip-tod) MODE="skip_tod" ;;
-        --from)     shift; FROM_SCRIPT="${1:-0}" ;;
-        --from=*)   FROM_SCRIPT="${arg#--from=}" ;;
+        --base)      MODE="base" ;;
+        --skip-tod)  MODE="skip_tod" ;;
+        --todoenuno) MODE="todoenuno" ;;
+        --from)      shift; FROM_SCRIPT="${1:-0}" ;;
+        --from=*)    FROM_SCRIPT="${arg#--from=}" ;;
     esac
 done
 
@@ -42,9 +43,10 @@ echo "  ╚═══════════════════════
 echo -e "${N}"
 
 case "$MODE" in
-    base)     echo -e "  Modo: ${C}BASE${N} (solo scripts 01-03)" ;;
-    skip_tod) echo -e "  Modo: ${C}SIN TODOENUNO${N} (scripts 01-04, 06-08)" ;;
-    *)        echo -e "  Modo: ${C}COMPLETO${N} (~200 GB total)" ;;
+    base)      echo -e "  Modo: ${C}BASE${N} (solo scripts 01-03, ~55 GB)" ;;
+    skip_tod)  echo -e "  Modo: ${C}SIN TODOENUNO${N} (scripts 01-04, 06-08, ~140 GB)" ;;
+    todoenuno) echo -e "  Modo: ${C}TODOENUNO${N} (sin MVC, scripts 01-03+05-08, ~133 GB ← cabe en 150 GB)" ;;
+    *)         echo -e "  Modo: ${C}COMPLETO${N} (~200 GB total)" ;;
 esac
 
 FREE_GB=$(df -BG /workspace | tail -1 | awk '{print $4}' | tr -d 'G')
@@ -82,11 +84,13 @@ run_script 2  "02_nodos_custom.sh"
 
 run_script 3  "03_modelos_base.sh"
 
-if [ "$MODE" != "base" ]; then
+# MVC (Music Video Creator) — solo en full y skip_tod
+if [ "$MODE" = "full" ] || [ "$MODE" = "skip_tod" ]; then
     run_script 4  "04_modelos_mvc.sh"
 fi
 
-if [ "$MODE" = "full" ]; then
+# TODOENUNO — solo en full y todoenuno
+if [ "$MODE" = "full" ] || [ "$MODE" = "todoenuno" ]; then
     run_script 5  "05_modelos_todoenuno.sh"
 fi
 

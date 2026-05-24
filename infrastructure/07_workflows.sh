@@ -117,6 +117,51 @@ else
 fi
 
 # ══════════════════════════════════════════════════════════════════════════════
+# ARAQUE SOLUTIONS — 3 workflows nuevos (desde el repo araque-solutions-os)
+# VideoFlow All-In-One v3.0 · LTX Director SFW/NSFW v3.0 · TodoEnUno v11
+# ══════════════════════════════════════════════════════════════════════════════
+set +e
+info "Copiando workflows ARAQUE SOLUTIONS v3.0..."
+REPO_WF_DIR="$(dirname "$0")/../workflows"
+
+declare -A ARAQUE_WORKFLOWS=(
+    ["VideoFlow_LTX23_AllInOne_v30.json"]="VideoFlow_LTX23_AllInOne_v30.json"
+    ["LTX23_AllInOne_SFW_NSFW_Director_v30.json"]="LTX23_AllInOne_SFW_NSFW_Director_v30.json"
+    ["LTX_TodoEnUno_v11.json"]="LTX_TodoEnUno_v11.json"
+)
+
+for src_name in "${!ARAQUE_WORKFLOWS[@]}"; do
+    dst_name="${ARAQUE_WORKFLOWS[$src_name]}"
+    src_path="$REPO_WF_DIR/$src_name"
+    dst_path="$WORKFLOWS_DIR/$dst_name"
+    if [ -f "$src_path" ]; then
+        cp "$src_path" "$dst_path"
+        log "Copiado: $dst_name"
+        # Patch Q4_0 → Q4_K_M en todos los workflows
+        python3 - << PYEOF
+import json
+wf_path = "$dst_path"
+try:
+    with open(wf_path) as f: wf = json.load(f)
+    nodes = wf if isinstance(wf, list) else wf.get("nodes", [])
+    patched = 0
+    for node in nodes:
+        for i, v in enumerate(node.get("widgets_values", [])):
+            if isinstance(v, str) and "Q4_0" in v:
+                node["widgets_values"][i] = v.replace("Q4_0", "Q4_K_M")
+                patched += 1
+    with open(wf_path, 'w') as f: json.dump(wf, f, indent=2)
+    if patched: print(f"[✓] Q4_0→Q4_K_M: {patched} ref(s) en {dst_name}")
+except Exception as e:
+    print(f"[⚠] Patch {dst_name}: {e}")
+PYEOF
+    else
+        warn "No encontrado en repo: $src_name — clona el repo primero"
+    fi
+done
+set -e
+
+# ══════════════════════════════════════════════════════════════════════════════
 # Music Video Creator V5.1 — 3 workflows (descarga automática desde GitHub)
 # ══════════════════════════════════════════════════════════════════════════════
 set +e
@@ -145,6 +190,9 @@ echo -e "${W}  WORKFLOWS:${N}"
 echo "  ──────────────────────────────────────────────"
 for wf in \
     "VideoFlow_LTX23_AllInOne_v3.json" \
+    "VideoFlow_LTX23_AllInOne_v30.json" \
+    "LTX23_AllInOne_SFW_NSFW_Director_v30.json" \
+    "LTX_TodoEnUno_v11.json" \
     "LTX2.3_Music_Video_Creator_Prompt_Creator_V5.json" \
     "LTX2.3_Music_Video_Creator_T2V_V5.1.json" \
     "LTX2.3_Music_Video_Creator_I2V_V5.1.json" \

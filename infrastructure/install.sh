@@ -1,11 +1,9 @@
-
 #!/bin/bash
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  ARAQUE SOLUTIONS — Instalador Universal v3.0                              ║
+# ║  ARAQUE SOLUTIONS — Instalador Universal v4.0 DEFINITIVO                   ║
 # ║  Compatible: RunPod · Vast.ai · TensorDock · Lambda                       ║
 # ║                                                                             ║
-# ║  USO — pegar en terminal del pod:                                           ║
-# ║                                                                             ║
+# ║  USO:                                                                       ║
 # ║  export HF_TOKEN="hf_xxx" \                                                ║
 # ║    CIVITAI_TOKEN="xxx" \                                                    ║
 # ║    GITHUB_TOKEN="ghp_xxx" \                                                 ║
@@ -15,7 +13,6 @@
 # ║  bash <(curl -fsSL https://raw.githubusercontent.com/jaaraque87/araque-solutions-os/main/infrastructure/install.sh)
 # ╚══════════════════════════════════════════════════════════════════════════════╝
  
-# ── Leer tokens desde variables de entorno ────────────────────────────────────
 HF_TOKEN="${HF_TOKEN:-}"
 CIVITAI_TOKEN="${CIVITAI_TOKEN:-}"
 GITHUB_TOKEN="${GITHUB_TOKEN:-}"
@@ -31,7 +28,6 @@ export HF_TOKEN CIVITAI_TOKEN GITHUB_TOKEN GITHUB_USER GITHUB_REPO
 export R2_ACCOUNT_ID R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY R2_BUCKET R2_ENDPOINT
 export GIT_TERMINAL_PROMPT=0 PIP_ROOT_USER_ACTION=ignore DEBIAN_FRONTEND=noninteractive
  
-# ── Validar tokens obligatorios ───────────────────────────────────────────────
 R='\033[0;31m'; G='\033[0;32m'; Y='\033[1;33m'; C='\033[0;36m'; W='\033[1;37m'; N='\033[0m'
 ok()   { echo -e "${G}[✓]${N} $*"; }
 warn() { echo -e "${Y}[⚠]${N} $*"; }
@@ -40,23 +36,19 @@ step() { echo -e "\n${C}━━━━ $* ━━━━${N}"; }
  
 echo ""
 echo -e "${W}╔══════════════════════════════════════════════════════╗${N}"
-echo -e "${W}║   ARAQUE SOLUTIONS — Instalador Universal v3.0      ║${N}"
+echo -e "${W}║   ARAQUE SOLUTIONS — Instalador v4.0 DEFINITIVO     ║${N}"
 echo -e "${W}║   ComfyUI + LTX 2.3 + Kenza Stack                  ║${N}"
 echo -e "${W}╚══════════════════════════════════════════════════════╝${N}"
-echo ""
  
-[ -z "$HF_TOKEN" ]           && { err "HF_TOKEN no definido — export HF_TOKEN=hf_xxx"; exit 1; }
-[ -z "$R2_ACCESS_KEY_ID" ]   && { err "R2_ACCESS_KEY_ID no definido"; exit 1; }
+[ -z "$HF_TOKEN" ]             && { err "HF_TOKEN no definido"; exit 1; }
+[ -z "$R2_ACCESS_KEY_ID" ]     && { err "R2_ACCESS_KEY_ID no definido"; exit 1; }
 [ -z "$R2_SECRET_ACCESS_KEY" ] && { err "R2_SECRET_ACCESS_KEY no definido"; exit 1; }
-[ -z "$R2_ACCOUNT_ID" ]      && { err "R2_ACCOUNT_ID no definido"; exit 1; }
-[ -z "$CIVITAI_TOKEN" ]      && warn "Sin CIVITAI_TOKEN — se omitirán LoRAs de Civitai"
-[ -z "$GITHUB_TOKEN" ]       && warn "Sin GITHUB_TOKEN — usando repo público"
- 
+[ -z "$R2_ACCOUNT_ID" ]        && { err "R2_ACCOUNT_ID no definido"; exit 1; }
 ok "Tokens verificados"
  
 START_TOTAL=$(date +%s)
  
-# ── PASO 1 — Detectar plataforma ──────────────────────────────────────────────
+# ── PASO 1 — Plataforma ───────────────────────────────────────────────────────
 step "PASO 1/8 — Plataforma"
 if   [ -d "/workspace" ] && [ -w "/workspace" ]; then BASE_DIR="/workspace"; PLATFORM="RunPod"
 elif [ -d "/root"      ] && [ -w "/root"      ]; then BASE_DIR="/root";      PLATFORM="Vast/TensorDock"
@@ -71,11 +63,10 @@ REPO_DIR="$BASE_DIR/araque"
 export BASE_DIR COMFY_DIR MODELS_DIR NODES_DIR WORKFLOWS_DIR
 ok "Plataforma: $PLATFORM | Base: $BASE_DIR"
  
-# ── PASO 2 — Dependencias ─────────────────────────────────────────────────────
+# ── PASO 2 — Dependencias sistema + R2 ───────────────────────────────────────
 step "PASO 2/8 — Dependencias"
 apt-get update -qq 2>/dev/null || true
 apt-get install -y -qq git wget curl ffmpeg libgl1 libglib2.0-0 unzip 2>/dev/null || true
-pip install -q huggingface_hub 2>/dev/null || true
  
 USE_R2=false
 if ! command -v rclone &>/dev/null; then
@@ -101,50 +92,53 @@ if [ -d "$REPO_DIR/.git" ]; then
 else
     git clone --depth=1 "$CLONE_URL" "$REPO_DIR" 2>/dev/null && ok "Repo clonado" || { err "No se pudo clonar"; exit 1; }
 fi
-cat > "$REPO_DIR/infrastructure/secrets.sh" << SECRETS
-export HF_TOKEN="$HF_TOKEN"
-export CIVITAI_TOKEN="$CIVITAI_TOKEN"
-export GITHUB_TOKEN="$GITHUB_TOKEN"
-export R2_ACCOUNT_ID="$R2_ACCOUNT_ID"
-export R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID"
-export R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY"
-export R2_BUCKET="$R2_BUCKET"
-export R2_ENDPOINT="$R2_ENDPOINT"
-export BASE_DIR="$BASE_DIR"
-export COMFY_DIR="$COMFY_DIR"
-export MODELS_DIR="$MODELS_DIR"
-export NODES_DIR="$NODES_DIR"
-export WORKFLOWS_DIR="$WORKFLOWS_DIR"
-SECRETS
-ok "secrets.sh generado localmente"
  
 # ── PASO 4 — ComfyUI ──────────────────────────────────────────────────────────
 step "PASO 4/8 — ComfyUI"
 mkdir -p "$MODELS_DIR" "$NODES_DIR" "$WORKFLOWS_DIR"
  
 if [ -d "$COMFY_DIR" ] && [ ! -d "$COMFY_DIR/.git" ]; then
-    # Vast.ai / templates que pre-instalan ComfyUI sin git
-    warn "ComfyUI existe sin git (template pre-instalado) — convirtiendo a repo git..."
+    warn "ComfyUI existe sin git — convirtiendo..."
     cd "$COMFY_DIR"
     git init --quiet
     git remote add origin https://github.com/comfyanonymous/ComfyUI.git 2>/dev/null || true
-    git fetch --depth=1 --quiet origin master 2>/dev/null \
-        || git fetch --depth=1 --quiet origin main 2>/dev/null \
-        || warn "No se pudo actualizar ComfyUI — usando versión del template"
+    git fetch --depth=1 --quiet origin master 2>/dev/null || git fetch --depth=1 --quiet origin main 2>/dev/null || true
     git checkout --quiet -f FETCH_HEAD 2>/dev/null || true
-    pip install -q -r requirements.txt 2>/dev/null && ok "Requirements OK" || warn "Algunos requirements fallaron"
-    ok "ComfyUI listo (desde template)"
+    ok "ComfyUI convertido desde template"
 elif [ -d "$COMFY_DIR/.git" ]; then
-    ok "ComfyUI ya existe — actualizando..."
+    ok "ComfyUI ya existe"
     cd "$COMFY_DIR" && git pull --quiet 2>/dev/null || true
-    pip install -q -r requirements.txt 2>/dev/null || true
 else
-    git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git "$COMFY_DIR" \
-        && ok "ComfyUI clonado" || { err "Falló clonar ComfyUI"; exit 1; }
-    pip install -q -r "$COMFY_DIR/requirements.txt" && ok "Requirements OK" || warn "Algunos requirements fallaron"
+    git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git "$COMFY_DIR" && ok "ComfyUI clonado" || { err "Falló"; exit 1; }
 fi
+ 
+pip install -q -r "$COMFY_DIR/requirements.txt" 2>/dev/null && ok "Requirements ComfyUI OK" || warn "Algunos fallaron"
+ 
 python3 -c "import torch; assert torch.cuda.is_available()" 2>/dev/null && ok "CUDA OK" || \
     { warn "Instalando PyTorch CUDA..."; pip install -q torch torchvision --index-url https://download.pytorch.org/whl/cu124 2>/dev/null; }
+ 
+# ── PASO 4b — Dependencias críticas (aprendidas el 31/05/2026) ───────────────
+step "PASO 4b/8 — Dependencias adicionales"
+pip install -q \
+    gitpython \
+    opencv-python \
+    gguf \
+    watchdog \
+    imageio-ffmpeg \
+    rotary-embedding-torch \
+    toml \
+    sqlalchemy \
+    alembic \
+    tqdm \
+    piexif \
+    uv \
+    scipy \
+    einops \
+    spandrel \
+    "transformers>=4.50.3,<5.0.0" \
+    "kornia==0.7.3" \
+    "safetensors>=0.4.2" \
+    && ok "Dependencias adicionales OK" || warn "Algunas fallaron"
  
 # ── PASO 5 — Custom nodes ─────────────────────────────────────────────────────
 step "PASO 5/8 — Custom nodes"
@@ -152,10 +146,12 @@ inode() {
     local name="$1" url="$2"
     local d="$NODES_DIR/$name"
     [ -d "$d" ] && { cd "$d" && git pull --quiet 2>/dev/null || true; ok "OK: $name"; } || \
-        { git clone --depth=1 --quiet "$url" "$d" && ok "Instalado: $name" || warn "Falló: $name"; }
+        { GIT_TERMINAL_PROMPT=0 git clone --depth=1 --quiet "$url" "$d" 2>/dev/null && ok "Instalado: $name" || warn "Falló: $name"; }
     [ -f "$d/requirements.txt" ] && pip install -q -r "$d/requirements.txt" 2>/dev/null || true
     cd "$BASE_DIR"
 }
+ 
+# Core
 inode "ComfyUI-Manager"               "https://github.com/ltdrdata/ComfyUI-Manager"
 inode "ComfyUI-KJNodes"               "https://github.com/kijai/ComfyUI-KJNodes"
 inode "ComfyUI-LTXVideo"              "https://github.com/Lightricks/ComfyUI-LTXVideo"
@@ -168,6 +164,24 @@ inode "ComfyUI-GGUF"                  "https://github.com/city96/ComfyUI-GGUF"
 inode "ComfyUI_Comfyroll_CustomNodes" "https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes"
 inode "comfyui-mixlab-nodes"          "https://github.com/shadowcz007/comfyui-mixlab-nodes"
 inode "ComfyUI-MelBandRoformer"       "https://github.com/kijai/ComfyUI-MelBandRoformer"
+inode "ComfyUI-Impact-Pack"           "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
+inode "ComfyUI-Inspire-Pack"          "https://github.com/ltdrdata/ComfyUI-Inspire-Pack"
+# Requeridos por workflows VideoFlow + Director
+inode "comfyui_essentials"            "https://github.com/cubiq/ComfyUI_essentials"
+inode "ComfyUI-Custom-Scripts"        "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
+inode "comfyui-easy-use"              "https://github.com/yolain/ComfyUI-Easy-Use"
+inode "ComfyUI-Frame-Interpolation"   "https://github.com/Fannovel16/ComfyUI-Frame-Interpolation"
+inode "comfyui-unload-model"          "https://github.com/Siphercase/comfyui-unload-model"
+inode "RES4LYF"                       "https://github.com/ClownsharkBatwing/RES4LYF"
+inode "was-node-suite-comfyui"        "https://github.com/WASasquatch/was-node-suite-comfyui"
+inode "cg-use-everywhere"             "https://github.com/chrisgoringe/cg-use-everywhere"
+inode "WhatDreamsCost-ComfyUI"        "https://github.com/WhatDreamsCost/ComfyUI-LTXDirector"
+inode "tts_audio_suite"               "https://github.com/ShmuelRonen/ComfyUI-AudioAnalyzer"
+inode "crt-nodes"                     "https://github.com/ihmyt/comfyui-crt-nodes"
+inode "Comfyui-Resolution-Master"     "https://github.com/Extraltodeus/ComfyUI-ResolutionMaster"
+inode "Listhelper"                    "https://github.com/liusida/ComfyUI-ListHelper"
+inode "comfyui-vrgamedevgirl"         "https://github.com/vrgamegirl19/comfyui-vrgamedevgirl"
+inode "comfyui_controlnet_aux"        "https://github.com/Fannovel16/comfyui_controlnet_aux"
  
 # ── PASO 6 — Modelos ──────────────────────────────────────────────────────────
 step "PASO 6/8 — Modelos ($([ "$USE_R2" = true ] && echo 'R2 ⚡' || echo 'HuggingFace 📥'))"
@@ -194,11 +208,13 @@ dl() {
 dl "diffusion_models/LTX-2.3-22B-distilled-1.1-Q4_K_M.gguf" "city96/LTX-Video-gguf" "LTX-2.3-22B-distilled-1.1-Q4_K_M.gguf" "$MODELS_DIR/diffusion_models/LTX-2.3-22B-distilled-1.1-Q4_K_M.gguf"
 dl "diffusion_models/LTX-2.3-22B-distilled-1.1-Q6_K.gguf" "city96/LTX-Video-gguf" "LTX-2.3-22B-distilled-1.1-Q6_K.gguf" "$MODELS_DIR/diffusion_models/LTX-2.3-22B-distilled-1.1-Q6_K.gguf"
 dl "diffusion_models/ltx-2.3-22b-distilled-1.1_transformer_only_fp8_scaled.safetensors" "Kijai/LTX2.3_comfy" "diffusion_models/ltx-2.3-22b-distilled-1.1_transformer_only_fp8_scaled.safetensors" "$MODELS_DIR/diffusion_models/ltx-2.3-22b-distilled-1.1_transformer_only_fp8_scaled.safetensors"
+dl "diffusion_models/MelBandRoformer_fp16.safetensors" "Kijai/MelBandRoFormer_comfy" "MelBandRoformer_fp16.safetensors" "$MODELS_DIR/diffusion_models/MelBandRoformer_fp16.safetensors"
+dl "diffusion_models/ltx2310eros_v1.safetensors" "" "" "$MODELS_DIR/diffusion_models/ltx2310eros_v1.safetensors"
 # Text encoders
 dl "text_encoders/ltx-2.3_text_projection_bf16.safetensors" "Kijai/LTX2.3_comfy" "text_encoders/ltx-2.3_text_projection_bf16.safetensors" "$MODELS_DIR/text_encoders/ltx-2.3_text_projection_bf16.safetensors"
 dl "text_encoders/gemma_3_12B_it_fp4_mixed.safetensors" "Comfy-Org/ltx-2" "split_files/text_encoders/gemma_3_12B_it_fp4_mixed.safetensors" "$MODELS_DIR/text_encoders/gemma_3_12B_it_fp4_mixed.safetensors"
 dl "text_encoders/gemma_3_12B_it_fp8_scaled.safetensors" "Comfy-Org/ltx-2" "split_files/text_encoders/gemma_3_12B_it_fp8_scaled.safetensors" "$MODELS_DIR/text_encoders/gemma_3_12B_it_fp8_scaled.safetensors"
-dl "text_encoders/tokenizer.model" "Comfy-Org/ltx-2" "split_files/text_encoders/tokenizer.model" "$MODELS_DIR/text_encoders/tokenizer.model"
+dl "text_encoders/tokenizer.model" "Kijai/LTX2.3_comfy" "text_encoders/tokenizer.model" "$MODELS_DIR/text_encoders/tokenizer.model"
 # VAEs
 dl "vae/LTX23_audio_vae_bf16.safetensors" "Kijai/LTX2.3_comfy" "vae/LTX23_audio_vae_bf16.safetensors" "$MODELS_DIR/vae/LTX23_audio_vae_bf16.safetensors"
 dl "vae/LTX23_video_vae_bf16.safetensors" "Kijai/LTX2.3_comfy" "vae/LTX23_video_vae_bf16.safetensors" "$MODELS_DIR/vae/LTX23_video_vae_bf16.safetensors"
@@ -206,21 +222,27 @@ dl "vae/taeltx2_3.safetensors" "Kijai/LTX2.3_comfy" "vae/taeltx2_3.safetensors" 
 # Upscalers
 dl "latent_upscale_models/ltx-2.3-spatial-upscaler-x1.5-1.0.safetensors" "Lightricks/LTX-2.3" "ltx-2.3-spatial-upscaler-x1.5-1.0.safetensors" "$MODELS_DIR/latent_upscale_models/ltx-2.3-spatial-upscaler-x1.5-1.0.safetensors"
 dl "latent_upscale_models/ltx-2.3-spatial-upscaler-x2-1.1.safetensors" "Lightricks/LTX-2.3" "ltx-2.3-spatial-upscaler-x2-1.1.safetensors" "$MODELS_DIR/latent_upscale_models/ltx-2.3-spatial-upscaler-x2-1.1.safetensors"
-# LoRAs HF
+# LoRAs
 dl "loras/ltx-2.3-id-lora-talkvid-3k.safetensors" "Comfy-Org/ltx-2.3" "split_files/loras/ltx-2.3-id-lora-talkvid-3k.safetensors" "$MODELS_DIR/loras/ltx-2.3-id-lora-talkvid-3k.safetensors"
 dl "loras/ltx-2.3-id-lora-celebvhq-3k.safetensors" "Comfy-Org/ltx-2.3" "split_files/loras/ltx-2.3-id-lora-celebvhq-3k.safetensors" "$MODELS_DIR/loras/ltx-2.3-id-lora-celebvhq-3k.safetensors"
 dl "loras/ltx-2.3-22b-distilled-lora-384-1.1.safetensors" "Lightricks/LTX-2.3" "ltx-2.3-22b-distilled-lora-384-1.1.safetensors" "$MODELS_DIR/loras/ltx-2.3-22b-distilled-lora-384-1.1.safetensors"
 dl "loras/ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors" "Lightricks/LTX-2.3-22b-IC-LoRA-Union-Control" "ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors" "$MODELS_DIR/loras/ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors"
 dl "loras/ltx-2-19b-ic-lora-detailer.safetensors" "Lightricks/LTX-2-19b-IC-LoRA-Detailer" "ltx-2-19b-ic-lora-detailer.safetensors" "$MODELS_DIR/loras/ltx-2-19b-ic-lora-detailer.safetensors"
-# LoRAs estilo desde R2
+# LoRAs estilo + nombre correcto para el workflow Director
 for lora in "AmateurHour_01_rank16.safetensors" "LTX2.3_Crisp_Enhance.safetensors" "LTX2.3_Luxe_Sensual.safetensors" "LTX2.3_Post_Apocalyptic.safetensors" "LTX2.3_Soft_Enhance.safetensors" "LTX2.3_Wild_West.safetensors" "LTX23-GalaxyAce.safetensors" "LTX23_Enhancers_CrispSoft.safetensors"; do
     dl "loras/$lora" "" "" "$MODELS_DIR/loras/$lora"
 done
-# Audio / RIFE / LIM
-dl "audio_separator/MelBandRoformer_fp16.safetensors" "Kijai/MelBandRoFormer_comfy" "MelBandRoformer_fp16.safetensors" "$MODELS_DIR/audio_separator/MelBandRoformer_fp16.safetensors"
+# Copiar con nombres exactos que buscan los workflows
+cp "$MODELS_DIR/loras/ltx-2.3-id-lora-celebvhq-3k.safetensors" "$MODELS_DIR/loras/LTX-2_3-ID-LoRA-CelebVHQ-3K.safetensors" 2>/dev/null || true
+cp "$MODELS_DIR/loras/ltx-2.3-id-lora-celebvhq-3k.safetensors" "$MODELS_DIR/loras/LTX-2.3-ID-LoRA-Celeb.safetensors" 2>/dev/null || true
+# RIFE
 dl "rife/rife49.pt" "" "" "$MODELS_DIR/rife/rife49.pt"
 dl "rife/rife47.pt" "" "" "$MODELS_DIR/rife/rife47.pt"
-dl "lim/dw-ll_ucoco_384_bs5.torchscript.pt" "" "" "$MODELS_DIR/lim/dw-ll_ucoco_384_bs5.torchscript.pt"
+ 
+# Limpiar symlinks y duplicados que causan conflictos con el Manager
+rm -rf "$NODES_DIR/ComfyUI-Frame-Interpolation-link" 2>/dev/null || true
+rm -rf "$NODES_DIR/comfyui-easy-use-bak" 2>/dev/null || true
+rm -rf "$NODES_DIR/ComfyUI_essentials_link" 2>/dev/null || true
  
 # ── PASO 7 — Workflows ────────────────────────────────────────────────────────
 step "PASO 7/8 — Workflows"
@@ -231,23 +253,15 @@ mkdir -p "$WORKFLOWS_DIR"
 step "PASO 8/8 — Arranque ComfyUI"
 POD_ID="${RUNPOD_POD_ID:-POD_ID}"
 [ "$PLATFORM" = "RunPod" ] && \
-    ACCESS_URL="https://${POD_ID}-8888.proxy.runpod.net/proxy/8188/" || \
+    ACCESS_URL="https://${POD_ID}-8188.proxy.runpod.net" || \
     ACCESS_URL="http://$(curl -s ifconfig.me 2>/dev/null || echo 'TU_IP'):8188"
  
 cat > "$BASE_DIR/start_comfyui.sh" << BOOT
 #!/bin/bash
-pkill -f 'python.*main.py' 2>/dev/null || true
-pkill -f jupyter 2>/dev/null || true
-sleep 2
-nohup jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root \
-    --ServerApp.token='' --ServerApp.password='' --ServerApp.allow_origin='*' \
-    > $BASE_DIR/jupyter.log 2>&1 &
-cd $COMFY_DIR && nohup python main.py --listen 0.0.0.0 --port 8188 \
-    > $BASE_DIR/comfyui.log 2>&1 &
-echo "ComfyUI arrancando..."
-echo "Acceso: $ACCESS_URL"
-sleep 15
-tail -5 $BASE_DIR/comfyui.log
+pkill -f 'python.*main.py' 2>/dev/null || true; sleep 2
+cd $COMFY_DIR && nohup python main.py --listen 0.0.0.0 --port 8188 > $BASE_DIR/comfyui.log 2>&1 &
+echo "ComfyUI arrancando — Acceso: $ACCESS_URL"
+sleep 15 && tail -5 $BASE_DIR/comfyui.log
 BOOT
 chmod +x "$BASE_DIR/start_comfyui.sh"
 bash "$BASE_DIR/start_comfyui.sh"
@@ -266,3 +280,4 @@ echo -e "${G}║${N}   Modelos    : $TOTAL_MODELS archivos · $TOTAL_SIZE"
 echo -e "${G}║${N}   Acceso     : $ACCESS_URL"
 echo -e "${G}║${N}   Reiniciar  : bash $BASE_DIR/start_comfyui.sh"
 echo -e "${G}╚══════════════════════════════════════════════════════╝${N}"
+ 

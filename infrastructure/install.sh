@@ -1,7 +1,8 @@
 #!/bin/bash
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  ARAQUE SOLUTIONS — Instalador Universal v4.0 DEFINITIVO                   ║
+# ║  ARAQUE SOLUTIONS — Instalador Universal v5.0                              ║
 # ║  Compatible: RunPod · Vast.ai · TensorDock · Lambda                       ║
+# ║  GPUs recomendadas: L40S, RTX 4090, A100                                  ║
 # ║                                                                             ║
 # ║  USO:                                                                       ║
 # ║  export HF_TOKEN="hf_xxx" \                                                ║
@@ -36,7 +37,7 @@ step() { echo -e "\n${C}━━━━ $* ━━━━${N}"; }
  
 echo ""
 echo -e "${W}╔══════════════════════════════════════════════════════╗${N}"
-echo -e "${W}║   ARAQUE SOLUTIONS — Instalador v4.0 DEFINITIVO     ║${N}"
+echo -e "${W}║   ARAQUE SOLUTIONS — Instalador v5.0                ║${N}"
 echo -e "${W}║   ComfyUI + LTX 2.3 + Kenza Stack                  ║${N}"
 echo -e "${W}╚══════════════════════════════════════════════════════╝${N}"
  
@@ -114,10 +115,17 @@ fi
  
 pip install -q -r "$COMFY_DIR/requirements.txt" 2>/dev/null && ok "Requirements ComfyUI OK" || warn "Algunos fallaron"
  
-python3 -c "import torch; assert torch.cuda.is_available()" 2>/dev/null && ok "CUDA OK" || \
-    { warn "Instalando PyTorch CUDA..."; pip install -q torch torchvision --index-url https://download.pytorch.org/whl/cu124 2>/dev/null; }
+# Detectar versión CUDA del driver y usar PyTorch compatible
+CUDA_DRIVER=$(nvidia-smi 2>/dev/null | grep "CUDA Version" | awk '{print $9}' | tr -d '.')
+if [ -n "$CUDA_DRIVER" ] && [ "$CUDA_DRIVER" -lt "1240" ] 2>/dev/null; then
+    warn "Driver CUDA $CUDA_DRIVER detectado — usando PyTorch cu121"
+    pip install -q torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 --force-reinstall 2>/dev/null
+else
+    pip install -q torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124 2>/dev/null || true
+fi
+python3 -c "import torch; assert torch.cuda.is_available()" 2>/dev/null && ok "CUDA OK" || warn "CUDA no disponible"
  
-# ── PASO 4b — Dependencias críticas (aprendidas el 31/05/2026) ───────────────
+# ── PASO 4b — Dependencias críticas ──────────────────────────────────────────
 step "PASO 4b/8 — Dependencias adicionales"
 pip install -q \
     gitpython \
@@ -166,22 +174,27 @@ inode "comfyui-mixlab-nodes"          "https://github.com/shadowcz007/comfyui-mi
 inode "ComfyUI-MelBandRoformer"       "https://github.com/kijai/ComfyUI-MelBandRoformer"
 inode "ComfyUI-Impact-Pack"           "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
 inode "ComfyUI-Inspire-Pack"          "https://github.com/ltdrdata/ComfyUI-Inspire-Pack"
-# Requeridos por workflows VideoFlow + Director
 inode "comfyui_essentials"            "https://github.com/cubiq/ComfyUI_essentials"
 inode "ComfyUI-Custom-Scripts"        "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
 inode "comfyui-easy-use"              "https://github.com/yolain/ComfyUI-Easy-Use"
 inode "ComfyUI-Frame-Interpolation"   "https://github.com/Fannovel16/ComfyUI-Frame-Interpolation"
-inode "comfyui-unload-model"          "https://github.com/Siphercase/comfyui-unload-model"
 inode "RES4LYF"                       "https://github.com/ClownsharkBatwing/RES4LYF"
 inode "was-node-suite-comfyui"        "https://github.com/WASasquatch/was-node-suite-comfyui"
 inode "cg-use-everywhere"             "https://github.com/chrisgoringe/cg-use-everywhere"
+inode "comfyui-vrgamedevgirl"         "https://github.com/vrgamegirl19/comfyui-vrgamedevgirl"
+inode "comfyui_controlnet_aux"        "https://github.com/Fannovel16/comfyui_controlnet_aux"
+# URLs corregidas
+inode "comfyui-unload-model"          "https://github.com/bhaskershivadas/ComfyUI-ModelUnloader"
 inode "WhatDreamsCost-ComfyUI"        "https://github.com/WhatDreamsCost/ComfyUI-LTXDirector"
 inode "tts_audio_suite"               "https://github.com/ShmuelRonen/ComfyUI-AudioAnalyzer"
 inode "crt-nodes"                     "https://github.com/ihmyt/comfyui-crt-nodes"
 inode "Comfyui-Resolution-Master"     "https://github.com/Extraltodeus/ComfyUI-ResolutionMaster"
 inode "Listhelper"                    "https://github.com/liusida/ComfyUI-ListHelper"
-inode "comfyui-vrgamedevgirl"         "https://github.com/vrgamegirl19/comfyui-vrgamedevgirl"
-inode "comfyui_controlnet_aux"        "https://github.com/Fannovel16/comfyui_controlnet_aux"
+ 
+# Limpiar duplicados y symlinks basura
+rm -rf "$NODES_DIR/ComfyUI-Frame-Interpolation-link" 2>/dev/null || true
+rm -rf "$NODES_DIR/comfyui-easy-use-bak" 2>/dev/null || true
+rm -rf "$NODES_DIR/ComfyUI_essentials_link" 2>/dev/null || true
  
 # ── PASO 6 — Modelos ──────────────────────────────────────────────────────────
 step "PASO 6/8 — Modelos ($([ "$USE_R2" = true ] && echo 'R2 ⚡' || echo 'HuggingFace 📥'))"
@@ -228,21 +241,15 @@ dl "loras/ltx-2.3-id-lora-celebvhq-3k.safetensors" "Comfy-Org/ltx-2.3" "split_fi
 dl "loras/ltx-2.3-22b-distilled-lora-384-1.1.safetensors" "Lightricks/LTX-2.3" "ltx-2.3-22b-distilled-lora-384-1.1.safetensors" "$MODELS_DIR/loras/ltx-2.3-22b-distilled-lora-384-1.1.safetensors"
 dl "loras/ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors" "Lightricks/LTX-2.3-22b-IC-LoRA-Union-Control" "ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors" "$MODELS_DIR/loras/ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors"
 dl "loras/ltx-2-19b-ic-lora-detailer.safetensors" "Lightricks/LTX-2-19b-IC-LoRA-Detailer" "ltx-2-19b-ic-lora-detailer.safetensors" "$MODELS_DIR/loras/ltx-2-19b-ic-lora-detailer.safetensors"
-# LoRAs estilo + nombre correcto para el workflow Director
 for lora in "AmateurHour_01_rank16.safetensors" "LTX2.3_Crisp_Enhance.safetensors" "LTX2.3_Luxe_Sensual.safetensors" "LTX2.3_Post_Apocalyptic.safetensors" "LTX2.3_Soft_Enhance.safetensors" "LTX2.3_Wild_West.safetensors" "LTX23-GalaxyAce.safetensors" "LTX23_Enhancers_CrispSoft.safetensors"; do
     dl "loras/$lora" "" "" "$MODELS_DIR/loras/$lora"
 done
-# Copiar con nombres exactos que buscan los workflows
+# Nombres exactos que buscan los workflows
 cp "$MODELS_DIR/loras/ltx-2.3-id-lora-celebvhq-3k.safetensors" "$MODELS_DIR/loras/LTX-2_3-ID-LoRA-CelebVHQ-3K.safetensors" 2>/dev/null || true
 cp "$MODELS_DIR/loras/ltx-2.3-id-lora-celebvhq-3k.safetensors" "$MODELS_DIR/loras/LTX-2.3-ID-LoRA-Celeb.safetensors" 2>/dev/null || true
-# RIFE
-dl "rife/rife49.pt" "" "" "$MODELS_DIR/rife/rife49.pt"
-dl "rife/rife47.pt" "" "" "$MODELS_DIR/rife/rife47.pt"
- 
-# Limpiar symlinks y duplicados que causan conflictos con el Manager
-rm -rf "$NODES_DIR/ComfyUI-Frame-Interpolation-link" 2>/dev/null || true
-rm -rf "$NODES_DIR/comfyui-easy-use-bak" 2>/dev/null || true
-rm -rf "$NODES_DIR/ComfyUI_essentials_link" 2>/dev/null || true
+# RIFE — desde HF
+dl "" "Kijai/RIFE_sf" "rife49.pt" "$MODELS_DIR/rife/rife49.pt"
+dl "" "Kijai/RIFE_sf" "rife47.pt" "$MODELS_DIR/rife/rife47.pt"
  
 # ── PASO 7 — Workflows ────────────────────────────────────────────────────────
 step "PASO 7/8 — Workflows"
@@ -261,7 +268,7 @@ cat > "$BASE_DIR/start_comfyui.sh" << BOOT
 pkill -f 'python.*main.py' 2>/dev/null || true; sleep 2
 cd $COMFY_DIR && nohup python main.py --listen 0.0.0.0 --port 8188 > $BASE_DIR/comfyui.log 2>&1 &
 echo "ComfyUI arrancando — Acceso: $ACCESS_URL"
-sleep 15 && tail -5 $BASE_DIR/comfyui.log
+sleep 20 && tail -5 $BASE_DIR/comfyui.log
 BOOT
 chmod +x "$BASE_DIR/start_comfyui.sh"
 bash "$BASE_DIR/start_comfyui.sh"
@@ -280,4 +287,3 @@ echo -e "${G}║${N}   Modelos    : $TOTAL_MODELS archivos · $TOTAL_SIZE"
 echo -e "${G}║${N}   Acceso     : $ACCESS_URL"
 echo -e "${G}║${N}   Reiniciar  : bash $BASE_DIR/start_comfyui.sh"
 echo -e "${G}╚══════════════════════════════════════════════════════╝${N}"
- 

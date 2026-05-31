@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║  ARAQUE SOLUTIONS — Instalador Universal v3.0                              ║
@@ -13,7 +14,7 @@
 # ║    R2_ACCOUNT_ID="xxx" && \                                                 ║
 # ║  bash <(curl -fsSL https://raw.githubusercontent.com/jaaraque87/araque-solutions-os/main/infrastructure/install.sh)
 # ╚══════════════════════════════════════════════════════════════════════════════╝
-
+ 
 # ── Leer tokens desde variables de entorno ────────────────────────────────────
 HF_TOKEN="${HF_TOKEN:-}"
 CIVITAI_TOKEN="${CIVITAI_TOKEN:-}"
@@ -25,43 +26,43 @@ R2_ACCESS_KEY_ID="${R2_ACCESS_KEY_ID:-}"
 R2_SECRET_ACCESS_KEY="${R2_SECRET_ACCESS_KEY:-}"
 R2_BUCKET="${R2_BUCKET:-kenza-models}"
 R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
-
+ 
 export HF_TOKEN CIVITAI_TOKEN GITHUB_TOKEN GITHUB_USER GITHUB_REPO
 export R2_ACCOUNT_ID R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY R2_BUCKET R2_ENDPOINT
 export GIT_TERMINAL_PROMPT=0 PIP_ROOT_USER_ACTION=ignore DEBIAN_FRONTEND=noninteractive
-
+ 
 # ── Validar tokens obligatorios ───────────────────────────────────────────────
 R='\033[0;31m'; G='\033[0;32m'; Y='\033[1;33m'; C='\033[0;36m'; W='\033[1;37m'; N='\033[0m'
 ok()   { echo -e "${G}[✓]${N} $*"; }
 warn() { echo -e "${Y}[⚠]${N} $*"; }
 err()  { echo -e "${R}[✗]${N} $*"; }
 step() { echo -e "\n${C}━━━━ $* ━━━━${N}"; }
-
+ 
 echo ""
 echo -e "${W}╔══════════════════════════════════════════════════════╗${N}"
 echo -e "${W}║   ARAQUE SOLUTIONS — Instalador Universal v3.0      ║${N}"
 echo -e "${W}║   ComfyUI + LTX 2.3 + Kenza Stack                  ║${N}"
 echo -e "${W}╚══════════════════════════════════════════════════════╝${N}"
 echo ""
-
+ 
 [ -z "$HF_TOKEN" ]           && { err "HF_TOKEN no definido — export HF_TOKEN=hf_xxx"; exit 1; }
 [ -z "$R2_ACCESS_KEY_ID" ]   && { err "R2_ACCESS_KEY_ID no definido"; exit 1; }
 [ -z "$R2_SECRET_ACCESS_KEY" ] && { err "R2_SECRET_ACCESS_KEY no definido"; exit 1; }
 [ -z "$R2_ACCOUNT_ID" ]      && { err "R2_ACCOUNT_ID no definido"; exit 1; }
 [ -z "$CIVITAI_TOKEN" ]      && warn "Sin CIVITAI_TOKEN — se omitirán LoRAs de Civitai"
 [ -z "$GITHUB_TOKEN" ]       && warn "Sin GITHUB_TOKEN — usando repo público"
-
+ 
 ok "Tokens verificados"
-
+ 
 START_TOTAL=$(date +%s)
-
+ 
 # ── PASO 1 — Detectar plataforma ──────────────────────────────────────────────
 step "PASO 1/8 — Plataforma"
 if   [ -d "/workspace" ] && [ -w "/workspace" ]; then BASE_DIR="/workspace"; PLATFORM="RunPod"
 elif [ -d "/root"      ] && [ -w "/root"      ]; then BASE_DIR="/root";      PLATFORM="Vast/TensorDock"
 elif [ -d "/home/ubuntu"] && [ -w "/home/ubuntu"]; then BASE_DIR="/home/ubuntu"; PLATFORM="Lambda"
 else BASE_DIR="/workspace"; PLATFORM="Unknown"; fi
-
+ 
 COMFY_DIR="$BASE_DIR/ComfyUI"
 MODELS_DIR="$COMFY_DIR/models"
 NODES_DIR="$COMFY_DIR/custom_nodes"
@@ -69,13 +70,13 @@ WORKFLOWS_DIR="$COMFY_DIR/user/default/workflows"
 REPO_DIR="$BASE_DIR/araque"
 export BASE_DIR COMFY_DIR MODELS_DIR NODES_DIR WORKFLOWS_DIR
 ok "Plataforma: $PLATFORM | Base: $BASE_DIR"
-
+ 
 # ── PASO 2 — Dependencias ─────────────────────────────────────────────────────
 step "PASO 2/8 — Dependencias"
 apt-get update -qq 2>/dev/null || true
 apt-get install -y -qq git wget curl ffmpeg libgl1 libglib2.0-0 unzip 2>/dev/null || true
 pip install -q huggingface_hub 2>/dev/null || true
-
+ 
 USE_R2=false
 if ! command -v rclone &>/dev/null; then
     curl -fsSL https://rclone.org/install.sh | bash -s -- --quiet 2>/dev/null || true
@@ -87,7 +88,7 @@ if command -v rclone &>/dev/null; then
     rclone lsd r2:$R2_BUCKET 2>/dev/null && USE_R2=true && ok "R2 conectado ⚡" || warn "R2 no disponible — usando HF"
 fi
 ok "Sistema listo"
-
+ 
 # ── PASO 3 — Repo ─────────────────────────────────────────────────────────────
 step "PASO 3/8 — Repositorio"
 if [ -n "$GITHUB_TOKEN" ]; then
@@ -116,21 +117,35 @@ export NODES_DIR="$NODES_DIR"
 export WORKFLOWS_DIR="$WORKFLOWS_DIR"
 SECRETS
 ok "secrets.sh generado localmente"
-
+ 
 # ── PASO 4 — ComfyUI ──────────────────────────────────────────────────────────
 step "PASO 4/8 — ComfyUI"
-mkdir -p "$COMFY_DIR" "$MODELS_DIR" "$NODES_DIR" "$WORKFLOWS_DIR"
-if [ ! -d "$COMFY_DIR/.git" ]; then
-    git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git "$COMFY_DIR" && ok "ComfyUI clonado" || { err "Falló"; exit 1; }
-    pip install -q -r "$COMFY_DIR/requirements.txt" && ok "Requirements OK" || warn "Algunos requirements fallaron"
-else
-    ok "ComfyUI ya existe"
+mkdir -p "$MODELS_DIR" "$NODES_DIR" "$WORKFLOWS_DIR"
+ 
+if [ -d "$COMFY_DIR" ] && [ ! -d "$COMFY_DIR/.git" ]; then
+    # Vast.ai / templates que pre-instalan ComfyUI sin git
+    warn "ComfyUI existe sin git (template pre-instalado) — convirtiendo a repo git..."
+    cd "$COMFY_DIR"
+    git init --quiet
+    git remote add origin https://github.com/comfyanonymous/ComfyUI.git 2>/dev/null || true
+    git fetch --depth=1 --quiet origin master 2>/dev/null \
+        || git fetch --depth=1 --quiet origin main 2>/dev/null \
+        || warn "No se pudo actualizar ComfyUI — usando versión del template"
+    git checkout --quiet -f FETCH_HEAD 2>/dev/null || true
+    pip install -q -r requirements.txt 2>/dev/null && ok "Requirements OK" || warn "Algunos requirements fallaron"
+    ok "ComfyUI listo (desde template)"
+elif [ -d "$COMFY_DIR/.git" ]; then
+    ok "ComfyUI ya existe — actualizando..."
     cd "$COMFY_DIR" && git pull --quiet 2>/dev/null || true
     pip install -q -r requirements.txt 2>/dev/null || true
+else
+    git clone --depth=1 https://github.com/comfyanonymous/ComfyUI.git "$COMFY_DIR" \
+        && ok "ComfyUI clonado" || { err "Falló clonar ComfyUI"; exit 1; }
+    pip install -q -r "$COMFY_DIR/requirements.txt" && ok "Requirements OK" || warn "Algunos requirements fallaron"
 fi
 python3 -c "import torch; assert torch.cuda.is_available()" 2>/dev/null && ok "CUDA OK" || \
     { warn "Instalando PyTorch CUDA..."; pip install -q torch torchvision --index-url https://download.pytorch.org/whl/cu124 2>/dev/null; }
-
+ 
 # ── PASO 5 — Custom nodes ─────────────────────────────────────────────────────
 step "PASO 5/8 — Custom nodes"
 inode() {
@@ -153,11 +168,11 @@ inode "ComfyUI-GGUF"                  "https://github.com/city96/ComfyUI-GGUF"
 inode "ComfyUI_Comfyroll_CustomNodes" "https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes"
 inode "comfyui-mixlab-nodes"          "https://github.com/shadowcz007/comfyui-mixlab-nodes"
 inode "ComfyUI-MelBandRoformer"       "https://github.com/kijai/ComfyUI-MelBandRoformer"
-
+ 
 # ── PASO 6 — Modelos ──────────────────────────────────────────────────────────
 step "PASO 6/8 — Modelos ($([ "$USE_R2" = true ] && echo 'R2 ⚡' || echo 'HuggingFace 📥'))"
 mkdir -p "$MODELS_DIR"/{checkpoints,diffusion_models,text_encoders,vae,loras,latent_upscale_models,audio_separator,lim,rife}
-
+ 
 dl() {
     local r2="$1" hf_repo="$2" hf_file="$3" dest="$4"
     local fname; fname=$(basename "$dest")
@@ -174,7 +189,7 @@ dl() {
         && mv "${dest}.tmp" "$dest" && ok "HF: $fname" \
         || { err "Falló: $fname"; rm -f "${dest}.tmp" 2>/dev/null; }
 }
-
+ 
 # Diffusion models
 dl "diffusion_models/LTX-2.3-22B-distilled-1.1-Q4_K_M.gguf" "city96/LTX-Video-gguf" "LTX-2.3-22B-distilled-1.1-Q4_K_M.gguf" "$MODELS_DIR/diffusion_models/LTX-2.3-22B-distilled-1.1-Q4_K_M.gguf"
 dl "diffusion_models/LTX-2.3-22B-distilled-1.1-Q6_K.gguf" "city96/LTX-Video-gguf" "LTX-2.3-22B-distilled-1.1-Q6_K.gguf" "$MODELS_DIR/diffusion_models/LTX-2.3-22B-distilled-1.1-Q6_K.gguf"
@@ -206,19 +221,19 @@ dl "audio_separator/MelBandRoformer_fp16.safetensors" "Kijai/MelBandRoFormer_com
 dl "rife/rife49.pt" "" "" "$MODELS_DIR/rife/rife49.pt"
 dl "rife/rife47.pt" "" "" "$MODELS_DIR/rife/rife47.pt"
 dl "lim/dw-ll_ucoco_384_bs5.torchscript.pt" "" "" "$MODELS_DIR/lim/dw-ll_ucoco_384_bs5.torchscript.pt"
-
+ 
 # ── PASO 7 — Workflows ────────────────────────────────────────────────────────
 step "PASO 7/8 — Workflows"
 mkdir -p "$WORKFLOWS_DIR"
 [ -d "$REPO_DIR/workflows" ] && cp "$REPO_DIR"/workflows/*.json "$WORKFLOWS_DIR/" 2>/dev/null && ok "Workflows copiados" || warn "Sin workflows en repo"
-
+ 
 # ── PASO 8 — Arranque ─────────────────────────────────────────────────────────
 step "PASO 8/8 — Arranque ComfyUI"
 POD_ID="${RUNPOD_POD_ID:-POD_ID}"
 [ "$PLATFORM" = "RunPod" ] && \
     ACCESS_URL="https://${POD_ID}-8888.proxy.runpod.net/proxy/8188/" || \
     ACCESS_URL="http://$(curl -s ifconfig.me 2>/dev/null || echo 'TU_IP'):8188"
-
+ 
 cat > "$BASE_DIR/start_comfyui.sh" << BOOT
 #!/bin/bash
 pkill -f 'python.*main.py' 2>/dev/null || true
@@ -236,12 +251,12 @@ tail -5 $BASE_DIR/comfyui.log
 BOOT
 chmod +x "$BASE_DIR/start_comfyui.sh"
 bash "$BASE_DIR/start_comfyui.sh"
-
+ 
 END_TOTAL=$(date +%s)
 ELAPSED=$(( (END_TOTAL - START_TOTAL) / 60 ))
 TOTAL_MODELS=$(find "$MODELS_DIR" -type f \( -name "*.safetensors" -o -name "*.gguf" -o -name "*.pt" \) 2>/dev/null | wc -l)
 TOTAL_SIZE=$(du -sh "$MODELS_DIR" 2>/dev/null | cut -f1)
-
+ 
 echo ""
 echo -e "${G}╔══════════════════════════════════════════════════════╗${N}"
 echo -e "${G}║   ✅ LISTO en ${ELAPSED} minutos                     ║${N}"

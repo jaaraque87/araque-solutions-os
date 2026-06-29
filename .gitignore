@@ -47,3 +47,6 @@ desktop.ini
 node_modules/
 .next/
 .vercel/
+
+# Copias locales/anidadas del mismo repo
+araque-solutions-os/

@@ -1,4 +1,5 @@
 import argparse
+import getpass
 import json
 import os
 import shutil
@@ -26,6 +27,45 @@ def load_env_file(path: Path) -> None:
         key = key.strip()
         value = value.strip().strip('"').strip("'")
         os.environ.setdefault(key, value)
+
+
+SECRET_LABELS = {
+    "COMFYDEPLOY_API_KEY": "ComfyDeploy API key (https://www.comfydeploy.com -> API Keys)",
+    "COMFYDEPLOY_DEPLOYMENT_ID": "ComfyDeploy deployment id (el workflow que desplegaste)",
+}
+
+
+def _mask(value: str) -> str:
+    if not value:
+        return "(vacio)"
+    return value[0] + "***" if len(value) <= 8 else f"{value[:4]}...{value[-2:]}"
+
+
+def require_secret(name: str, env_path: Path = None) -> str:
+    """Devuelve `name` del entorno/.env. Si falta y hay terminal, lo pide de
+    forma segura, ofrece guardarlo en .env local, y nunca imprime la clave."""
+    value = os.getenv(name, "").strip()
+    if value:
+        return value
+    label = SECRET_LABELS.get(name, name)
+    if not sys.stdin.isatty():
+        raise RuntimeError(
+            f"Falta {name} y no hay terminal interactiva. "
+            f"Definelo en el entorno o en pipeline/.env. ({label})"
+        )
+    print(f"\n[!] Falta {name}.\n    Para que sirve: {label}")
+    value = getpass.getpass(f"    Pega {name} (entrada oculta): ").strip()
+    if not value:
+        raise RuntimeError(f"No se ingreso {name}.")
+    answer = input("    Guardar en pipeline/.env local? [s/N]: ").strip().lower()
+    if answer in ("s", "si", "y", "yes"):
+        target = env_path or (PIPELINE_ROOT / ".env")
+        with open(target, "a", encoding="utf-8") as fh:
+            fh.write(f"\n{name}={value}\n")
+        print(f"    OK guardada en {target} (.env esta en .gitignore).")
+    os.environ[name] = value
+    print(f"    Usando {name}={_mask(value)} en esta sesion.")
+    return value
 
 
 def slugify(value: str) -> str:
@@ -389,6 +429,13 @@ def main() -> int:
     run_dir.mkdir(parents=True, exist_ok=True)
 
     width, height = resolve_dimensions(brief.get("format", "9:16"))
+
+    # Para una corrida real necesitamos las claves de ComfyDeploy. Si faltan y
+    # hay terminal, se piden de forma segura (no afecta el modo --mock-assets).
+    if not args.mock_assets:
+        require_secret("COMFYDEPLOY_API_KEY")
+        require_secret("COMFYDEPLOY_DEPLOYMENT_ID")
+
     payload = build_comfydeploy_payload(brief)
     write_json(run_dir / "comfydeploy_payload.json", payload)
 

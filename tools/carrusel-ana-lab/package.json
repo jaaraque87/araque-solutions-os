@@ -1,0 +1,12 @@
+{
+  "name": "carrusel-ana-lab",
+  "version": "1.0.0",
+  "description": "Carruseles editoriales de IG con fotos IA + tipografía programática. Por Ana Paula Cascardo + Claude, compartido con la comunidad.",
+  "scripts": {
+    "fotos": "node generar-fotos.mjs",
+    "render": "node generar.js"
+  },
+  "dependencies": {
+    "puppeteer": "^23.0.0"
+  }
+}

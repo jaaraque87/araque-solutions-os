@@ -1,0 +1,9 @@
+{
+  "name": "fal-jobs",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@fal-ai/client": "^1.10.1"
+  }
+}

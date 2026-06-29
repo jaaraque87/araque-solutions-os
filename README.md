@@ -92,6 +92,24 @@ bash run_all.sh --from=05    # retomar desde script 05
 
 ---
 
+## Pipeline portable ComfyDeploy + HyperFrames
+
+Para ejecutar desde cualquier PC, RunPod, VPS, Codex o Claude Code:
+
+```bash
+cd pipeline/comfydeploy_hyperframes
+python run.py --brief examples/brief.example.json --mock-assets --skip-render
+```
+
+Documentacion:
+
+- `pipeline/comfydeploy_hyperframes/README.md`
+- `docs/ejecutar-con-codex-o-claude.md`
+
+Requisito importante: HyperFrames 0.7.18 requiere Node.js 22+.
+
+---
+
 ## Pod recomendado (RunPod)
 
 | GPU | VRAM | Uso recomendado | $/hr |

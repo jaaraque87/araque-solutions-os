@@ -1,0 +1,38 @@
+{
+  "brand": "Araque Solutions",
+  "title": "Pipeline IA para videos UGC",
+  "subtitle": "ComfyDeploy genera assets. HyperFrames arma el video final.",
+  "format": "9:16",
+  "duration_seconds": 12,
+  "style": "clean editorial, high contrast, energetic but professional",
+  "voiceover": "Creamos videos con IA desde cualquier lugar. Generamos assets, armamos escenas, agregamos subtitulos y exportamos el master final.",
+  "captions": [
+    {
+      "start": 0.2,
+      "end": 2.4,
+      "text": "Videos con IA desde cualquier lugar"
+    },
+    {
+      "start": 2.6,
+      "end": 5.6,
+      "text": "ComfyDeploy genera los assets"
+    },
+    {
+      "start": 5.8,
+      "end": 8.8,
+      "text": "HyperFrames monta el video final"
+    },
+    {
+      "start": 9.0,
+      "end": 11.6,
+      "text": "Listo para publicar o entregar"
+    }
+  ],
+  "comfydeploy_inputs": {
+    "prompt": "Vertical UGC style AI production pipeline visual, modern studio desk, timeline interface, generated images and video frames, premium agency look",
+    "negative_prompt": "low quality, blurry, distorted text, watermark",
+    "width": 1080,
+    "height": 1920,
+    "num_outputs": 3
+  }
+}

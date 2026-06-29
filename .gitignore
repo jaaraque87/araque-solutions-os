@@ -16,6 +16,7 @@ secrets.sh
 # ── OUTPUTS — videos y renders generados ─────────────────────────────────────
 outputs/
 renders/
+pipeline/comfydeploy_hyperframes/runs/
 *.mp4
 *.webm
 *.mov

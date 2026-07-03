@@ -1,0 +1,33 @@
+{
+  "provider": "elevenlabs",
+  "brand_voice": "araque_official",
+  "voice_id": "rzpLrJDiI1CBeAvkbjNf",
+  "model_id": "eleven_v3",
+  "language": "es",
+  "voice_settings": {
+    "stability": 0.42,
+    "similarity_boost": 0.82,
+    "style": 0.34,
+    "use_speaker_boost": true
+  },
+  "delivery": {
+    "pace": "fast but clear",
+    "energy": "medium-high controlled",
+    "tone": "natural UGC premium, direct authority, commercial intent",
+    "accent": "neutral Latin Spanish"
+  },
+  "recommended_tags": [
+    "[confident]",
+    "[calm]",
+    "[serious]",
+    "[curious]",
+    "[slightly excited]",
+    "[short pause]",
+    "[clear]"
+  ],
+  "do_not_commit": [
+    "ELEVENLABS_API_KEY",
+    "generated audio outputs",
+    "private raw voice samples"
+  ]
+}

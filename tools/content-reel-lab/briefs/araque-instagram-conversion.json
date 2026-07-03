@@ -1,0 +1,42 @@
+{
+  "source": "https://www.instagram.com/araquesolutions/",
+  "brand": "Araque Solutions",
+  "category": "AI content creation agency",
+  "objective": ["sell services", "position as authority", "drive qualified DMs"],
+  "platform": ["Instagram Reels", "Instagram carousel"],
+  "tone": "natural UGC, direct, confident, no guru language",
+  "offer": "AI-assisted content production system for businesses that need reels, carousels, ads and consistent posting that turns attention into inquiries.",
+  "audience": "business owners, local brands and agencies that know they need content but do not have a repeatable production system",
+  "central_tension": "Most brands are posting more, but still do not have a content system that creates trust and sales.",
+  "selected_angle": "Stop posting pieces. Build a production system that turns ideas into clients.",
+  "hook_variants": [
+    {
+      "id": "A",
+      "text": "Tu contenido no esta fallando. Falta sistema.",
+      "risk": "Softer hook, strong for authority."
+    },
+    {
+      "id": "B",
+      "text": "Likes no pagan facturas. Clientes si.",
+      "risk": "More aggressive, better for conversion."
+    },
+    {
+      "id": "C",
+      "text": "Si tu contenido no vende, mira esto.",
+      "risk": "Classic direct-response, less distinctive."
+    }
+  ],
+  "selected_hook_id": "B",
+  "reel_script_30s": [
+    "Likes no pagan facturas. Clientes si.",
+    "El problema no es que te falten ideas.",
+    "El problema es que publicas piezas sueltas.",
+    "En Araque Solutions convertimos tu oferta en un sistema de contenido.",
+    "Guion, visual, reel, carrusel, captions y llamada a la accion.",
+    "Usamos IA para producir mas rapido, pero la estrategia decide que vender.",
+    "Si quieres contenido que parezca bonito y ademas traiga DMs, escribenos.",
+    "Araque Solutions. Contenido con IA para convertir atencion en clientes."
+  ],
+  "carousel_thesis": "Un carrusel que vende servicios debe cambiar la creencia: no necesitas mas contenido, necesitas un sistema de conversion.",
+  "cta": "Escribe SISTEMA por DM o agenda una auditoria de contenido."
+}

@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Araque Anton";
+        src: url("assets/fonts/anton-400.woff2") format("woff2");
+        font-weight: 400;
+      }
+      @font-face {
+        font-family: "Araque Inter";
+        src: url("assets/fonts/inter-800.woff2") format("woff2");
+        font-weight: 800;
+      }
+      @font-face {
+        font-family: "Araque Inter";
+        src: url("assets/fonts/inter-600.woff2") format("woff2");
+        font-weight: 600;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #050407;
+      }
+      body {
+        font-family: "Araque Inter", Arial, sans-serif;
+        color: #f6f4f8;
+      }
+      #root {
+        position: relative;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 20% 18%, rgba(255,45,120,0.42), rgba(255,45,120,0) 34%),
+          radial-gradient(circle at 82% 72%, rgba(124,77,255,0.38), rgba(124,77,255,0) 38%),
+          #050407;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background-color: #050407;
+      }
+      .scene-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        padding: 132px 82px 112px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 52px;
+      }
+      .kicker {
+        width: fit-content;
+        padding: 16px 24px;
+        border: 3px solid #ff2d78;
+        border-radius: 999px;
+        font-size: 27px;
+        line-height: 1;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        background: rgba(5,4,7,0.72);
+        box-shadow: 0 0 42px rgba(255,45,120,0.35);
+      }
+      .hero {
+        max-width: 930px;
+        font-family: "Araque Anton", sans-serif;
+        font-size: 122px;
+        line-height: 0.92;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+      .hero.tight { font-size: 108px; }
+      .hero.small { font-size: 92px; line-height: 0.98; }
+      .sub {
+        max-width: 800px;
+        font-size: 42px;
+        line-height: 1.12;
+        font-weight: 800;
+        color: #f6f4f8;
+      }
+      .bodyline {
+        max-width: 860px;
+        font-size: 36px;
+        line-height: 1.2;
+        font-weight: 600;
+        color: rgba(246,244,248,0.86);
+      }
+      .accent { color: #ff2d78; }
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+      .metric {
+        min-height: 168px;
+        padding: 22px;
+        border-radius: 24px;
+        background: rgba(246,244,248,0.08);
+        border: 2px solid rgba(246,244,248,0.18);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+      }
+      .metric b {
+        display: block;
+        margin-bottom: 10px;
+        font-family: "Araque Anton", sans-serif;
+        font-size: 48px;
+        line-height: 1;
+        color: #ff2d78;
+      }
+      .metric span {
+        display: block;
+        font-size: 24px;
+        line-height: 1.1;
+        font-weight: 800;
+      }
+      .pipeline { display: grid; gap: 18px; }
+      .step {
+        display: flex;
+        align-items: center;
+        min-height: 92px;
+        padding: 22px 28px;
+        border-radius: 26px;
+        background: rgba(246,244,248,0.1);
+        border-left: 8px solid #ff2d78;
+        font-size: 34px;
+        font-weight: 800;
+      }
+      .stack {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .tile {
+        min-height: 210px;
+        padding: 28px;
+        border-radius: 32px;
+        background: linear-gradient(135deg, rgba(255,45,120,0.2), rgba(124,77,255,0.18));
+        border: 2px solid rgba(246,244,248,0.2);
+      }
+      .tile strong {
+        display: block;
+        margin-bottom: 16px;
+        font-family: "Araque Anton", sans-serif;
+        font-size: 54px;
+        line-height: 0.95;
+        text-transform: uppercase;
+      }
+      .tile span {
+        font-size: 27px;
+        line-height: 1.15;
+        font-weight: 600;
+        color: rgba(246,244,248,0.86);
+      }
+      .cta-panel {
+        padding: 58px;
+        border-radius: 36px;
+        background: #f6f4f8;
+        color: #050407;
+        box-shadow: 0 36px 120px rgba(0,0,0,0.42);
+      }
+      .cta-panel .hero {
+        color: #050407;
+        font-size: 104px;
+      }
+      .handle {
+        margin-top: 26px;
+        font-size: 42px;
+        font-weight: 800;
+        color: #ff2d78;
+      }
+      .watermark {
+        position: absolute;
+        top: 74px;
+        right: 72px;
+        z-index: 30;
+        width: 96px;
+        height: 96px;
+        object-fit: contain;
+        opacity: 0.9;
+        filter: drop-shadow(0 10px 24px rgba(0,0,0,0.45));
+      }
+      .ghost {
+        position: absolute;
+        z-index: 1;
+        font-family: "Araque Anton", sans-serif;
+        font-size: 260px;
+        line-height: 0.78;
+        color: rgba(246,244,248,0.065);
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+      .ghost::before { content: attr(data-word); }
+      .ghost.a { left: -20px; bottom: 150px; }
+      .ghost.b { right: -70px; top: 240px; transform: rotate(90deg); }
+      .rule {
+        height: 8px;
+        width: 100%;
+        background: linear-gradient(90deg, #ff2d78, #7c4dff);
+        border-radius: 99px;
+      }
+      .transition-sweep {
+        position: absolute;
+        inset: 0;
+        z-index: 26;
+        background: linear-gradient(100deg, rgba(255,45,120,0), #ff2d78 38%, #7c4dff 62%, rgba(124,77,255,0));
+        transform-origin: left center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1920">
+      <img id="brand-watermark" class="watermark clip" data-start="0" data-duration="30" data-track-index="30" src="assets/araque-mark.png" />
+
+      <section id="s1" class="scene clip" data-start="0" data-duration="5" data-track-index="1">
+        <div class="ghost a" data-layout-ignore data-word="CLIENTES"></div>
+        <div class="scene-content">
+          <div class="kicker">Araque Solutions</div>
+          <div>
+            <div class="hero">Likes no pagan facturas.</div>
+            <div class="sub"><span class="accent">Clientes</span> si.</div>
+          </div>
+          <div class="rule"></div>
+        </div>
+      </section>
+
+      <section id="s2" class="scene clip" data-start="5" data-duration="5" data-track-index="2">
+        <div class="ghost b" data-layout-ignore data-word="POSTEAR"></div>
+        <div class="scene-content">
+          <div class="kicker">El problema</div>
+          <div>
+            <div class="hero tight">No te faltan ideas.</div>
+            <div class="bodyline">Te falta un sistema que convierta cada pieza en confianza, prueba y DM.</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric"><b>01</b><span>Oferta clara</span></div>
+            <div class="metric"><b>02</b><span>Prueba visual</span></div>
+            <div class="metric"><b>03</b><span>Siguiente paso</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s3" class="scene clip" data-start="10" data-duration="5" data-track-index="3">
+        <div class="ghost a" data-layout-ignore data-word="SISTEMA"></div>
+        <div class="scene-content">
+          <div class="kicker">Lo que hacemos</div>
+          <div class="hero small">Convertimos tu oferta en produccion diaria.</div>
+          <div class="pipeline">
+            <div class="step">Tema -> guion que vende</div>
+            <div class="step">Guion -> reel dinamico</div>
+            <div class="step">Reel -> carrusel que educa</div>
+            <div class="step">Contenido -> DM calificado</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s4" class="scene clip" data-start="15" data-duration="5" data-track-index="4">
+        <div class="ghost b" data-layout-ignore data-word="IA"></div>
+        <div class="scene-content">
+          <div class="kicker">IA con direccion</div>
+          <div>
+            <div class="hero tight">La IA acelera.</div>
+            <div class="sub">La estrategia decide <span class="accent">que vender</span>.</div>
+          </div>
+          <div class="bodyline">No hacemos contenido por llenar calendario. Hacemos piezas con intencion comercial.</div>
+        </div>
+      </section>
+
+      <section id="s5" class="scene clip" data-start="20" data-duration="4" data-track-index="5">
+        <div class="ghost a" data-layout-ignore data-word="ACTIVOS"></div>
+        <div class="scene-content">
+          <div class="kicker">Tu motor de contenido</div>
+          <div class="stack">
+            <div class="tile"><strong>Reels</strong><span>Hooks, captions, visuales y CTA.</span></div>
+            <div class="tile"><strong>Carruseles</strong><span>Educacion que posiciona autoridad.</span></div>
+            <div class="tile"><strong>Ads</strong><span>Variaciones para probar mensajes.</span></div>
+            <div class="tile"><strong>Avatares</strong><span>Opcional, cuando el formato lo pida.</span></div>
+          </div>
+          <div class="bodyline">Primero el sistema. Luego escalamos formatos.</div>
+        </div>
+      </section>
+
+      <section id="s6" class="scene clip" data-start="24" data-duration="6" data-track-index="6">
+        <div class="ghost b" data-layout-ignore data-word="DM"></div>
+        <div class="scene-content">
+          <div class="kicker">Oferta piloto</div>
+          <div class="cta-panel">
+            <div class="hero">Agenda una auditoria de contenido.</div>
+            <div class="bodyline" style="color:#19151d;">Te decimos que producir para vender servicios este mes.</div>
+            <div class="handle">@araquesolutions</div>
+          </div>
+          <div class="rule"></div>
+        </div>
+      </section>
+
+      <div id="tr1" class="transition-sweep clip" data-start="4.7" data-duration="0.55" data-track-index="20"></div>
+      <div id="tr2" class="transition-sweep clip" data-start="9.7" data-duration="0.55" data-track-index="20"></div>
+      <div id="tr3" class="transition-sweep clip" data-start="14.7" data-duration="0.55" data-track-index="20"></div>
+      <div id="tr4" class="transition-sweep clip" data-start="19.7" data-duration="0.55" data-track-index="20"></div>
+      <div id="tr5" class="transition-sweep clip" data-start="23.7" data-duration="0.55" data-track-index="20"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      function safeFromTo(selector, fromVars, toVars, at) {
+        if (document.querySelector(selector)) {
+          tl.fromTo(selector, fromVars, toVars, at);
+        }
+      }
+
+      function enter(scene, t) {
+        safeFromTo(`${scene} .kicker`, { opacity: 0, y: -36, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "expo.out" }, t + 0.18);
+        safeFromTo(`${scene} .hero`, { opacity: 0, x: -74, scale: 0.98 }, { opacity: 1, x: 0, scale: 1, duration: 0.58, ease: "power4.out" }, t + 0.34);
+        safeFromTo(`${scene} .sub, ${scene} .bodyline`, { opacity: 0, y: 44 }, { opacity: 1, y: 0, duration: 0.48, ease: "back.out(1.2)" }, t + 0.64);
+        safeFromTo(`${scene} .rule`, { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.52, ease: "power3.out" }, t + 0.82);
+      }
+
+      enter("#s1", 0);
+      enter("#s2", 5);
+      enter("#s3", 10);
+      enter("#s4", 15);
+      enter("#s5", 20);
+      enter("#s6", 24);
+
+      tl.fromTo("#s2 .metric", { opacity: 0, y: 52, rotate: -2 }, { opacity: 1, y: 0, rotate: 0, duration: 0.46, stagger: 0.12, ease: "power3.out" }, 6.02);
+      tl.fromTo("#s3 .step", { opacity: 0, x: -68 }, { opacity: 1, x: 0, duration: 0.36, stagger: 0.16, ease: "power2.out" }, 11.02);
+      tl.fromTo("#s5 .tile", { opacity: 0, y: 62, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1, ease: "circ.out" }, 21.0);
+      tl.fromTo("#s6 .cta-panel", { opacity: 0, y: 70, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.72, ease: "expo.out" }, 24.82);
+
+      ["#tr1", "#tr2", "#tr3", "#tr4", "#tr5"].forEach((id) => {
+        const start = Number(document.querySelector(id).dataset.start);
+        tl.fromTo(id, { opacity: 0, scaleX: 0, x: -260 }, { opacity: 1, scaleX: 1.25, x: 240, duration: 0.32, ease: "power3.inOut", overwrite: "auto" }, start);
+        tl.to(id, { opacity: 0, duration: 0.18, ease: "power2.out", overwrite: "auto" }, start + 0.32);
+      });
+
+      tl.to(".watermark", { y: 8, scale: 1.04, yoyo: true, repeat: 9, duration: 1.5, ease: "sine.inOut" }, 0);
+      tl.to("#s6", { opacity: 0, duration: 0.6, ease: "sine.inOut" }, 29.35);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

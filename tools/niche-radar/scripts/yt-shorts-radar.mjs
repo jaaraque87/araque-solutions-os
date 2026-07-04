@@ -98,6 +98,50 @@ function naturalGap(sorted) {
   return idx === -1 ? sorted.length : idx;
 }
 
+function findWhisper() {
+  if (process.env.HYPERFRAMES_WHISPER_PATH && fs.existsSync(process.env.HYPERFRAMES_WHISPER_PATH)) return process.env.HYPERFRAMES_WHISPER_PATH;
+  const local = path.join(process.env.LOCALAPPDATA ?? "", "whisper-cpp", "Release", "whisper-cli.exe");
+  if (fs.existsSync(local)) return local;
+  return null;
+}
+
+function findHyperframesCli() {
+  if (process.env.HYPERFRAMES_CLI && fs.existsSync(process.env.HYPERFRAMES_CLI)) return process.env.HYPERFRAMES_CLI;
+  const local = path.resolve(radarRoot, "..", "content-reel-lab", "node_modules", "hyperframes", "dist", "cli.js");
+  if (fs.existsSync(local)) return local;
+  return null;
+}
+
+// Fallback cuando el canal no publica subtítulos: bajar solo el audio (peor calidad,
+// suficiente para voz) y transcribir con Whisper local vía hyperframes. Costo $0.
+function whisperFallback(bin, video, base, lang) {
+  const hfCli = findHyperframesCli();
+  const whisper = findWhisper();
+  if (!hfCli || !whisper) return false;
+  const mp3 = `${base}.mp3`;
+  try {
+    ytdlp(bin, ["-f", "worstaudio", "-x", "--audio-format", "mp3", "-o", `${base}.%(ext)s`, video.url]);
+    const r = spawnSync(process.execPath, [hfCli, "transcribe", "-m", "small", "-l", lang, "--json", mp3], {
+      encoding: "utf8",
+      env: { ...process.env, HYPERFRAMES_WHISPER_PATH: whisper },
+      cwd: path.dirname(mp3),
+      maxBuffer: 1024 * 1024 * 64,
+    });
+    if (r.status !== 0) return false;
+    const meta = JSON.parse(r.stdout.trim().split(/\r?\n/).pop());
+    if (!meta.ok || !meta.transcriptPath) return false;
+    const words = JSON.parse(fs.readFileSync(meta.transcriptPath, "utf8"));
+    const text = (Array.isArray(words) ? words : []).map((w) => w.text ?? "").join(" ").replace(/\s+/g, " ").trim();
+    if (!text) return false;
+    fs.writeFileSync(`${base}.txt`, `${video.title}\n${video.url}\n[transcript: whisper local, ${meta.wordCount} palabras]\n${"=".repeat(40)}\n${text}\n`, "utf8");
+    return true;
+  } catch {
+    return false;
+  } finally {
+    if (fs.existsSync(mp3)) fs.unlinkSync(mp3);
+  }
+}
+
 function cleanVtt(vtt) {
   const seen = new Set();
   const lines = [];
@@ -187,10 +231,12 @@ function main() {
           fs.unlinkSync(path.join(path.dirname(base), vtt));
           console.log(`  ${i + 1}/${detailCount} ✓ transcript`);
         } else {
-          console.log(`  ${i + 1}/${detailCount} · sin subtítulos disponibles`);
+          const ok = whisperFallback(bin, v, base, args.lang.split(",")[0]);
+          console.log(`  ${i + 1}/${detailCount} ${ok ? "✓ transcript (whisper local)" : "· sin subtítulos ni whisper"}`);
         }
       } catch {
-        console.log(`  ${i + 1}/${detailCount} ✗ subtítulos fallaron`);
+        const ok = whisperFallback(bin, v, base, args.lang.split(",")[0]);
+        console.log(`  ${i + 1}/${detailCount} ${ok ? "✓ transcript (whisper local)" : "✗ subtítulos y whisper fallaron"}`);
       }
     }
   } else {

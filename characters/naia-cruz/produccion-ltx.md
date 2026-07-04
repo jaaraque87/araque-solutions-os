@@ -68,6 +68,7 @@ UGC-style photo, vertical 2:3 portrait, shot on iPhone. [LÍNEA FÍSICA NAIA]. W
 - Cámara: `Absolutely static locked-off camera` (diario) o `very slow subtle dolly-in barely one meter` (énfasis)
 - Cierre: `Her lips move clearly matching the audio`
 - Duración del prompt proporcional: 5s → 3-4 oraciones; 8-10s → 7-8 oraciones
+- **REGLA de entrega:** cada prompt LTX se entrega con su encabezado completo: imagen + archivo de audio (con su duración) + **duración exacta del clip (= mp3 + 0.3s)** + CFG + fps. El operador no debe buscar parámetros en otra sección.
 
 **Segmento B-ROLL producto (sin lipsync):**
 ```

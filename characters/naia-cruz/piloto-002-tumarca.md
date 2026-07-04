@@ -67,22 +67,22 @@ UGC-style product photo, vertical 9:16. A sleek matte white aluminum can with a 
 
 ## Prompts LTX Director (selfie handheld, canon QA del piloto 001)
 
-**SEG 1 (IMG-A + audio frase 1):**
+**SEG 1 — IMG-A + `seg1-hook-avatar.mp3` (5.80s) → ⏱ DURACIÓN CLIP: 6.1s · CFG 1.2 · 30fps:**
 ```
 Shot on iPhone 16 Pro Max, 4K Cinematic mode, Apple ProRes LOG. Vertical frame, selfie video, close-up portrait, face in upper third. A young woman in her mid-twenties, short sleek black bob hair, hazel green eyes, pale warm olive skin, curvy hourglass figure, gold "N" initial necklace, wearing a fitted ribbed white tank top. She holds the camera with one extended arm in authentic selfie style, in a bright modern kitchen softly blurred behind. In her free hand she holds up a matte white aluminum can with a teal gradient band and the text "TU MARCA AQUÍ", keeping it steady at chest height, label toward the camera. She speaks directly to camera with fresh enthusiastic energy, like recommending a product she loves. Speaking in Latin American Spanish with a warm, genuine tone. "La probé hace una semana y no he vuelto a tomar otra cosa. Refresca... y no sabe a castigo." She glances at the can once with a small smile, then back to the lens. Subtle handheld selfie movement, natural micro-shake. 24mm selfie lens equivalent, f/2.2. Smart HDR 4, bright even exposure, natural warm skin tones, skin pores visible. Her lips move clearly matching the audio. The can stays steady, its label stable and unchanged. Vertical 9:16 format.
 ```
 
-**SEG 2 (IMG-C + audio frase 2, SIN lipsync, duración fija 4s):**
+**SEG 2 — IMG-C, SIN audio input (la voz va encima en el master) → ⏱ DURACIÓN CLIP: 4.1s · CFG 1.2 · 30fps:**
 ```
 Shot on iPhone 16 Pro Max, vertical frame 9:16. Product hero shot: a matte white aluminum can with a teal gradient band and the text "TU MARCA AQUÍ" standing on a rustic wooden table with ice cubes and a lime slice, heavy condensation on the can. The camera very slowly pushes in toward the can, subtle handheld feel. A single condensation drop slides slowly down the can. Bright natural window light, shallow depth of field, fresh summery atmosphere. The text on the can stays perfectly legible, static and unchanged. No people, no extra text.
 ```
 
-**SEG 3 (IMG-B + audio frase 3):**
+**SEG 3 — IMG-B + `seg3-reveal-avatar.mp3` (6.14s) → ⏱ DURACIÓN CLIP: 6.4s · CFG 1.2 · 30fps:**
 ```
 Shot on iPhone 16 Pro Max, 4K Cinematic mode. Vertical frame, selfie video, medium close-up. The same young woman, short sleek black bob hair, hazel green eyes, pale warm olive skin, gold "N" initial necklace, fitted ribbed white tank top, holding the camera with one extended arm in selfie style in the bright kitchen. She holds the can tilted toward the lens in her free hand, label visible, then looks into the camera with a knowing, conspiratorial half-smile, her energy shifting from ad-mode to honest confession. Speaking in Latin American Spanish with a confident, slightly amused tone. "Mira la lata otra vez: dice tu marca aquí. Esta bebida no existe. Tu producto sí." She taps the label once gently with her thumb on "tu marca aquí", then lowers the can slightly. Subtle handheld selfie movement, camera stays on her face. 24mm selfie lens equivalent, f/2.2. Natural skin tones, pores visible. Her lips move clearly matching the audio. The can label stays stable and unchanged. Vertical 9:16.
 ```
 
-**SEG 4 (IMG-A + audio frase 4):**
+**SEG 4 — IMG-A + `seg4-cta-avatar.mp3` (3.78s) → ⏱ DURACIÓN CLIP: 4.1s · CFG 1.2 · 30fps:**
 ```
 Shot on iPhone 16 Pro Max, 4K Cinematic mode. Vertical frame, selfie video, close-up portrait, face in upper third. The same young woman, short sleek black bob, hazel green eyes, gold "N" necklace, fitted ribbed white tank top, holding the camera with one extended arm in selfie style in the bright modern kitchen, the can now resting lower near her waist. She looks directly into the lens with calm confidence and says in Latin American Spanish, warm direct tone: "Escríbeme MARCA al DM y te muestro tu producto en un anuncio así." She points once gently toward the camera lens with her free hand on "DM". After speaking she holds a warm direct gaze with a slow confident smile. Subtle handheld selfie movement. 24mm selfie lens equivalent, f/2.2. Natural skin texture. Her lips move clearly matching the audio. Vertical 9:16.
 ```

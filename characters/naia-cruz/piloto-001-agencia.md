@@ -13,6 +13,12 @@ Audio master YA GENERADO (2026-07-04, eleven_multilingual_v2, 23.9s): `naia-pilo
 
 Cortar el audio por frases: `ffprobe`/Whisper local da los timestamps exactos (`node <HYPERFRAMES_CLI> transcribe -m small -l es --json audio.mp3`).
 
+**✅ YA CORTADO (2026-07-04)** — carpeta `Downloads\naia-piloto-001\` (llevar por WhatsApp):
+- `seg1-hook-avatar.mp3` 4.20s · `seg2-broll-voz.mp3` 4.38s · `seg3-prueba-avatar.mp3` 5.37s · `seg4-cta-avatar.mp3` 9.92s · `audio-master.mp3` 23.87s
+- Cortes exactos usados: 0→4.20 → 8.58 → 13.95 → fin
+- seg4 tiene 2 pausas dramáticas (en ~5.7s y ~8.4s internos): el prompt LTX del SEG 4 ya incluye acting beats en esas pausas — Naia sostiene la mirada, NO debe quedar estática
+- Duración de cada clip LTX = duración de su mp3 + 0.3s
+
 ## Imágenes GPT (generar en ChatGPT Plus con el character sheet adjunto)
 
 ⚠ Subir SIEMPRE el character sheet como imagen de referencia + este texto. Specs del sheet: identidad facial exacta, bob negro, ojos verde oliva, piel pale olive textura real, silueta curvy natural, lentes 35/50mm, luz golden hour o soft indoor luxury, evitar piel plástica.
@@ -54,7 +60,7 @@ Shot on iPhone 16 Pro Max, 4K Cinematic mode. Vertical frame, selfie video, medi
 
 **SEG 4 (IMG-A + audio frase 4):**
 ```
-Shot on iPhone 16 Pro Max, 4K Cinematic mode. Vertical frame, selfie video, close-up portrait, face in upper third. The same young woman, short sleek black bob, hazel green eyes, gold "N" necklace, fitted black tank top, holding the camera with one extended arm in selfie style in the bright creative studio. She looks directly into the lens with calm confidence and says in Latin American Spanish, warm direct tone: "Escríbeme UGC al DM, y te muestro cómo." She points once gently toward the camera lens with her free hand on "DM", then holds a direct confident smile. Subtle handheld selfie movement. 24mm selfie lens equivalent, f/2.2. Natural skin texture. Her lips move clearly matching the audio. Vertical 9:16.
+Shot on iPhone 16 Pro Max, 4K Cinematic mode. Vertical frame, selfie video, close-up portrait, face in upper third. The same young woman, short sleek black bob, hazel green eyes, gold "N" necklace, fitted black tank top, holding the camera with one extended arm in selfie style in the bright creative studio. She looks directly into the lens with calm confidence and says in Latin American Spanish, warm direct tone: "Escríbeme UGC al DM, y te muestro cómo." She points once gently toward the camera lens with her free hand on "DM". After speaking she pauses, holding a warm direct gaze at the lens with a slow confident smile forming, tilts her head very slightly, then finishes the last word with a knowing look. Subtle handheld selfie movement. 24mm selfie lens equivalent, f/2.2. Natural skin texture. Her lips move clearly matching the audio, staying naturally still and expressive during the pauses. Vertical 9:16.
 ```
 
 **Negativos (todos los segmentos):**

@@ -1,0 +1,79 @@
+# PILOTO 001 — Reel agencia (formato DIARIO)
+
+Audio master YA GENERADO (2026-07-04, eleven_multilingual_v2, 23.9s): `naia-piloto-001-audio-master.mp3` (está en Downloads del PC original — copiarlo junto con el .env; regenerable con el body de abajo por ~310 créditos).
+
+## Guion segmentado (el audio contiene TODO seguido)
+
+| SEG | Frase | Tipo | ~dur |
+|---|---|---|---|
+| 1 | "Este video no lo grabó nadie. Y aun así, vende más que tu último anuncio." | AVATAR lipsync | 6s |
+| 2 | "Sin cámara, sin actores, sin estudio... solo inteligencia artificial bien usada." | B-ROLL (voz encima) | 5s |
+| 3 | "Tu negocio puede tener treinta videos así cada mes, por menos de lo que cuesta un solo creador de contenido." | AVATAR lipsync | 8s |
+| 4 | "Escríbeme UGC al DM, y te muestro cómo." | AVATAR CTA | 4s |
+
+Cortar el audio por frases: `ffprobe`/Whisper local da los timestamps exactos (`node <HYPERFRAMES_CLI> transcribe -m small -l es --json audio.mp3`).
+
+## Imágenes GPT (generar en ChatGPT Plus con el character sheet adjunto)
+
+⚠ Subir SIEMPRE el character sheet como imagen de referencia + este texto. Specs del sheet: identidad facial exacta, bob negro, ojos verde oliva, piel pale olive textura real, silueta curvy natural, lentes 35/50mm, luz golden hour o soft indoor luxury, evitar piel plástica.
+
+**IMG-A (SEG 1 y 4 — hook y CTA, mismo setup):**
+```
+UGC-style photo, vertical 9:16 portrait, shot on iPhone, waist-up framing. Use the attached character sheet for exact facial identity: young woman mid-twenties, short sleek black bob, hazel green eyes, pale warm olive skin, curvy hourglass figure, gold "N" initial necklace. Wearing a fitted black tank top and high-waist beige trousers, confident posture, talking to camera mid-gesture with one hand slightly raised. Modern bright home office / creative studio background, laptop and ring light visible but blurred, organic lived-in space, asymmetrical composition. Soft indoor luxury light, bright even exposure, natural skin texture with visible pores, authentic UGC feel, 35mm look. No plastic skin, no text.
+```
+
+**IMG-B (SEG 3 — prueba, cambio de toma):**
+```
+Same woman from the attached character sheet (exact same face, short black bob, hazel green eyes, gold "N" necklace), UGC-style photo, vertical 9:16, medium close-up from chest up. Now sitting on a stool slightly angled to camera, wearing the same fitted black tank top, leaning slightly forward mid-conversation, warm confident half-smile. Same bright creative studio, softly blurred. Golden hour window light from the side, natural skin texture, authentic UGC feel, 50mm look. No plastic skin, no text.
+```
+
+**IMG-C (SEG 2 — b-roll, sin Naia):**
+```
+UGC-style photo, vertical 9:16. A smartphone on a small tripod recording nothing — empty chair in front of it — in a bright modern studio corner, ring light on, laptop open showing a video editing timeline, coffee cup. Nobody in the scene. Soft daylight, shallow depth of field, authentic behind-the-scenes feel. No text, no logos.
+```
+(La idea visual: "nadie lo grabó" — el set VACÍO. Refuerza el hook.)
+
+## Prompts LTX Director (uno por segmento, con su trozo de audio)
+
+**SEG 1 (IMG-A + audio frase 1):**
+```
+Shot on iPhone 16 Pro Max, 4K Cinematic mode, Apple ProRes LOG. Vertical frame, close-up portrait, face in upper third. A young woman in her mid-twenties, short sleek black bob hair, hazel green eyes, pale warm olive skin, curvy hourglass figure, gold "N" initial necklace, wearing a fitted black tank top. She stands in a bright modern creative studio, speaking directly to camera with subtle natural hand gestures, confident direct energy. Speaking in Latin American Spanish with a confident, slightly playful tone. "Este video no lo grabó nadie. Y aun así, vende más que tu último anuncio." Absolutely static locked-off camera, zero camera movement. 85mm portrait lens equivalent, f/1.8, shallow depth of field. Smart HDR 4, bright even exposure, natural warm skin tones, skin pores visible. Her lips move clearly matching the audio. She raises one eyebrow slightly at the end with a knowing half-smile. Vertical 9:16 format.
+```
+
+**SEG 2 (IMG-C + audio frase 2, SIN lipsync):**
+```
+Shot on iPhone 16 Pro Max, vertical frame 9:16. An empty creative studio corner: a smartphone on a small tripod, ring light glowing, empty chair, laptop showing a video editing timeline. The camera very slowly pushes in toward the phone on the tripod, subtle handheld feel. Soft daylight, shallow depth of field, authentic behind-the-scenes atmosphere. No people, no text.
+```
+
+**SEG 3 (IMG-B + audio frase 3):**
+```
+Shot on iPhone 16 Pro Max, 4K Cinematic mode. Vertical frame, medium close-up from chest up. The same young woman, short sleek black bob hair, hazel green eyes, pale warm olive skin, gold "N" initial necklace, fitted black tank top, sitting on a stool slightly angled to camera in a bright studio with golden hour window light. She speaks directly to camera, leaning slightly forward, warm confident energy with subtle hand gestures. Speaking in Latin American Spanish with a confident tone. "Tu negocio puede tener treinta videos así cada mes, por menos de lo que cuesta un solo creador de contenido." She pauses briefly mid-sentence, nods once, then continues. Absolutely static locked-off camera. 50mm equivalent, f/2, shallow depth of field. Natural skin tones, pores visible. Her lips move clearly matching the audio. Vertical 9:16.
+```
+
+**SEG 4 (IMG-A + audio frase 4):**
+```
+Shot on iPhone 16 Pro Max, 4K Cinematic mode. Vertical frame, close-up portrait, face in upper third. The same young woman, short sleek black bob, hazel green eyes, gold "N" necklace, fitted black tank top, standing in the bright creative studio. She looks directly into the lens with calm confidence and says in Latin American Spanish, warm direct tone: "Escríbeme UGC al DM, y te muestro cómo." She points once gently toward the camera on "DM", then holds a direct confident smile. Absolutely static locked-off camera. 85mm equivalent, f/1.8. Natural skin texture. Her lips move clearly matching the audio. Vertical 9:16.
+```
+
+**Negativos (todos los segmentos):**
+```
+no extra limbs, no face warp, no object duplication, no text artifacts, no watermark, no flicker, no camera shake, no multiple people
+```
+
+## Paso a paso ComfyDeploy / ComfyUI (LTX Director manual)
+
+1. Cortar el audio master en 4 trozos por frase (timestamps de Whisper): `ffmpeg -i master.mp3 -ss <ini> -to <fin> -c copy segN.mp3`
+2. En el workflow **LTX23 AllInOne Director v30**: cargar IMG del segmento como first frame (modo I2V), cargar `segN.mp3` en el input de audio (LTXVAudioVAE), pegar el prompt del segmento, negativos, **CFG 1.2**, 30fps, 576×1024, duración = duración del trozo de audio +0.3s.
+3. SEG 2 (b-roll): sin audio input, duración fija 5s.
+4. Generar → guardar como `seg1.mp4` ... `seg4.mp4`. Si un seg sale mal: cambiar SOLO el seed.
+5. Ensamblar (cualquier PC con el repo):
+```bash
+printf "file 'seg1.mp4'\nfile 'seg2.mp4'\nfile 'seg3.mp4'\nfile 'seg4.mp4'\n" > lista.txt
+ffmpeg -f concat -safe 0 -i lista.txt -c:v libx264 -r 30 -pix_fmt yuv420p -an mudo.mp4
+ffmpeg -i mudo.mp4 -i naia-piloto-001-audio-master.mp3 -c:v copy -c:a aac -shortest full.mp4
+node tools/content-reel-lab/scripts/render-batch.mjs --jobs <jobs con full.mp4>   # o el unitario
+```
+Overlay del piloto: hook "nadie grabó este video" · CTA "Escríbeme UGC al DM" · @araquesolutions
+
+## Regenerar el audio (cualquier PC, ~310 créditos)
+POST `https://api.elevenlabs.io/v1/text-to-speech/rzpLrJDiI1CBeAvkbjNf` con el guion completo, model `eleven_multilingual_v2`, voice_settings {stability:0.45, similarity_boost:0.8, style:0.35}. Key en `.env`.

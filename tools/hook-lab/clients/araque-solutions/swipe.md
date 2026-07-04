@@ -52,6 +52,26 @@ Fuentes: `radar/adriansaenz-2026-07-04T16-59-58/` y `radar/mirkovigna-2026-07-04
 5. `El mejor [método/sistema] sin [lo que todos usan] de 2026` — contrarian anti-hype (34K)
 6. `Nadie notó que [cosa que hicimos] es [IA]` — nuestro giro del anti-hype (hipótesis propia, sin dato aún — PROBAR)
 
+### Spoken hooks de los 6 winners (Whisper local, run adriansaenz-2026-07-04T17-24-14)
+
+| Views | Spoken hook (primeras palabras reales) | Estructura |
+|---|---|---|
+| 1.8M | "Hace unos días me apareció en YouTube un video llamado ¿Cómo logré generar 90 mil dólares sin inversión...?" | descubrimiento + promesa numérica re-declarada |
+| 1.4M | "Hace unos días se hizo muy viral este tweet en el cual una persona usando la IA puso la voz de Quevedo..." | descubrimiento + prueba social viral + celebridad |
+| 1.2M | "In this video, I'm going to tell you different ways to earn money [as a teenager]" | promesa directa + segmento |
+| 815K | "En este vídeo voy a crear una marca de ropa en 7 días sin ningún tipo de inversión" | experimento declarado, futuro |
+| 796K | "En este vídeo voy a utilizar la IA para hacer apuestas deportivas con el objetivo de ganar dinero" | experimento declarado, futuro |
+| 700K | "No, no, Adri, eso es igual, déjalo, déjalo..." (diálogo a mitad de escena) | in-media-res puro |
+
+**Los 2 openers hablados dominantes del nicho:**
+- **"Hace unos días [descubrí/se hizo viral X]..."** — historia de descubrimiento; la cifra del título se repite hablada en la primera frase.
+- **"En este vídeo voy a [experimento con stakes]"** — ⚠ HALLAZGO CONTRA-DOGMA: nuestras skills dicen "nunca abrir con 'hoy les voy a mostrar'", pero los datos muestran que "voy a + experimento fuerte" gana con 800K views. El matiz: no es saludo de relleno — es la promesa concreta declarada de inmediato (principio #7, instant value promise, pesa más que el estilo). La regla real: se puede abrir lineal SI la primera frase YA contiene el experimento + stakes + cifra.
+
+**Plantillas habladas para Naia (a probar):**
+1. "Hace unos días un [negocio como el tuyo] me escribió: no vendo nada con mi contenido. Esto fue lo que pasó [N] días después."
+2. "En este video voy a crearle una campaña completa a un negocio real… sin cámara, sin actores y por menos de lo que cuesta un almuerzo."
+3. (diálogo in-media-res) "—¿Y esto lo grabaste tú? —Nadie lo grabó. Ese es el punto."
+
 ### Pendiente de research
 - Transcripts: la mayoría de estos canales no publica subtítulos → activar fallback Whisper local para extraer el hook HABLADO (el título es proxy del text hook, falta el spoken hook).
 - IG/TikTok del mismo nicho vía navegador asistido (view counts públicos del grid).

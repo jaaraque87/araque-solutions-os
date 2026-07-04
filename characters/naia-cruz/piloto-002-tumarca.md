@@ -38,7 +38,7 @@ Cortes exactos (alignment): 0→5.793 → 9.571 → 15.702 → fin.
 
 ## Regenerar el audio (si hiciera falta)
 
-POST `https://api.elevenlabs.io/v1/text-to-speech/rzpLrJDiI1CBeAvkbjNf`, model `eleven_multilingual_v2`, voice_settings {stability:0.45, similarity_boost:0.8, style:0.35}, CTA a speed 1.08 si sale lento. Guion completo (~330 chars ≈ 330 créditos):
+POST `https://api.elevenlabs.io/v1/text-to-speech/rzpLrJDiI1CBeAvkbjNf/with-timestamps`, model `eleven_v3`, voice_settings {stability:0.5, similarity_boost:0.8}, con los audio tags del texto de arriba. Guion completo (~400 chars ≈ 400 créditos):
 
 > La probé hace una semana y no he vuelto a tomar otra cosa. Refresca... y no sabe a castigo. Se ve bien, se antoja... un anuncio como cualquier otro, ¿no? Mira la lata otra vez: dice tu marca aquí. Esta bebida no existe. Tu producto sí. Escríbeme MARCA al DM y te muestro tu producto en un anuncio así.
 

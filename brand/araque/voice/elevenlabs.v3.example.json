@@ -4,12 +4,12 @@
   "voice_id": "rzpLrJDiI1CBeAvkbjNf",
   "model_id": "eleven_v3",
   "language": "es",
+  "endpoint": "/v1/text-to-speech/{voice_id}/with-timestamps",
   "voice_settings": {
-    "stability": 0.42,
-    "similarity_boost": 0.82,
-    "style": 0.34,
-    "use_speaker_boost": true
+    "stability": 0.5,
+    "similarity_boost": 0.8
   },
+  "_validado": "piloto-002 2026-07-04: eleven_v3 acepta stability discreta (0.0 creative / 0.5 natural / 1.0 robust) - 0.5 validado; style no enviado. Endpoint with-timestamps SIEMPRE: valida completitud y da cortes por caracter.",
   "delivery": {
     "pace": "fast but clear",
     "energy": "medium-high controlled",

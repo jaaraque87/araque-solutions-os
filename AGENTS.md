@@ -30,6 +30,7 @@ The repo should contain code, docs, prompts, workflows, templates, and agent ins
 6. Before pushing, run `git status` and check for accidental secrets or large files.
 7. If working on HyperFrames, remember HyperFrames 0.7.18 requires Node.js 22+.
 8. If working on ComfyDeploy, keep API endpoint details configurable through `COMFYDEPLOY_RUN_URL`.
+9. **TTS audio (Naia or any voice): ALWAYS ElevenLabs model `eleven_v3` + audio tags, called via the `with-timestamps` endpoint** (it validates the generation arrived complete and returns per-character timestamps for phrase cuts — no Whisper needed). NEVER `eleven_multilingual_v2`, turbo or flash: validated 2026-07-04 (piloto 002), v2 sounds like a scripted announcer, not UGC. Canonical voice settings: `brand/araque/voice/elevenlabs.v3.example.json`. Audio tags go in the text but are not spoken, so LTX prompts that quote the spoken lines stay valid.
 
 ## Portable pipeline quick test
 

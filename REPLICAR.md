@@ -26,7 +26,7 @@ Lee CLAUDE.md, characters/naia-cruz/produccion-ltx.md y characters/naia-cruz/pil
 Vamos a producir un reel DIARIO nuevo para [CLIENTE/agencia] sobre [TEMA/OFERTA].
 1. Elige el mejor hook de tools/hook-lab/clients/[cliente]/hooks.json (o genera batería nueva con la skill hook-lab si no existe).
 2. Escribe el guion segmentado (4 segmentos, ~50 palabras, fórmula HOOK→AGITAR→PRUEBA→CTA).
-3. Genera el audio master con ElevenLabs (voz Naia, settings del piloto: stability 0.45/similarity 0.8/style 0.35 — y el CTA a speed 1.08 si sale lento), córtalo por frases con Whisper y dame los trozos.
+3. Genera el audio master con ElevenLabs — SIEMPRE modelo eleven_v3 + audio tags, endpoint with-timestamps (settings: brand/araque/voice/elevenlabs.v3.example.json) — y córtalo por frases con los timestamps del alignment.
 4. Dame los prompts de imagen para ChatGPT (adjuntaré el character sheet) y los prompts LTX por segmento (estilo selfie handheld, canon del piloto).
 5. Cuando te pase los MP4 de LTX: ensambla (concat + audio master + overlays con la plantilla cara-libre) y entrégame el reel final.
 Regla: nunca cubrir el rostro con captions. Nunca gastar API sin avisarme.

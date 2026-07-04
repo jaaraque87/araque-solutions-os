@@ -84,4 +84,4 @@ node tools/content-reel-lab/scripts/render-batch.mjs --jobs <jobs con full.mp4> 
 Overlay del piloto: hook "nadie grabó este video" · CTA "Escríbeme UGC al DM" · @araquesolutions
 
 ## Regenerar el audio (cualquier PC, ~310 créditos)
-POST `https://api.elevenlabs.io/v1/text-to-speech/rzpLrJDiI1CBeAvkbjNf` con el guion completo, model `eleven_multilingual_v2`, voice_settings {stability:0.45, similarity_boost:0.8, style:0.35}. Key en `.env`.
+⚠ CANON ACTUALIZADO (piloto 002): regenerar con model `eleven_v3` + audio tags vía endpoint `/with-timestamps` (settings stability:0.5, similarity_boost:0.8 — ver `brand/araque/voice/elevenlabs.v3.example.json`). El original se generó con multilingual_v2 y sonaba a locutora; NO repetir. Key en `.env`.

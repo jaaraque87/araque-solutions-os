@@ -1,0 +1,109 @@
+{
+  "cliente": "cola-light-generica",
+  "fecha": "2026-07-04",
+  "research": "web-lite + repo-kallaway",
+  "nota": "Bateria para demo de Naia. Angulo: vender sabor y ritual de pausa, no salud ni perdida de peso. No usar marcas reales.",
+  "hooks": [
+    {
+      "id": "h01",
+      "linea": "No queria una cola light. Queria una pausa que supiera bien.",
+      "overlay": "LIGHT NO ES CASTIGO",
+      "visual_frame1": "Naia sostiene una lata generica fria junto a un vaso con hielo, mirada directa, estilo selfie UGC.",
+      "patron": "contrarian + instant value promise",
+      "angulo": "sabor sobre sacrificio",
+      "score": 10,
+      "seleccionado": true
+    },
+    {
+      "id": "h02",
+      "linea": "La puse junto a mi cola de siempre. La sorpresa fue el primer sorbo.",
+      "overlay": "PRIMER SORBO",
+      "visual_frame1": "Dos vasos con hielo en mesa, Naia entra a cuadro con una lata sin marca.",
+      "patron": "experimento con stakes suaves",
+      "angulo": "prueba sensorial",
+      "score": 9,
+      "seleccionado": false
+    },
+    {
+      "id": "h03",
+      "linea": "Si tu bebida light sabe a castigo, no es light. Es aburrida.",
+      "overlay": "NO SABE A RENUNCIA",
+      "visual_frame1": "Naia hace gesto de no con la cabeza y acerca la lata a camara.",
+      "patron": "negatividad / error",
+      "angulo": "dolor de sabor artificial",
+      "score": 9,
+      "seleccionado": false
+    },
+    {
+      "id": "h04",
+      "linea": "Esto no es una promesa fit. Es una lata fria cuando el dia pesa.",
+      "overlay": "SIN DISCURSO FIT",
+      "visual_frame1": "Close-up de lata con condensacion sobre escritorio despues de una reunion.",
+      "patron": "contrarian",
+      "angulo": "anti wellness exagerado",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h05",
+      "linea": "POV: quieres algo dulce, frio y ligero sin convertirlo en tema.",
+      "overlay": "DULCE SIN DRAMA",
+      "visual_frame1": "Mano sirve cola sobre hielo, burbujas visibles, Naia al fondo desenfocada.",
+      "patron": "POV / situacional",
+      "angulo": "antojo cotidiano",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h06",
+      "linea": "La prueba de una cola light no es la etiqueta. Es si la terminas.",
+      "overlay": "SI LA TERMINAS",
+      "visual_frame1": "Vaso casi vacio con hielo y lata generica al lado.",
+      "patron": "resultado primero",
+      "angulo": "prueba por comportamiento",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h07",
+      "linea": "Deje de pedir cafe en la tarde. Cambie a esta pausa fria.",
+      "overlay": "PAUSA FRIA",
+      "visual_frame1": "Naia aparta una taza de cafe y levanta una lata generica.",
+      "patron": "historia in-media-res",
+      "angulo": "ritual alternativo",
+      "score": 7,
+      "seleccionado": false
+    },
+    {
+      "id": "h08",
+      "linea": "Hay bebidas light que se sienten como renuncia. Esta se siente como pausa.",
+      "overlay": "NO ES RENUNCIA",
+      "visual_frame1": "Naia prueba la bebida y sonrie como aprobando el sabor.",
+      "patron": "curiosity gap",
+      "angulo": "cambio de percepcion",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h09",
+      "linea": "No la compres por ligera. Comprala si te gusta la cola fria.",
+      "overlay": "SABOR PRIMERO",
+      "visual_frame1": "Close-up de lata fria, hielo y burbujas; Naia sostiene el vaso.",
+      "patron": "contrarian",
+      "angulo": "sabor primero",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h10",
+      "linea": "Una lata, hielo y cinco minutos sin ruido. Ese es el anuncio.",
+      "overlay": "5 MIN SIN RUIDO",
+      "visual_frame1": "Naia en balcon o cocina tranquila, sonido visual de hielo y lata fria.",
+      "patron": "demostracion imposible/simple",
+      "angulo": "ritual calmado",
+      "score": 8,
+      "seleccionado": false
+    }
+  ]
+}
+

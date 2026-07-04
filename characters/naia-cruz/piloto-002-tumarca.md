@@ -28,7 +28,12 @@ CTA keyword **"MARCA"** (piloto 001 usó "UGC") → atribución por reel en los 
 
 **Overlays:** hook `este anuncio no existe` · CTA `Escríbeme MARCA al DM` · @araquesolutions. Nunca sobre el rostro (plantilla cara-libre).
 
-## Audio master (pendiente — requiere .env)
+## Audio master — ✅ GENERADO Y CORTADO (2026-07-04)
+
+Carpeta `Downloads\naia-piloto-002\` (respaldar por WhatsApp): `audio-master.mp3` 15.74s (generado con endpoint **with-timestamps** → `alignment.json` con tiempos por carácter, adiós Whisper para cortes) · `seg1-hook-avatar.mp3` 4.83s · `seg2-broll-voz.mp3` 2.87s · `seg3-reveal-avatar.mp3` 4.21s · `seg4-cta-avatar.mp3` 3.74s · **`audio-master-final.mp3` 16.21s** (= trozos + 0.2s de aire insertado en cada corte porque la generación salió con pausas casi nulas; ESTE es el que se pega al video final).
+Cortes exactos (alignment): 0→4.818 → 7.692 → 11.889 → fin. ⚠ Lección: la 1ª generación (endpoint normal, stream) llegó truncada (16.6s sin cola, CTA a medias) — usar SIEMPRE with-timestamps: mismo costo, valida completitud y da los cortes.
+
+## Regenerar el audio (si hiciera falta)
 
 POST `https://api.elevenlabs.io/v1/text-to-speech/rzpLrJDiI1CBeAvkbjNf`, model `eleven_multilingual_v2`, voice_settings {stability:0.45, similarity_boost:0.8, style:0.35}, CTA a speed 1.08 si sale lento. Guion completo (~330 chars ≈ 330 créditos):
 
@@ -86,14 +91,14 @@ no extra limbs, no face warp, no object duplication, no text artifacts, no warpe
 
 ## Parámetros ComfyDeploy LTX Director v30 (idénticos al piloto)
 
-Imagen del seg como first frame (I2V) + su mp3 en LTXVAudioVAE + prompt + negativos · **CFG 1.2** · 30fps (o 25) · 576×1024+ · duración = mp3 + 0.3s · SEG 2 sin audio input, 4s fijos. Si un seg falla: cambiar SOLO el seed.
+Imagen del seg como first frame (I2V) + su mp3 en LTXVAudioVAE + prompt + negativos · **CFG 1.2** · 30fps (o 25) · 576×1024+ · duración = mp3 + 0.3s → **SEG1 5.1s · SEG2 3.2s (sin audio input) · SEG3 4.5s · SEG4 4.0s**. Si un seg falla: cambiar SOLO el seed.
 
 ## Ensamblaje
 
 ```bash
 printf "file 'seg1.mp4'\nfile 'seg2.mp4'\nfile 'seg3.mp4'\nfile 'seg4.mp4'\n" > lista.txt
 ffmpeg -f concat -safe 0 -i lista.txt -c:v libx264 -r 30 -pix_fmt yuv420p -an mudo.mp4
-ffmpeg -i mudo.mp4 -i naia-piloto-002-audio-master.mp3 -c:v copy -c:a aac -shortest full.mp4
+ffmpeg -i mudo.mp4 -i audio-master-final.mp3 -c:v copy -c:a aac -shortest full.mp4
 node tools/content-reel-lab/scripts/render-ltx-avatar-original-audio.mjs --video full.mp4 --hook "este anuncio no existe" --cta "Escríbeme MARCA al DM"
 ```
 

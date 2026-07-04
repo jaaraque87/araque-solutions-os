@@ -97,8 +97,12 @@
         backdrop-filter: blur(8px);
       }
 
+      /* REGLA DE LA CASA (2026-07-04): ningún texto/overlay cubre el rostro del talento.
+         El rostro vive en el tercio superior (hasta ~55% de altura) — los paneles de
+         texto van anclados abajo, en la banda 60-85%. */
       .panel.top {
-        top: 205px;
+        top: auto;
+        bottom: 560px;
         max-width: 770px;
       }
 
@@ -161,7 +165,7 @@
       .side-word {
         position: absolute;
         right: -90px;
-        top: 620px;
+        top: 1150px; /* bajo la línea del rostro — regla de la casa */
         z-index: 3;
         font-family: "Araque Anton", sans-serif;
         font-size: 210px;

@@ -64,6 +64,22 @@ cd tools/fal-jobs
 node seedance_naia.mjs start.png end.png out.mp4      # o DRY_RUN=1 para validar sin gastar
 ```
 
+## 6b. Producción constante de reels (probado 2026-07-04, Windows)
+
+Un video LTX con audio → reel con marca (unitario):
+```bash
+node ./tools/content-reel-lab/scripts/render-ltx-avatar-original-audio.mjs --video "clip.mp4" --hook "..." --cta "..." --handle "@araquesolutions"
+```
+Lote completo (N videos → N reels, ~1.5 min c/u):
+```bash
+node ./tools/content-reel-lab/scripts/render-batch.mjs --jobs "tools/content-reel-lab/briefs/batch.example.json"
+```
+Notas Windows (el batch las aplica solo; para el unitario exportarlas):
+- Node 24 bloquea `npx.cmd` desde spawn → instalar hyperframes local (`cd tools/content-reel-lab && npm install hyperframes`) y definir `HYPERFRAMES_CLI=<repo>/tools/content-reel-lab/node_modules/hyperframes/dist/cli.js`.
+- Symlinks bloqueados sin modo desarrollador → `HYPERFRAMES_EXTRACT_CACHE_DIR=off`.
+
+Los hooks de cada lote salen de la skill `.claude/skills/hook-lab` (research de nicho + batería puntuada por cliente → `tools/hook-lab/clients/<cliente>/hooks.json`). Guion y retención: `.claude/skills/guion-ugc` + `.claude/skills/script-framework`. Voz oficial (Naia Cruz): `brand/araque/voice/VOICE.md` + `characters/naia-cruz/`.
+
 ## 7. Arquitectura de producción (qué corre dónde)
 - **Generar** → ComfyDeploy/LTX (talking-heads, volumen, $0 por pieza) · fal.ai solo para física/wow imposible en LTX.
 - **Componer visual** → HyperFrames (local, $0).

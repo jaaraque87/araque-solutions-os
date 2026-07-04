@@ -1,0 +1,21 @@
+{
+  "defaults": {
+    "handle": "@araquesolutions",
+    "quality": "standard",
+    "fps": "30"
+  },
+  "jobs": [
+    {
+      "video": "C:\\ruta\\a\\clip-ltx-1.mp4",
+      "hook": "Rostro real. Audio real. Venta real.",
+      "cta": "Vender mas, vendas lo que vendas.",
+      "name": "cliente-demo-reel-1"
+    },
+    {
+      "video": "C:\\ruta\\a\\clip-ltx-2.mp4",
+      "hook": "Nadie te explica por que tu contenido no vende.",
+      "cta": "Escribeme UGC al DM y te muestro.",
+      "name": "cliente-demo-reel-2"
+    }
+  ]
+}

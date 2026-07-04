@@ -1,0 +1,108 @@
+{
+  "cliente": "araque-solutions",
+  "fecha": "2026-07-04",
+  "research": "offline",
+  "nota": "Primera batería. Ángulo saturado del nicho ('mira, 100% IA 🤯') invertido en h03 y h07: se vende resultado de negocio, no asombro técnico.",
+  "hooks": [
+    {
+      "id": "h01",
+      "linea": "Nadie te explica por qué tu contenido no vende.",
+      "overlay": "tu contenido no vende por esto",
+      "visual_frame1": "Naia mirando a cámara, gesto de confidencia, medio plano",
+      "patron": "curiosity gap",
+      "angulo": "dolor",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h02",
+      "linea": "Tu competencia publica 30 videos al mes. Tú, 2.",
+      "overlay": "30 videos vs 2",
+      "visual_frame1": "Naia señalando un contador en pantalla dividida",
+      "patron": "POV / situacional",
+      "angulo": "miedo competitivo",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h03",
+      "linea": "Este video no lo grabó nadie. Y aun así vende más que tu último anuncio.",
+      "overlay": "nadie grabó este video",
+      "visual_frame1": "Naia hablando natural; el overlay revela la tensión",
+      "patron": "contrarian",
+      "angulo": "inversión del ángulo saturado",
+      "score": 10,
+      "seleccionado": true
+    },
+    {
+      "id": "h04",
+      "linea": "Un creador UGC te cobra 100 dólares por video. A mí me cuesta 3.",
+      "overlay": "$100 vs $3 por video",
+      "visual_frame1": "split: factura de creador vs contador de costo",
+      "patron": "especificidad numérica",
+      "angulo": "precio",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h05",
+      "linea": "Deja de pagar por videos que se ven bonitos y no venden nada.",
+      "overlay": "bonito ≠ vende",
+      "visual_frame1": "Naia negando con el dedo, gesto firme",
+      "patron": "negatividad / error",
+      "angulo": "dolor de inversión perdida",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h06",
+      "linea": "Si tienes un negocio y no publicas todos los días, esto te va a doler.",
+      "overlay": "dueños de negocio: esto duele",
+      "visual_frame1": "Naia acercándose a cámara, tono serio",
+      "patron": "callout directo",
+      "angulo": "segmentación dueños",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h07",
+      "linea": "No vendo inteligencia artificial. Vendo que tu teléfono no pare de sonar.",
+      "overlay": "no vendo IA",
+      "visual_frame1": "Naia con teléfono vibrando en mano",
+      "patron": "contrarian",
+      "angulo": "inversión del ángulo saturado",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h08",
+      "linea": "¿Sabes cuánto pierde tu negocio cada día que no publica? Yo sí lo calculé.",
+      "overlay": "esto pierdes por no publicar",
+      "visual_frame1": "número creciendo en pantalla junto a Naia",
+      "patron": "pregunta imposible de ignorar",
+      "angulo": "costo de oportunidad",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h09",
+      "linea": "Me tomó un año armar este sistema. Te lo muestro en 30 segundos.",
+      "overlay": "1 año → 30 segundos",
+      "visual_frame1": "timelapse del pipeline en pantalla, Naia en esquina",
+      "patron": "time-compression",
+      "angulo": "autoridad por proceso",
+      "score": 7,
+      "seleccionado": false
+    },
+    {
+      "id": "h10",
+      "linea": "3 señales de que tu marca está espantando clientes en redes. La segunda la hacen todos.",
+      "overlay": "la 2 la haces tú",
+      "visual_frame1": "lista tapada que se va revelando",
+      "patron": "lista con gancho",
+      "angulo": "diagnóstico",
+      "score": 8,
+      "seleccionado": false
+    }
+  ]
+}

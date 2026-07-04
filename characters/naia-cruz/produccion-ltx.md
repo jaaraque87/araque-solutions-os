@@ -1,6 +1,6 @@
 # Canon de producción — Naia Cruz en LTX 2.3 Director
 
-Flujo completo: GPT Image 2 (imagen) → ElevenLabs (audio master) → ComfyDeploy LTX Director (animación+lipsync) → ensamblaje → overlays de marca (content-reel-lab). Formatos: **DIARIO** (15-20s) y **SECUENCIA** (30-60s multi-escena).
+Flujo completo: GPT Image 2 (imagen) → ElevenLabs (audio master; **modelo `eleven_v3` + audio tags vía endpoint with-timestamps** — multilingual_v2 suena a locutora, validado piloto 002) → ComfyDeploy LTX Director (animación+lipsync) → ensamblaje → overlays de marca (content-reel-lab). Formatos: **DIARIO** (15-20s) y **SECUENCIA** (30-60s multi-escena).
 
 ---
 

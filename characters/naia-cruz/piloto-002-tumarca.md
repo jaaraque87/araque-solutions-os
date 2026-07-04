@@ -30,8 +30,11 @@ CTA keyword **"MARCA"** (piloto 001 usó "UGC") → atribución por reel en los 
 
 ## Audio master — ✅ GENERADO Y CORTADO (2026-07-04)
 
-Carpeta `Downloads\naia-piloto-002\` (respaldar por WhatsApp): `audio-master.mp3` 15.74s (generado con endpoint **with-timestamps** → `alignment.json` con tiempos por carácter, adiós Whisper para cortes) · `seg1-hook-avatar.mp3` 4.83s · `seg2-broll-voz.mp3` 2.87s · `seg3-reveal-avatar.mp3` 4.21s · `seg4-cta-avatar.mp3` 3.74s · **`audio-master-final.mp3` 16.21s** (= trozos + 0.2s de aire insertado en cada corte porque la generación salió con pausas casi nulas; ESTE es el que se pega al video final).
-Cortes exactos (alignment): 0→4.818 → 7.692 → 11.889 → fin. ⚠ Lección: la 1ª generación (endpoint normal, stream) llegó truncada (16.6s sin cola, CTA a medias) — usar SIEMPRE with-timestamps: mismo costo, valida completitud y da los cortes.
+**Modelo definitivo: `eleven_v3` + audio tags** (`[upbeat]`, `[soft laugh]`, `[casual]`, `[playful]`, `[warm]` — settings stability 0.5 / similarity 0.8). QA del usuario: multilingual_v2 con los settings del piloto 001 "no suena natural UGC" (locutora leyendo, pausas casi nulas, 3.7 wps). v3 salió 19.6s, 3.2 wps, pausas naturales de ~0.4s en cada corte → sin post-proceso.
+
+Carpeta `Downloads\naia-piloto-002\` (respaldar por WhatsApp): **`audio-master-final.mp3` 19.6s** (= v3 tal cual, ESTE se pega al video final) · `seg1-hook-avatar.mp3` 5.80s · `seg2-broll-voz.mp3` 3.79s · `seg3-reveal-avatar.mp3` 6.14s · `seg4-cta-avatar.mp3` 3.78s · `alignment-v3.json`.
+Cortes exactos (alignment): 0→5.793 → 9.571 → 15.702 → fin.
+⚠ Lecciones: (1) usar SIEMPRE el endpoint **with-timestamps**: mismo costo, valida completitud (la 1ª generación por stream llegó TRUNCADA con el CTA a medias) y da los cortes por carácter — Whisper ya no hace falta para esto; (2) los tags v3 van en el texto pero NO se hablan — el texto hablado queda idéntico al que citan los prompts LTX.
 
 ## Regenerar el audio (si hiciera falta)
 
@@ -91,7 +94,7 @@ no extra limbs, no face warp, no object duplication, no text artifacts, no warpe
 
 ## Parámetros ComfyDeploy LTX Director v30 (idénticos al piloto)
 
-Imagen del seg como first frame (I2V) + su mp3 en LTXVAudioVAE + prompt + negativos · **CFG 1.2** · 30fps (o 25) · 576×1024+ · duración = mp3 + 0.3s → **SEG1 5.1s · SEG2 3.2s (sin audio input) · SEG3 4.5s · SEG4 4.0s**. Si un seg falla: cambiar SOLO el seed.
+Imagen del seg como first frame (I2V) + su mp3 en LTXVAudioVAE + prompt + negativos · **CFG 1.2** · 30fps (o 25) · 576×1024+ · duración = mp3 + 0.3s → **SEG1 6.1s · SEG2 4.1s (sin audio input) · SEG3 6.4s · SEG4 4.1s**. Si un seg falla: cambiar SOLO el seed.
 
 ## Ensamblaje
 

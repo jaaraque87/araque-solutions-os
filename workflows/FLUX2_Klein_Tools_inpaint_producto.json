@@ -1,0 +1,2086 @@
+{
+  "id": "c149fb5a-df88-4eb6-aefe-7e8d62ca3813",
+  "revision": 0,
+  "last_node_id": 1413,
+  "last_link_id": 22539,
+  "nodes": [
+    {
+      "id": 1329,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        2437.4067162877554,
+        1528.400295819318
+      ],
+      "size": [
+        270,
+        85
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 22391
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22389
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core",
+        "ver": "0.21.1",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "flux klein\\sliders\\NKD_klein_9B_focal_lenght_slider_V1.safetensors",
+        1.5
+      ],
+      "color": "#590c48",
+      "bgcolor": "#000817"
+    },
+    {
+      "id": 1330,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        2137.4067162877554,
+        1528.400295819318
+      ],
+      "size": [
+        270,
+        85
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 22399
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22391
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core",
+        "ver": "0.21.1",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "flux klein\\sliders\\NKD_klein_9B_focal_lenght_slider_V1.safetensors",
+        -2
+      ],
+      "color": "#590c48",
+      "bgcolor": "#000817"
+    },
+    {
+      "id": 1332,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        1842.4067162877539,
+        1528.400295819318
+      ],
+      "size": [
+        265,
+        85
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 22486
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22399
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core",
+        "ver": "0.21.1",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "flux klein\\sliders\\NKD_klein_9B_focal_lenght_slider_V1.safetensors",
+        1
+      ],
+      "color": "#590c48",
+      "bgcolor": "#000817"
+    },
+    {
+      "id": 1188,
+      "type": "SetNode",
+      "pos": [
+        3188.880281930183,
+        1396.1728451412534
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "link": 21932
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": null
+        }
+      ],
+      "title": "model",
+      "properties": {
+        "Node name for S&R": "SetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "previousName": "model",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "model"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 1189,
+      "type": "SetNode",
+      "pos": [
+        3188.880281930183,
+        1434.3131200799369
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "link": 21933
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "title": "clip",
+      "properties": {
+        "Node name for S&R": "SetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "previousName": "clip",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "clip"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 1190,
+      "type": "SetNode",
+      "pos": [
+        3188.880281930183,
+        1470.4134949963238
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "link": 21934
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": null
+        }
+      ],
+      "title": "vae",
+      "properties": {
+        "Node name for S&R": "SetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "previousName": "vae",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "vae"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 1391,
+      "type": "MarkdownNote",
+      "pos": [
+        126.8330089097595,
+        1459.8226936948083
+      ],
+      "size": [
+        595,
+        805
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "ℹ️ Node Info ES",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "# NKD Klein Tools\n\nEstos dos nodos (NKD Klein Presampling y NKD Klein Postsampling) trabajan en pareja para gestionar toda la lógica interna de Flux Klein, especialmente en workflows avanzados de inpainting como este.\n\nCuando se trata de inpainting, hay dos cosas principales que debes tener en cuenta.\n\n### Inpainting clásico (img2img local para refinado)\nSi quieres usar Klein como modelo generativo, asegúrate de activar la opción Bypass Reference. Esto te permite hacer un pase de img2img para refinar los detalles subyacentes. Eso sí, recuerda bajar el denoise hasta alrededor de 0.60.\n\nEste modo es el que quieres cuando la región enmascarada ya tiene más o menos lo que buscas y solo necesitas pulirla (corregir manos raras, suavizar artefactos, afinar texturas, ese tipo de cosas).\n\nKlein se comporta aquí como cualquier otro modelo generativo (Flux1 Dev o SDXL).\n\nSi subes demasiado el denoise (por encima de ~0.75) empezará a alucinar contenido nuevo en vez de refinar; demasiado bajo (por debajo de ~0.20) y apenas hará nada. El punto dulce entre 0.40 y 0.60 mantiene la composición intacta mientras deja al modelo refinar la imagen y la textura en base a lo que hay debajo.\n\n### Inpainting en modo edición\n\nLo bueno de Klein es que puedes usarlo como modelo de edición durante el inpainting. Para ello asegúrate de tener Bypass Reference desactivado, para que el modelo pueda tratar tu imagen de entrada como referencia. Muy útil para cambiar detalles concretos en las zonas enmascaradas, como el color de una chaqueta o el peinado de alguien.\n\nEn este modo el prompt funciona más como una instrucción que como una descripción, tipo: \"pon la chaqueta en rojo\", \"convierte la taza en un vaso\", \"quita/añade unas gafas de aviador\".\n\nKlein mira el área no enmascarada como contexto e intenta igualar el estilo, la iluminación y la perspectiva al rellenar la máscara, así que la edición se integra en el resto de la imagen en vez de parecer una pegatina. \n\nAquí necesitas mantener el denoise a 1.0 porque realmente quieres que la región enmascarada se reconstruya desde cero.\n\n### Inpaint Blend\nHay un valor inpaint_blend en el nodo Presampling que controla lo suave que es la transición entre la región manipulada y el resto de la imagen. Valores más altos dan transiciones más suaves y naturales; valores más bajos dan bordes de máscara más duros y literales.\n\n- Con valores altos el modelo puede ir integrando el contenido nuevo en el original de forma gradual a lo largo del borde, así la edición se funde con lo que la rodea. Se beneficia mucho de una máscara desenfocada y es especialmente útil en el \"modo inpainting clásico\".\n\n- Valores bajos empujan la transición hacia un borde de máscara duro y literal. Esto va bien si estás usando una máscara precisa (de un pase de ID en 3D o de Photoshop). También puede ayudar al modelo a seguir tus prompts con más precisión en el \"modo edición\", ya que puede mirar el contexto alrededor de la máscara con más atención.\n\n### Detailing\nEsta opción te permite recortar y hacer zoom en la región enmascarada, para que el modelo use su resolución completa solo en esa área concreta. Es la opción a elegir cuando estás refinando o corrigiendo detalles pequeños.\n\nLa opción padding te permite aumentar el contexto de la máscara para que el modelo entienda mejor qué hay alrededor.\n\n### Entonces ¿Cuál uso?\nRegla rápida:\n\n- Refinar lo que ya hay → Bypass Reference activado, denoise alrededor de 0.40 - 0.60.\n- Reemplazar o editar lo que hay → Bypass Reference desactivado, denoise a 1, y prompt como si dieras órdenes: \"elimina tal cosa\", \"convierte esto en aquello\".\n"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1371,
+      "type": "MarkdownNote",
+      "pos": [
+        -154.24824191584534,
+        1461.4179633350952
+      ],
+      "size": [
+        270,
+        405
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "📥 Downloads",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "# Downloads\n\n## Model Links\n\n**Diffusion Models**\n\n- [flux-2-klein-9b-fp8.safetensors](https://huggingface.co/black-forest-labs/FLUX.2-klein-9B/tree/main)\n\n**Text encoders**\n\n- [qwen_3_8b_fp8mixed.safetensors](https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors)\n\n**Vae**\n\n- [flux2-vae.safetensors](https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors)\n\n\n## Model Storage Location\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 diffusion_models/\n│   │      └── flux-2-klein-9b-fp8.safetensors\n│   ├── 📂 text_encoders/\n│   │      └── qwen_3_8b_fp8mixed.safetensors\n│   └── 📂 vae/\n│          └── flux2-vae.safetensors\n```"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 1191,
+      "type": "GetNode",
+      "pos": [
+        1492.1455461221462,
+        1437.9404455678373
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22490
+          ]
+        }
+      ],
+      "title": "model",
+      "properties": {
+        "Node name for S&R": "GetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "model"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 1381,
+      "type": "MarkdownNote",
+      "pos": [
+        -154.7504898064231,
+        1904.8824076317842
+      ],
+      "size": [
+        270.5059589150822,
+        88
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "ℹ️ Concept Slider LoRAS",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "You can find many Concept Sliders loras in [Civitai](https://civitai.com/search/models?baseModel=Flux.2%20Klein%209B&baseModel=Flux.2%20Klein%209B-base&sortBy=models_v9&query=slider)\n"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 904,
+      "type": "786ac6ef-d899-4f94-b3a9-98425e600dd7",
+      "pos": [
+        2765.799148511601,
+        1396.8935449851763
+      ],
+      "size": [
+        355,
+        150
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "model",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            21932
+          ]
+        },
+        {
+          "label": "clip",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            21933
+          ]
+        },
+        {
+          "label": "vae",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            21934
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "757",
+            "unet_name"
+          ],
+          [
+            "755",
+            "clip_name"
+          ],
+          [
+            "756",
+            "vae_name"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.17.0",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 1194,
+      "type": "GetNode",
+      "pos": [
+        2307.9090187982792,
+        1900.2190774448277
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            21938
+          ]
+        }
+      ],
+      "title": "vae",
+      "properties": {
+        "Node name for S&R": "GetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "vae"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 1198,
+      "type": "SetNode",
+      "pos": [
+        2769.5193686995017,
+        1593.9574559984692
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "link": 22389
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": null
+        }
+      ],
+      "title": "model loras",
+      "properties": {
+        "Node name for S&R": "SetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "previousName": "model loras",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "model loras"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 1199,
+      "type": "GetNode",
+      "pos": [
+        1559.7519643939443,
+        1710.831280365878
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22467
+          ]
+        }
+      ],
+      "title": "model loras",
+      "properties": {
+        "Node name for S&R": "GetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "model loras"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 1192,
+      "type": "GetNode",
+      "pos": [
+        1717.3871572099442,
+        1711.7526080179257
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            22509
+          ]
+        }
+      ],
+      "title": "clip",
+      "properties": {
+        "Node name for S&R": "GetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "clip"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 1193,
+      "type": "GetNode",
+      "pos": [
+        1837.8112932553454,
+        1710.2750232839308
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            22510
+          ]
+        }
+      ],
+      "title": "vae",
+      "properties": {
+        "Node name for S&R": "GetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "vae"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 1362,
+      "type": "NKDReferenceImage",
+      "pos": [
+        1952.809248970652,
+        1711.8795468809592
+      ],
+      "size": [
+        165,
+        30
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 22465
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "NKDReferenceImage",
+        "cnr_id": "comfyui-nkd-popup-preview",
+        "ver": "77f8398a7dc4a870a8cf43de85a114bb00d34736",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [],
+      "color": "#0b1324",
+      "bgcolor": "#161e2e"
+    },
+    {
+      "id": 1409,
+      "type": "LoadImage",
+      "pos": [
+        1839.9311796600505,
+        2598.4324682036054
+      ],
+      "size": [
+        272.9604170058278,
+        326
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            22536
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "10367-Tortilla_Azteka_10_und.png",
+        "image"
+      ]
+    },
+    {
+      "id": 1410,
+      "type": "LoadImage",
+      "pos": [
+        1534.666746312506,
+        2595.582445243371
+      ],
+      "size": [
+        272.9604170058278,
+        326
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            22535
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "ComfyUI_temp_htgdz_00001_.png",
+        "image"
+      ]
+    },
+    {
+      "id": 1404,
+      "type": "LoadImage",
+      "pos": [
+        1836.848049406801,
+        2199.3079992526345
+      ],
+      "size": [
+        272.9604170058278,
+        326
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            22538
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "ComfyUI_temp_bptxp_00001_.png",
+        "image"
+      ]
+    },
+    {
+      "id": 1402,
+      "type": "LoadImage",
+      "pos": [
+        1521.8455562487063,
+        2202.983880667933
+      ],
+      "size": [
+        282.1245346804094,
+        326
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            22533
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "10227-Gina_Pikuitos_1kg_Clasico.png",
+        "image"
+      ]
+    },
+    {
+      "id": 907,
+      "type": "VAEDecode",
+      "pos": [
+        1891.668313987247,
+        1772.8492065641071
+      ],
+      "size": [
+        169.8580078125,
+        50
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 22318
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 21938
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            22518
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core",
+        "ver": "0.19.3",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 1372,
+      "type": "MarkdownNote",
+      "pos": [
+        126.11048893939973,
+        2308.5737186643137
+      ],
+      "size": [
+        594.9534823550919,
+        207.40288462397848
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "ℹ️ Node Info EN",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "## Postsampling extras\n\nThree optional switches on the Postsampling node.\n\n- **Match Original Colors.** Pulls the regenerated zone's color and lighting back toward the original. Fixes Klein's tendency to drift in white balance and saturation. Try 0.5 first if your edits look slightly off-tint.\n- **Seamless Edges.** Uses Poisson blending to erase any color seam at the mask boundary. Turn it on if you still see the edge after matching colors.\n- **Auto-Detect Edit Region.** For edits *without* a mask. Finds what the model actually changed between your input and the result, then composites only that part back. Keeps the rest of the image pixel-perfect when you do several edits in a row."
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1284,
+      "type": "NKDPopupPreviewNode",
+      "pos": [
+        2444.866266510856,
+        1711.7126416513443
+      ],
+      "size": [
+        681.5929464956344,
+        726.9051778057774
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 22520
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "NKDPopupPreviewNode",
+        "cnr_id": "comfyui-nkd-popup-preview",
+        "ver": "77f8398a7dc4a870a8cf43de85a114bb00d34736",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "color": "#0b1324",
+      "bgcolor": "#161e2e"
+    },
+    {
+      "id": 1299,
+      "type": "KSampler",
+      "pos": [
+        1849.4564028048455,
+        1854.971754603847
+      ],
+      "size": [
+        254.37623795966738,
+        264.4586797944387
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 22513
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 22514
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 22515
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 22516
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            22318
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "cnr_id": "comfy-core",
+        "ver": "0.21.1",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        608447290306047,
+        "randomize",
+        8,
+        1,
+        "euler",
+        "simple",
+        1
+      ],
+      "color": "#705100",
+      "bgcolor": "#545444"
+    },
+    {
+      "id": 1413,
+      "type": "MarkdownNote",
+      "pos": [
+        3157.39990078088,
+        1665.2848937251865
+      ],
+      "size": [
+        467.5734214611359,
+        943.8954328644186
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "ℹ️ Scheduler info",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "## Combinaciones recomendadas para inpaint\n\n### 1. Edición precisa de producto\nPara cambiar una zona sin deformar demasiado el objeto original.\n\n- **Sampler:** `euler` o `dpmpp_2m`\n- **Scheduler:** `kl_optimal`\n- **Denoise:** `0.35 - 0.50`\n- **Reference Strength:** `2 - 4`\n- **Mask Expand:** `8 - 16`\n- **Mask Blur:** `8 - 16`\n- **Inpaint Blend:** `0.10 - 0.20`\n\nIdeal para packaging, logos, detalles de producto y reemplazos donde la forma tiene que mantenerse.\n\n### 2. Inpaint más creativo\nPara dejar que Klein reconstruya más libremente la zona.\n\n- **Sampler:** `dpmpp_2m` o `dpmpp_sde`\n- **Scheduler:** `beta` o `karras`\n- **Denoise:** `0.55 - 0.75`\n- **Reference Strength:** `1 - 2`\n- **Mask Expand:** `16 - 32`\n- **Mask Blur:** `12 - 24`\n- **Inpaint Blend:** `0.15 - 0.30`\n\nIdeal cuando la zona original no sirve o querés una reinterpretación más fuerte.\n\n### 3. Corrección suave\nPara arreglar color, textura, bordes o pequeños errores sin redibujar todo.\n\n- **Sampler:** `euler`\n- **Scheduler:** `linear_quadratic`\n- **Denoise:** `0.20 - 0.35`\n- **Reference Strength:** `3 - 5`\n- **Mask Expand:** `4 - 12`\n- **Mask Blur:** `12 - 24`\n- **Inpaint Blend:** `0.05 - 0.15`\n\nIdeal para limpiar un borde, corregir una sombra, integrar mejor un objeto o bajar artefactos.\n\n### 4. Reemplazo de objeto completo\nPara cambiar un objeto dentro de la imagen manteniendo perspectiva e iluminación.\n\n- **Sampler:** `dpmpp_2m`\n- **Scheduler:** `kl_optimal`\n- **Denoise:** `0.50 - 0.65`\n- **Reference Strength:** `2 - 3`\n- **Mask Expand:** `20 - 40`\n- **Mask Blur:** `12 - 20`\n- **Inpaint Blend:** `0.15 - 0.25`\n\nIdeal para poner un producto nuevo, cambiar un envase o reemplazar una pieza visible.\n\n### 5. Máxima fidelidad a la imagen original\nPara tocar lo menos posible fuera de la máscara.\n\n- **Sampler:** `euler`\n- **Scheduler:** `linear_quadratic`\n- **Denoise:** `0.25 - 0.45`\n- **Reference Strength:** `4 - 6`\n- **Mask Expand:** `4 - 10`\n- **Mask Blur:** `16 - 32`\n- **Inpaint Blend:** `0.05 - 0.12`\n- **Postsampling:** activar `Match Original Colors` y `Seamless Edges`\n\nIdeal cuando la imagen base ya está bien y solo necesitás una edición quirúrgica."
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1412,
+      "type": "MarkdownNote",
+      "pos": [
+        2430.6238808545377,
+        2516.0169286667183
+      ],
+      "size": [
+        716.4898782588782,
+        220.97220869798775
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "ℹ️ Scheduler info",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "- **kl_optimal.** Mejor primera opción para Flux/Klein. Es estable, eficiente y suele respetar bien la estructura de la referencia. Usalo como default.\n- **linear_quadratic.** Mejor cuando la edición tiene que respetar mucho la composición o la forma del producto original. Puede verse un poco menos pulido, pero suele deformar menos.\n- **beta.** Opción moderna y balanceada. Puede sumar mejor detalle que `linear_quadratic`, pero también puede cambiar más el carácter de la imagen.\n- **karras.** Da más contraste y nitidez. Sirve para buscar un acabado más marcado, pero puede endurecer texturas o alejarse más de la referencia.\n- **sgm_uniform.** Fallback seguro. Buen comportamiento general si los otros schedulers generan artefactos.\n- **normal.** Base neutra. Sirve para comparar, pero normalmente no es la opción más fuerte.\n- **exponential.** Sampling más suave y menos agresivo. Puede ayudar si el resultado sale demasiado duro, pero también puede perder detalle.\n- **ddim_uniform.** Rápido y predecible. Bueno para pruebas rápidas, normalmente más débil para calidad final.\n- **simple.** Básico y estable. Usalo solo para debug rápido o cuando quieras el comportamiento más simple posible.\n\nOrden recomendado: `kl_optimal`, después `linear_quadratic`, después `beta`, después `karras`."
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1366,
+      "type": "NAGuidance",
+      "pos": [
+        2162.8752380045985,
+        1714.3813864785575
+      ],
+      "size": [
+        240.1041015625,
+        106
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 22467
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22508
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NAGuidance",
+        "cnr_id": "comfy-core",
+        "ver": "0.22.0",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        2.5,
+        0.25,
+        1.1
+      ]
+    },
+    {
+      "id": 1393,
+      "type": "NKDKleinPostsampling",
+      "pos": [
+        2160.7834465235956,
+        2539.703499703967
+      ],
+      "size": [
+        238.630859375,
+        170
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 22518
+        },
+        {
+          "name": "bundle",
+          "type": "NKD_KLEIN_BUNDLE",
+          "link": 22519
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            22520
+          ]
+        },
+        {
+          "name": "debug_difference",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "debug_difference",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NKDKleinPostsampling",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-nkd-klein-tools",
+        "ver": "20c49806e40dbb3d3eb54854a22f72a5d4bd3f2b"
+      },
+      "widgets_values": [
+        10,
+        0.1,
+        false,
+        false,
+        2,
+        0,
+        false,
+        true
+      ],
+      "color": "#0b1324",
+      "bgcolor": "#161e2e"
+    },
+    {
+      "id": 1365,
+      "type": "LoadImage",
+      "pos": [
+        1521.3042500694892,
+        1790.6473939102566
+      ],
+      "size": [
+        285,
+        315
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            22465,
+            22511
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            22512
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.22.0",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "image": "clipspace/clipspace-painted-masked-1782403249416.png [input]"
+      },
+      "widgets_values": [
+        "clipspace/clipspace-painted-masked-1782403249416.png [input]",
+        "image"
+      ],
+      "color": "#590c48",
+      "bgcolor": "#000817"
+    },
+    {
+      "id": 1392,
+      "type": "NKDKleinPresampling",
+      "pos": [
+        2182.6814779587826,
+        1897.0794453119636
+      ],
+      "size": [
+        211.5435546875,
+        586
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 22508
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 22509
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 22510
+        },
+        {
+          "label": "ref_0",
+          "name": "ref_images.ref_0",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 22511
+        },
+        {
+          "label": "ref_1",
+          "name": "ref_images.ref_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 22533
+        },
+        {
+          "label": "ref_2",
+          "name": "ref_images.ref_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 22538
+        },
+        {
+          "label": "ref_3",
+          "name": "ref_images.ref_3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 22535
+        },
+        {
+          "label": "ref_4",
+          "name": "ref_images.ref_4",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 22536
+        },
+        {
+          "label": "ref_5",
+          "name": "ref_images.ref_5",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 22512
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            22513
+          ]
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            22514
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            22515
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            22516
+          ]
+        },
+        {
+          "name": "bundle",
+          "type": "NKD_KLEIN_BUNDLE",
+          "links": [
+            22519
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "ref_0",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NKDKleinPresampling",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-nkd-klein-tools",
+        "ver": "20c49806e40dbb3d3eb54854a22f72a5d4bd3f2b"
+      },
+      "widgets_values": [
+        "Erase the missformed text",
+        "",
+        true,
+        true,
+        "As Reference",
+        2,
+        1024,
+        1024,
+        "Native",
+        "Gray",
+        0.5,
+        false,
+        -2,
+        20,
+        20,
+        0,
+        true,
+        20
+      ],
+      "color": "#0b1324",
+      "bgcolor": "#161e2e"
+    },
+    {
+      "id": 1378,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        1502.4067162877536,
+        1528.400295819318
+      ],
+      "size": [
+        315,
+        85
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 22490
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            22486
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "cnr_id": "comfy-core",
+        "ver": "0.24.0",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "flux klein/sliders/NKD_klein_9B_focal_lenght_slider_V1.safetensors",
+        1
+      ],
+      "color": "#590c48",
+      "bgcolor": "#000817"
+    }
+  ],
+  "links": [
+    [
+      21932,
+      904,
+      0,
+      1188,
+      0,
+      "MODEL"
+    ],
+    [
+      21933,
+      904,
+      1,
+      1189,
+      0,
+      "CLIP"
+    ],
+    [
+      21934,
+      904,
+      2,
+      1190,
+      0,
+      "VAE"
+    ],
+    [
+      21938,
+      1194,
+      0,
+      907,
+      1,
+      "VAE"
+    ],
+    [
+      22318,
+      1299,
+      0,
+      907,
+      0,
+      "LATENT"
+    ],
+    [
+      22389,
+      1329,
+      0,
+      1198,
+      0,
+      "MODEL"
+    ],
+    [
+      22391,
+      1330,
+      0,
+      1329,
+      0,
+      "MODEL"
+    ],
+    [
+      22399,
+      1332,
+      0,
+      1330,
+      0,
+      "MODEL"
+    ],
+    [
+      22465,
+      1365,
+      0,
+      1362,
+      0,
+      "IMAGE"
+    ],
+    [
+      22467,
+      1199,
+      0,
+      1366,
+      0,
+      "MODEL"
+    ],
+    [
+      22486,
+      1378,
+      0,
+      1332,
+      0,
+      "MODEL"
+    ],
+    [
+      22490,
+      1191,
+      0,
+      1378,
+      0,
+      "MODEL"
+    ],
+    [
+      22508,
+      1366,
+      0,
+      1392,
+      0,
+      "MODEL"
+    ],
+    [
+      22509,
+      1192,
+      0,
+      1392,
+      1,
+      "CLIP"
+    ],
+    [
+      22510,
+      1193,
+      0,
+      1392,
+      2,
+      "VAE"
+    ],
+    [
+      22511,
+      1365,
+      0,
+      1392,
+      3,
+      "IMAGE"
+    ],
+    [
+      22512,
+      1365,
+      1,
+      1392,
+      9,
+      "MASK"
+    ],
+    [
+      22513,
+      1392,
+      0,
+      1299,
+      0,
+      "MODEL"
+    ],
+    [
+      22514,
+      1392,
+      1,
+      1299,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      22515,
+      1392,
+      2,
+      1299,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      22516,
+      1392,
+      3,
+      1299,
+      3,
+      "LATENT"
+    ],
+    [
+      22518,
+      907,
+      0,
+      1393,
+      0,
+      "IMAGE"
+    ],
+    [
+      22519,
+      1392,
+      4,
+      1393,
+      1,
+      "NKD_KLEIN_BUNDLE"
+    ],
+    [
+      22520,
+      1393,
+      0,
+      1284,
+      0,
+      "IMAGE"
+    ],
+    [
+      22533,
+      1402,
+      0,
+      1392,
+      4,
+      "IMAGE"
+    ],
+    [
+      22535,
+      1410,
+      0,
+      1392,
+      6,
+      "IMAGE"
+    ],
+    [
+      22536,
+      1409,
+      0,
+      1392,
+      7,
+      "IMAGE"
+    ],
+    [
+      22538,
+      1404,
+      0,
+      1392,
+      5,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 43,
+      "title": "Loaders",
+      "bounding": [
+        2732.5934834463633,
+        1300.9926701802726,
+        570.3665985284124,
+        323.98317429207736
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 45,
+      "title": "Output",
+      "bounding": [
+        2429.0391111848676,
+        1630.4005105675813,
+        717.312219096088,
+        847.337854446657
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 47,
+      "title": "Presampling",
+      "bounding": [
+        1482.8763323596893,
+        1631.1339792378737,
+        941.4210941110612,
+        1363.3027249766167
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 48,
+      "title": "Loras",
+      "bounding": [
+        1482.4067162877536,
+        1458.400295819318,
+        1244.4650621292126,
+        165.51623358634424
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "definitions": {
+    "subgraphs": [
+      {
+        "id": "786ac6ef-d899-4f94-b3a9-98425e600dd7",
+        "version": 1,
+        "state": {
+          "lastGroupId": 48,
+          "lastNodeId": 1413,
+          "lastLinkId": 22539,
+          "lastRerouteId": 59
+        },
+        "revision": 0,
+        "config": {},
+        "name": "NKD Flux Klein Loader",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -1313.3332812576464,
+            1881.1067733360478,
+            128,
+            48
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            -613.3333148790458,
+            1846.6666363961306,
+            128,
+            108
+          ]
+        },
+        "inputs": [],
+        "outputs": [
+          {
+            "id": "6288fcd6-1f4e-4b6d-ab5b-ea9aea113972",
+            "name": "MODEL",
+            "type": "MODEL",
+            "linkIds": [
+              18684
+            ],
+            "label": "model",
+            "pos": [
+              -589.3333148790458,
+              1870.6666363961306
+            ]
+          },
+          {
+            "id": "23665389-ec31-4671-8315-ee557d4b8462",
+            "name": "CLIP",
+            "type": "CLIP",
+            "linkIds": [
+              18685
+            ],
+            "label": "clip",
+            "pos": [
+              -589.3333148790458,
+              1890.6666363961306
+            ]
+          },
+          {
+            "id": "c621b5cf-a577-4cf5-963f-6826ed770c19",
+            "name": "VAE",
+            "type": "VAE",
+            "linkIds": [
+              18686
+            ],
+            "label": "vae",
+            "pos": [
+              -589.3333148790458,
+              1910.6666363961306
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 757,
+            "type": "UNETLoader",
+            "pos": [
+              -1122.7219251336887,
+              1697.1081580193254
+            ],
+            "size": [
+              270,
+              110
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 0,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "localized_name": "MODELO",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  18684
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "UNETLoader",
+              "cnr_id": "comfy-core",
+              "ver": "0.8.2",
+              "ue_properties": {
+                "widget_ue_connectable": {},
+                "version": "7.6.2",
+                "input_ue_unconnectable": {}
+              },
+              "models": [
+                {
+                  "name": "flux-2-klein-base-9b-fp8.safetensors",
+                  "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-base-9b-fp8/resolve/main/flux-2-klein-base-9b-fp8.safetensors",
+                  "directory": "diffusion_models"
+                }
+              ],
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [
+              "FLUX2/flux-2-klein-9b.safetensors",
+              "default"
+            ],
+            "color": "#130d2b",
+            "bgcolor": "#121b26"
+          },
+          {
+            "id": 756,
+            "type": "VAELoader",
+            "pos": [
+              -1125.199303238935,
+              2054.402090283195
+            ],
+            "size": [
+              275,
+              70
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 1,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "localized_name": "VAE",
+                "name": "VAE",
+                "type": "VAE",
+                "links": [
+                  18686
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VAELoader",
+              "cnr_id": "comfy-core",
+              "ver": "0.8.2",
+              "ue_properties": {
+                "widget_ue_connectable": {},
+                "version": "7.6.2",
+                "input_ue_unconnectable": {}
+              },
+              "models": [
+                {
+                  "name": "flux2-vae.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors",
+                  "directory": "vae"
+                }
+              ],
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [
+              "flux2-vae.safetensors"
+            ],
+            "color": "#130d2b",
+            "bgcolor": "#121b26"
+          },
+          {
+            "id": 755,
+            "type": "CLIPLoader",
+            "pos": [
+              -1129.119581943361,
+              1849.518188421231
+            ],
+            "size": [
+              285,
+              135
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 2,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "localized_name": "CLIP",
+                "name": "CLIP",
+                "type": "CLIP",
+                "links": [
+                  18685
+                ]
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "CLIPLoader",
+              "cnr_id": "comfy-core",
+              "ver": "0.8.2",
+              "ue_properties": {
+                "widget_ue_connectable": {},
+                "version": "7.6.2",
+                "input_ue_unconnectable": {}
+              },
+              "models": [
+                {
+                  "name": "qwen_3_8b_fp8mixed.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors",
+                  "directory": "text_encoders"
+                }
+              ],
+              "enableTabs": false,
+              "tabWidth": 65,
+              "tabXOffset": 10,
+              "hasSecondTab": false,
+              "secondTabText": "Send Back",
+              "secondTabOffset": 80,
+              "secondTabWidth": 65
+            },
+            "widgets_values": [
+              "qwen_3_8b_fp8mixed.safetensors",
+              "flux2",
+              "default"
+            ],
+            "color": "#130d2b",
+            "bgcolor": "#121b26"
+          }
+        ],
+        "groups": [],
+        "links": [
+          {
+            "id": 18684,
+            "origin_id": 757,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 18685,
+            "origin_id": 755,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 1,
+            "type": "CLIP"
+          },
+          {
+            "id": 18686,
+            "origin_id": 756,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 2,
+            "type": "VAE"
+          }
+        ],
+        "extra": {
+          "workflowRendererVersion": "LG",
+          "ue_links": [],
+          "links_added_by_ue": []
+        }
+      }
+    ]
+  },
+  "config": {},
+  "extra": {
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "frontendVersion": "1.45.19",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "ds": {
+      "scale": 0.7158579348237659,
+      "offset": [
+        -1320.4034262533644,
+        -1359.9244883295269
+      ]
+    }
+  },
+  "version": 0.4
+}

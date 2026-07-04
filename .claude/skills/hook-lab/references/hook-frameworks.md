@@ -77,6 +77,27 @@ El "cebo interno" (la segunda...) es lo que retiene, no la lista.
 - Jerga interna del rubro que el avatar comprador no usa.
 - Hook idéntico al ángulo saturado del nicho (salvo inversión deliberada).
 
+## Niveles de conciencia (Schwartz) — el mapa para clientes con bajas ventas
+
+Antes de elegir patrón, diagnosticar en qué nivel está el avatar comprador del cliente. **El hook debe hablar al nivel donde está la audiencia, no al que le conviene a la marca.** La causa #1 de contenido que no vende: hablar de producto (nivel 4) a una audiencia que está en nivel 1-2.
+
+| Nivel | El viewer... | Hook que funciona | Patrones típicos |
+|---|---|---|---|
+| 1. Inconsciente | no sabe que tiene el problema | síntoma visible + tensión | #1 error, #9 pregunta, #10 POV |
+| 2. Consciente del problema | siente el dolor, no conoce soluciones | agitar el dolor + esperanza | #5 callout, #8 historia, #13 confesión |
+| 3. Consciente de soluciones | compara opciones | diferenciación + prueba | #2 contrarian, #4 números, #6 proof-first |
+| 4. Consciente del producto | conoce al cliente, duda | demoler la objeción principal | #4 números, #12 demo, #13 confesión |
+| 5. Máxima conciencia | solo necesita el empujón | oferta directa + urgencia real | #11 temporal + CTA duro |
+
+Regla de mezcla mensual para un cliente típico con bajas ventas: ~60% contenido nivel 1-2 (alcance, nuevos leads), ~30% nivel 3-4 (nutrir y diferenciar), ~10% nivel 5 (convertir). Si el cliente solo publica nivel 4-5 (puro producto/oferta), ese ES su problema — documentarlo en el intake.
+
+## Dos modos de pieza (declarar en cada job)
+
+- **Modo ALCANCE (orgánico viral)**: gana atención y leads. Métrica: retención, shares, seguidos. Aquí manda el curiosity gap.
+- **Modo CONVERSIÓN (respuesta directa)**: estructura gancho → agitar → prueba → oferta → CTA único. Métrica: clicks, DMs, ventas atribuibles (UTM/código promo). Aquí manda la claridad de oferta; lo "viral" es secundario.
+
+No mezclar métricas: juzgar una pieza de conversión por views (o viceversa) rompe la relación con el cliente.
+
 ## Nota por plataforma
 
 - **TikTok**: más crudo, más POV, ritmo más agresivo, se permite lo-fi.

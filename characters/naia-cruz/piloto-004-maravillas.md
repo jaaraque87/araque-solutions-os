@@ -77,6 +77,31 @@ no extra limbs, no face warp, no identity change, no multiple people in shot 1, 
 ```
 HOOK y CTA: ejecución simple de un solo shot (sin transición), prompt estilo piloto-002 SEG4.
 
+## ✅ GATE OK (2026-07-05) — VARIABLES POR PARADA para el template
+
+Rellenar el template con estas 4 variables por parada. IMG: mismo template de imagen, solo cambia [LOCACIÓN].
+
+| # | [LOCACIÓN] imagen | [TONO] | [MARAVILLA] shot 2 | [MOVIMIENTO] |
+|---|---|---|---|---|
+| 2 | standing on a watchtower of the Great Wall of China, the wall snaking over green mountain ridges behind her, soft morning mist | amazed, wide-eyed | the Great Wall of China snaking endlessly over mountain ridges into the mist | orbiting wide above the wall |
+| 3 | standing in front of the Treasury (Al-Khazneh) carved into the rose-red rock canyon in Petra, Jordan, warm reflected light | hushed, secretive | the Treasury facade of Petra glowing rose-red inside the canyon | slowly pulling back through the narrow Siq canyon revealing the facade |
+| 4 | inside the Colosseum in Rome, ancient arches and tiers behind her, late afternoon sun | casual, impressed | the Roman Colosseum at golden hour | orbiting wide around the exterior |
+| 5 | in the front gardens of the Taj Mahal at dawn, the white marble dome and minarets reflected in the long water channel behind her | warm, tender | the Taj Mahal at sunrise, white marble turning soft pink, reflection in the water channel | slowly pushing in toward the dome |
+| 6 | on a stone terrace at Machu Picchu, the ancient citadel and Huayna Picchu peak behind her, morning clouds below | impressed, awed | the full citadel of Machu Picchu on its mountain ridge, clouds drifting below the peaks | pulling back to reveal the whole citadel |
+| 7 | on the grass esplanade in front of El Castillo pyramid at Chichén Itzá, Mexico, bright midday light | playful, teasing | El Castillo pyramid at Chichén Itzá, late afternoon light casting a serpent-shaped shadow down the staircase | slowly pushing in toward the staircase |
+
+**IMG-0 HOOK/CTA (una sola imagen para ambos):** template de imagen con [LOCACIÓN] = `in a cozy warm bedroom, an open suitcase on the bed behind her, soft morning light` — detalle narrativo: el hook y el CTA ocurren EN CASA (la pista escondida del reveal "yo nunca salí de mi casa").
+
+**HOOK — IMG-0 + seg0-hook.mp3 (5.51s) → clip 6.8s:**
+```
+Shot on iPhone 16 Pro Max, 4K Cinematic mode. Vertical frame, selfie video, close-up portrait, face in upper third. A young woman in her mid-twenties, short sleek black bob hair, hazel green eyes, pale warm olive skin, gold "N" initial necklace, fitted black athletic top and light utility jacket, holding the camera with one extended arm in a cozy warm bedroom, an open suitcase on the bed softly blurred behind her. She is talking directly to the camera with excited, adventurous energy. Speaking in Latin American Spanish with an upbeat, teasing tone. "Recorrí las siete maravillas del mundo en un solo día... y sin tomar un solo avión. Mira." Her mouth articulates every word clearly, lips moving in sync with the audio throughout. After speaking she raises her eyebrows with a knowing smile, holding the gaze at the lens. Subtle handheld selfie movement. 24mm selfie lens equivalent, f/2.2. Natural skin texture, pores visible. Vertical 9:16.
+```
+
+**CTA — IMG-0 + seg8-cta.mp3 (5.61s) → clip 5.9s:**
+```
+Shot on iPhone 16 Pro Max, 4K Cinematic mode. Vertical frame, selfie video, close-up portrait, face in upper third. The same young woman, short sleek black bob, hazel green eyes, pale warm olive skin, gold "N" initial necklace, fitted black athletic top and light utility jacket, holding the camera with one extended arm in the same cozy warm bedroom, the open suitcase still visible softly blurred behind her. She is talking directly to the camera, her energy dropping to an intimate, conspiratorial confession. Speaking in Latin American Spanish with a soft, amused, knowing tone. "Y aquí el detalle... yo nunca salí de mi casa. Nada de esto lo filmó una cámara... Piénsalo." Her mouth articulates every word clearly, lips moving in sync with the audio throughout. She lets a slow smile form after the last word, one eyebrow slightly raised, gaze locked on the lens. Subtle handheld selfie movement. 24mm selfie lens equivalent, f/2.2. Natural skin texture, pores visible. Vertical 9:16.
+```
+
 ## Ensamblaje
 
 Igual al piloto-002: recortar cada clip a la duración EXACTA de su trozo (trim en filter_complex, lección validada), concat con corte duro, pegar master v3, overlays content-reel-lab (`HYPERFRAMES_CLI` + cache off en Windows). Música: NO en v1 (la voz + ambiente manda; si pide música, `music-ugc` instrumental bajo).

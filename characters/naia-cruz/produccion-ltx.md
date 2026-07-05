@@ -48,6 +48,7 @@ Mismo principio, 6-10 segmentos, arco completo: hook → contexto → 2-3 prueba
 **Factor fit/atractiva SIN vulgar — vocabulario aprobado:**
 - Wardrobe: `fitted athletic wear`, `high-waist leggings and fitted crop top`, `elegant bodycon midi dress`, `fitted blazer over silk top`, `activewear set` — ropa que marca la silueta, nunca lencería/explícito en contenido de agencia
 - Pose/energía: `confident posture`, `athletic graceful stance`, `soft knowing smile`, `direct eye contact` — magnetismo por seguridad, no por piel
+- ⚠ **CABEZA FRONTAL (preferencia del usuario, 2026-07-05):** el look selfie sesga a cabeza ladeada. Incluir SIEMPRE en prompts de imagen: `her head straight and level, facing the camera directly, frontal symmetrical framing, no head tilt` + negativos `no tilted head, no three-quarter profile`.
 - La vestimenta SE ADAPTA a lo promocionado: gym/wellness → activewear; SaaS/servicios → office siren (blazer fitted); restaurante/lifestyle → bodycon casual elegante
 - ⚠ Regla de coherencia comercial: el styling atractivo es el VISUAL HOOK para audiencia masculina — usarlo cuando el comprador del producto es hombre o mixto; si el avatar comprador es mujer, cambiar a styling aspiracional (ella quiere SER Naia, no mirarla)
 

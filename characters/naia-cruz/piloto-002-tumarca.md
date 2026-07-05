@@ -89,7 +89,7 @@ Shot on iPhone 16 Pro Max, 4K Cinematic mode. Vertical frame, selfie video, clos
 
 **Negativos (todos):**
 ```
-no extra limbs, no face warp, no object duplication, no text artifacts, no warped letters on the can, no hand movement, no dropping the can, no can rotation, no can morphing, no watermark, no flicker, no camera shake, no multiple people
+no extra limbs, no face warp, no multiple people, no object duplication, no deformed can, no melted can, no crushed can, no bent can, no can morphing, no can rotation, no hand movement, no dropping the can, no text artifacts, no warped letters on the can, no watermark, no flicker, no camera shake
 ```
 
 ## Parámetros ComfyDeploy LTX Director v30 (idénticos al piloto)

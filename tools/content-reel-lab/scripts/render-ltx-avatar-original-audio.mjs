@@ -76,7 +76,8 @@ function run(command, args, options = {}) {
   const result = spawnSync(command, args, {
     stdio: options.capture ? ["ignore", "pipe", "pipe"] : "inherit",
     encoding: "utf8",
-    shell: false,
+    // Node >=20.12 en Windows lanza EINVAL al spawnear .cmd sin shell (CVE-2024-27980)
+    shell: process.platform === "win32" && command.toLowerCase().endsWith(".cmd"),
     cwd: options.cwd ?? process.cwd(),
     env: options.env ?? process.env,
   });
@@ -342,6 +343,10 @@ function main() {
     HYPERFRAMES_FFMPEG_PATH: ffmpeg,
     HYPERFRAMES_FFPROBE_PATH: ffprobe,
   };
+  if (process.platform === "win32" && !process.env.HYPERFRAMES_EXTRACT_CACHE_DIR) {
+    // Windows sin Developer Mode no permite symlinks; la cache de extraccion los usa (EPERM)
+    env.HYPERFRAMES_EXTRACT_CACHE_DIR = "off";
+  }
 
   console.log(`\n[2/5] HyperFrames lint...`);
   runHyperframes(["lint", "."], workDir, env);

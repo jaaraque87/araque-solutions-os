@@ -113,6 +113,16 @@ ffmpeg -i mudo.mp4 -i audio-master-final.mp3 -c:v copy -c:a aac -shortest full.m
 node tools/content-reel-lab/scripts/render-ltx-avatar-original-audio.mjs --video full.mp4 --hook "este anuncio no existe" --cta "Escríbeme MARCA al DM"
 ```
 
+## ✅ ENSAMBLADO Y ENTREGADO (2026-07-05)
+
+`Downloads\naia-piloto-002\REEL-FINAL-PARA-PUBLICAR.mp4` — 1080×1920, 19.6s, 15.4MB. Clips fuente mapeados por primer frame (extraer frame 0 con ffmpeg + verificar visual = método confiable para nombrar LTX2_3_*.mp4).
+
+**Lecciones de ensamblaje (aplicar SIEMPRE):**
+1. **Recortar cada clip a la duración EXACTA de su trozo de audio** al concatenar (`trim=duration=` en filter_complex): los clips traen +0.1-0.3s de colita y el desfase acumulado corría el lipsync ~0.5s en el CTA. Con trims exactos el total dio 19.60s = master clavado.
+2. **Windows + Node 24:** el script content-reel-lab moría con `spawnSync npx.cmd EINVAL` → parcheado (shell:true para .cmd) + usar `HYPERFRAMES_CLI` apuntando a `node_modules/hyperframes/dist/cli.js`.
+3. **Windows sin Developer Mode:** el render HyperFrames moría con `EPERM symlink` (cache de extracción) → parcheado: `HYPERFRAMES_EXTRACT_CACHE_DIR=off` automático en win32.
+4. QA aceptado: en SEG 1 el texto de la lata sale borroso al moverse (regla conocida: la legibilidad la carga el hero SEG 2 + overlays); SEG 2 y 3 nítidos.
+
 ## Caption al publicar (framing spec/concepto)
 
 Concepto propio — la marca de la lata no existe (por eso dice lo que dice 😉). Anuncio completo producido por @araquesolutions sin cámara, sin actores, sin estudio. ¿Lo quieres con TU producto? Escríbeme MARCA al DM. #contenidoparanegocios #marketingdigital

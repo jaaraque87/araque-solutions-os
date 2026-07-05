@@ -36,7 +36,20 @@ Entre paradas: **corte duro** en el ensamblaje (canon: transiciones LTX solo den
 
 Overlays: hook `7 maravillas · 1 día · 0 aviones` · por parada: chip con el nombre (`GIZA, EGIPTO`) · CTA `nada de esto fue filmado` + @araquesolutions. Nunca sobre el rostro.
 
-**Audio:** modelo `eleven_v3` + tags vía `/with-timestamps` (AGENTS.md #9), UNA generación master, cortar por paradas con el alignment. ~700-800 créditos. NO generar sin aprobación del usuario.
+**Audio: ✅ GENERADO (2026-07-05)** — eleven_v3, 42.5s de voz, completo hasta "Piénsalo." Carpeta `Downloads\naia-piloto-004\`: `audio-master.mp3` + `alignment.json` + 9 trozos + **`audio-master-final.mp3` 50.3s** (= trozos + 1.0s de aire tras el hook y cada parada — ahí la toma dron respira sin voz; ESTE va al reel). v3 habló los datos a ~4s/parada.
+
+**Duraciones de clip LTX (= trozo + 1.0s aire + 0.3s buffer; el buffer se recorta al ensamblar):**
+| Ejecución | Audio input | ⏱ Clip |
+|---|---|---|
+| seg0 hook | seg0-hook.mp3 (5.51s) | **6.8s** |
+| seg1 Giza (GATE) | seg1-giza.mp3 (3.92s) | **5.2s** |
+| seg2 Muralla | seg2-muralla.mp3 (4.73s) | **6.0s** |
+| seg3 Petra | seg3-petra.mp3 (4.73s) | **6.0s** |
+| seg4 Coliseo | seg4-coliseo.mp3 (4.23s) | **5.5s** |
+| seg5 Taj Mahal | seg5-taj.mp3 (4.02s) | **5.3s** |
+| seg6 Machu Picchu | seg6-machu.mp3 (5.09s) | **6.4s** |
+| seg7 Chichén Itzá | seg7-chichen.mp3 (4.55s) | **5.9s** |
+| seg8 CTA | seg8-cta.mp3 (5.61s) | **5.9s** |
 
 ## Imágenes GPT (8 first frames, character sheet SIEMPRE adjunto)
 

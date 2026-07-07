@@ -8,11 +8,6 @@
 | [retro-collage](retro-collage/style.md) | papel cortado vintage 70s | storytelling nostálgico | — | no |
 | [yellow-burst](yellow-burst/style.md) | pop gráfico amarillo + halftone | anuncios, listas, energía | — | no |
 | [paper-puzzle](paper-puzzle/style.md) | rompecabezas de cartón | misterio, predicción, reveal | — | no |
-| [patterned](patterned/style.md) | texturas vintage rasgadas (kraft, azulejos, kilim) | dinámico pero elegante — el punto medio del dial | ✅ 4 | ✅ (2026-07-05; arquitectura 2 capas: mundo Omni + tiritas propias en post) |
-| [graffiti](graffiti/style.md) | neón dibujado sobre la escena real oscurecida | energía nocturna/urbana con clase | ✅ 4 | parcial — test OK, falta oscurecido del ambiente |
-| [neon-type](neon-type/style.md) | ventanas retro-OS planas azul/verde + tipo 3D gigante | tech/software, texto co-protagonista | ✅ 4 | bloqueado por filtro (forma real) 2026-07-05; reintentar |
-| [jarvis-hud](jarvis-hud/style.md) | centro de comando oscuro + glow naranja (obsidian Morfeo) | sistemas/agentes/IA, pitches Labs | ✅ | bloqueado por filtro 2026-07-05; reintentar |
-| [jarvis-hud](jarvis-hud/style.md) | mission control negro + glow naranja | tech/IA, sistemas y agentes, Labs | ✅ 4 | pendiente OK de Paul — primer run completo: `outputs/avatar/avatar-omni-jarvis-hud-sistema-20260704-235605` (QA propio 18/18 textos) |
 
 Al validar un estilo (primera generación aprobada por Paul): cambiar a "sí" acá y en su
 `style.md`, y guardar stills del render bueno en `refs/` si no tenía.

@@ -1,6 +1,6 @@
 ---
 name: omni-edit
-description: OMNI EDIT — sistema de estilos propios para edición generativa de clips con Gemini Omni Flash vía API directa de Google (réplica del Shorts Maker de Higgsfield, sin sus créditos). Mantiene una librería de estilos preconfigurados en styles/ y aplica UN estilo elegido de forma CONSISTENTE a una serie de clips (batch), o crea/copia estilos nuevos desde videos/imágenes de referencia. Usar SIEMPRE que Paul diga "omni edit", "sticker punch" / "editalo en Sticker Punch" (el formato canon de restyle maximalista, card en docs/formats/oe-sticker-punch.md), "editá estos clips con estilo X", "aplicale el estilo claymation/scribble/collage", "pasá esta serie a estilo...", "qué estilos tenemos", "creá un estilo desde este video/referencia", "copiate el estilo de este short/preset", o comparta varios clips pidiendo un look unificado. NO para dirigir un hook puntual con decisión de intensidad por contexto (eso es /omni-hook), NO para unir clips ni captions del pipeline (HyperFrames), NO para generar video desde cero.
+description: OMNI EDIT — sistema de estilos propios para edición generativa de clips con Gemini Omni Flash vía API directa de Google (réplica del Shorts Maker de Higgsfield, sin sus créditos). Mantiene una librería de estilos preconfigurados en styles/ y aplica UN estilo elegido de forma CONSISTENTE a una serie de clips (batch), o crea/copia estilos nuevos desde videos/imágenes de referencia. Usar SIEMPRE que Paul diga "omni edit", "editá estos clips con estilo X", "aplicale el estilo claymation/scribble/collage", "pasá esta serie a estilo...", "qué estilos tenemos", "creá un estilo desde este video/referencia", "copiate el estilo de este short/preset", o comparta varios clips pidiendo un look unificado. NO para dirigir un hook puntual con decisión de intensidad por contexto (eso es /omni-hook), NO para unir clips ni captions del pipeline (HyperFrames), NO para generar video desde cero.
 ---
 
 # OMNI EDIT
@@ -34,16 +34,7 @@ captions y doodads de cada clip son la parte variable.
    mientras esté en cámara, voz original intacta, no music, 9:16, misma duración) +
    bloque de estilo del `style.md` + lo variable del clip.
 
-   **⚠️ Toda variación por beat se DIRIGE con lógica declarada (feedback Paul
-   2026-07-05):** encuadres, escalas, posiciones y paletas que cambian por beat deben
-   responder a una lógica narrativa derivada del guion (close = peso emocional del
-   claim/remate; chico+aire = contexto/explicación; transiciones = beats puente),
-   escrita en una línea en el prompt doc ANTES de generar. Variedad sin lógica = la
-   misma fórmula sin criterio que ya fue rechazada a nivel multi-clip. Ver
-   styles/patterned/style.md § Sujeto para la guía completa.
-
-   **⚠️ Capa de motion obligatoria — formato "STICKER PUNCH" (canon validado, feedback
-   Paul 2026-07-03; card: `docs/formats/oe-sticker-punch.md`):** el
+   **⚠️ Capa de motion obligatoria (canon validado, feedback Paul 2026-07-03):** el
    prompt McDonald's maximalista es LA gramática de movimiento — los estilos aportan
    material y paleta, NO reemplazan el ritmo. Todo prompt lleva: (a) "a new background
    or insert every ~1 second"; (b) "hard cuts and zoom punch-ins on my face synced to
@@ -86,21 +77,6 @@ con UNA generación de prueba sobre un clip corto antes de darlo por bueno.
 
 ## Reglas heredadas (no repetir errores ya pagados)
 
-- **El filtro de Google bloquea FAMILIAS de prompt enteras y tiene días sensibles**
-  (2026-07-05: 9 intentos de mundos "sujeto adentro de contenedores UI / dark dashboard"
-  bloqueados mientras otros estilos pasaban en el mismo minuto). **Protocolo de
-  diagnóstico** (en orden; cada sonda es rápida y no genera costo si bloquea):
-  1. Retry simple (hay bloqueos transitorios).
-  2. Sonda con OTRO video fuente → discrimina flag de input.
-  3. **Sonda de control: reenviar un prompt que YA pasó** → discrimina throttle de
-     cuenta vs contenido del prompt.
-  4. Bisect semántico recién después de 1-3.
-  Reestructurar el mundo como OVERLAY sobre la escena real puede pasar el filtro, pero
-  puede matar la identidad del estilo (neon-type pasó como overlay y salió
-  irreconocible): un compromiso que pasa el filtro NO es el estilo. Si el estilo
-  necesita su forma verdadera y está bloqueado: documentar estado y reintentar otro
-  día — el umbral fluctúa. También sanear siempre bebidas/alcohol y CTAs de plata.
-
 - **El fondo de la fuente NUNCA queda visible** en modos de mundo temático: cutout del
   sujeto obligatorio ("cut me out completely — my original background must never be
   visible"). Meter el frame crudo adentro de una ventana/marco arrastra el fondo fuente
@@ -130,49 +106,6 @@ con UNA generación de prueba sobre un clip corto antes de darlo por bueno.
   pseudo-texto en cards (apareció 'MERDA' en una card decorativa).
 - **QA de identidad primero**: antes de cualquier otro check del render, confirmar que
   la persona ES la fuente. Un restyle con energía perfecta y otra cara es basura.
-- **Regla de capas explícita** (validada en el promo giveaway): todo prompt maximalista
-  lleva "LAYERING RULE — STRICT: no element may ever cover or touch his face or mouth"
-  Y posición asignada por punch word en el beat map ("slams in BELOW his chin at chest
-  level", "above his head"). Sin posición asignada, Omni apila bursts sobre la boca.
-- **Retime exacto antes del remux**: Omni devuelve el video ~1% más largo que la fuente
-  (9.00 vs 8.88), y esa deriva uniforme desincroniza labios hacia el final. Pipeline fijo:
-  `ffmpeg -i render.mp4 -vf "setpts=PTS*(dur_fuente/dur_render),fps=25" -an retimed.mp4`
-  → remux voz original. Sumar "TIMING RULE: his body and lip movements follow the source
-  footage timing exactly" al prompt ayuda, pero el retime va igual.
-- **QA de lip-sync = 6 puntos distribuidos** (no 3): comparar estados de boca fuente vs
-  final en 6 timestamps repartidos a lo largo del clip, post-retime.
-- **Veredictos de texto SIEMPRE sobre crop a resolución nativa**, nunca sobre thumbnails
-  de contact sheet: el lettering bubble/starburst comprimido genera falsos positivos
-  ("MARGADUR" que era MARCADOR, "tachado" que era la púa del starburst) y falsos ok.
-  El punto de la i en lettering a mano no es una tilde mal puesta.
-- **Texto horneado defectuoso NO se edita: se reemplaza el elemento entero.** El
-  turn-by-turn no puede corregir un typo en texto ya generado — falló 4 veces seguidas
-  con dos técnicas (instrucción abstracta "spell exactly X" y descripción as-seen del
-  error). Lo que SÍ funciona: "COMPLETELY REMOVE the [elemento] (the one whose text is
-  wrong)… then ADD a brand new [elemento] in the same position reading exactly '…'".
-  Generar de cero es lo que Omni hace bien; editar texto existente, no. Refinamiento:
-  si el elemento nuevo HEREDA el typo igual (pasó con un terminal tipeando: toda la
-  cadena de ancestros tenía el error), cambiar el TIPO de elemento al nativo del formato
-  que ya probó renderizar texto bien en ese mismo video (ej.: starburst punch word en
-  vez de terminal) — el cambio de tipo rompe la herencia.
-- **En batch, los Interaction IDs se loguean en orden de FINALIZACIÓN, no de job**: el
-  clip más corto termina primero. NUNCA mapear parent IDs por posición en el log; antes
-  de cualquier turn-by-turn sobre outputs de batch, verificar el contenido del parent
-  (un frame alcanza) o correr las ediciones encadenadas de a una. Error pagado: los fixes
-  de dos clips se aplicaron cruzados y ambos renders salieron con el contenido del otro.
-- **El turn-by-turn preserva estructura pero NO es determinista en secundarios**: puede
-  reposicionar punch words, rediseñar cards o mover un beat ~0.3s. Re-QA completo del
-  render turn-by-turn, nunca asumir "solo cambió lo pedido". A veces mejora cosas
-  (HIGGSFIELD se auto-corrigió de posición); igual se verifica.
-- **Mezcla de master: SIEMPRE premaster dinámico de la voz** (`loudnorm=I=-15:TP=-1.5:LRA=11`)
-  antes de mezclar música/SFX — ElevenLabs STS y HeyGen entregan la voz a ~-32 LUFS aunque
-  se les suba a -16; medir SIEMPRE post-STS, nunca asumir. Sin premaster, los SFX a volumen
-  de librería quedan +15dB sobre la voz y el LUFS integrado del total miente (el mix v1 del
-  promo midió -14.9 "bien" con la voz enterrada). QA de mezcla = LUFS integrado + volumedetect
-  de tramo hablado vs gap vs cola (la voz debe dominar por >5dB).
-- **En filter_complex, un pad etiquetado no se reusa**: consumirlo dos veces (voz en sidechain
-  + amix) produce grafos rotos que fallan SILENCIOSO (exit 0, audio sin voz). Usar `asplit=2`.
-  Tres mezclas se tiraron por esto.
 - Omni puede correr el audio ~0.5s en clips cortos → captions del master se miden sobre
   el render, no la fuente.
 - Los gags/transiciones con <1s de ventana = cambio de estado, no movimiento lento.

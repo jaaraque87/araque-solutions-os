@@ -1,0 +1,15 @@
+[
+  {
+    "video": "outputs/naia-araque/scene_01.mp4",
+    "output": "outputs/naia-araque/omni/scene_01_patterned.mp4",
+    "aspect_ratio": "9:16",
+    "prompt": "<< esqueleto compartido de la skill + bloque de estilo de styles/patterned/style.md + beat map del clip — lo redacta la skill omni-edit, NO a mano >>",
+    "image": [".claude/skills/omni-edit/styles/patterned/refs/ref_0.8.jpg"]
+  },
+  {
+    "video": "outputs/naia-araque/scene_02.mp4",
+    "output": "outputs/naia-araque/omni/scene_02_patterned.mp4",
+    "aspect_ratio": "9:16",
+    "prompt": "<< ídem, parte variable del clip 2 — misma paleta rotada, doodads propios >>"
+  }
+]

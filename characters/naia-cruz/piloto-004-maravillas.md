@@ -18,6 +18,8 @@ Audio input = el trozo completo de la parada (lipsync aplica mientras hay cara; 
 ```
 Entre paradas: **corte duro** en el ensamblaje (canon: transiciones LTX solo dentro del mismo entorno). El corte duro ES el ritmo listicle.
 
+**⚠ REGLA DEL SHOT 2 (QA Giza en TAO Director V2, 2026-07-08):** desde un selfie a nivel de piso NO se puede pedir "aerial drone shot" — el modelo no teletransporta la cámara: rota la escena en su eje, distorsiona y DUPLICA el monumento (mismo vicio que la órbita en Kling). El global prompt de continuidad del V2 agrava el salto. **Shot 2 correcto = movimiento continuo de UN solo eje partiendo de la posición de ella:** `the camera turns away from the woman and pushes forward in a straight line toward [monumento], one single continuous camera move`. Nada de orbit/aerial/spin. Negativos extra: `no camera orbit, no camera rotation, no spinning, no duplicated [monumento], no extra [monumento]`. Movimientos corregidos: Giza push-in recto · Muralla glide siguiendo la línea de la muralla · Coliseo push-in hacia la arena (desde adentro) · Petra pull-back por el Siq · Taj push-in al domo · Machu pull-back revelando · Chichén push-in a la escalinata.
+
 **GATE DE VALIDACIÓN:** producir SOLO la ejecución de las pirámides primero. Si el multi-shot interno (cara→dron) sale limpio, se producen las otras 8. Si LTX no aguanta el cambio de escena interno, plan B: 2 ejecuciones por parada (Naia 4s + dron 3s por separado, pipeline estándar piloto-002) = mismo reel, más renders.
 
 ## Guion (~130 palabras ≈ 45-48s, eleven_v3 + audio tags, UNA generación master)

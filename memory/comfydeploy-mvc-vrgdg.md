@@ -1,0 +1,31 @@
+---
+name: comfydeploy-mvc-vrgdg
+description: "ComfyDeploy (org araquesolutions) — Music Video Creator de vrgamedevgirl instalado; datos de máquina, API interna y trucos del navegador"
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: 158fbfdf-2e80-4382-9d1e-e2ae4349727a
+---
+
+ComfyDeploy org **araquesolutions** (app.comfydeploy.com), sesión Google de jaaraque87.
+
+**Music Video Creator (vrgamedevgirl / vrgamegirl19)** — instalado el 2026-07-05:
+- Workflows importados: "LTX2.3 MVC Prompt Creator V5.1", "LTX2.3 MVC I2V V5.2" (`bac7a9f2`), "LTX2.3 MVC T2V V5.2" (`8b0eb710`), asociados a la máquina "LTX TODO EN UNO's Machine" (`385499ef-14be-4a75-9ab5-4617913e9e4d`).
+- Repo: github.com/vrgamegirl19/comfyui-vrgamedevgirl — las versiones nuevas viven en ramas `dev/music-video-builder-ui-test-vN` (v9 = la más reciente a jul 2026, commit `d6dde1fd`, incluye carpeta `flow_automation` = Video Builder UI standalone).
+- Máquina actualizada: pack vrgamedevgirl a commit v9 + paso `RUN pip install llama-cpp-python` (rueda CUDA cu124 con fallback) ANTES del paso del pack. **v21 (`2fc4206e`) = READY y completa** (llama-cpp-python 0.3.32 desde rueda, vrgdg en d6dde1f, tardó ~2h50m — los builds de esta máquina tardan horas por las dependencias pesadas, el campo build_log/updated_at NO se actualiza durante el build, no asumir colgado). v22 (`05b9ae1e`) = variante endurecida (llama solo-rueda, sin torchcodec) quedó compilando; al terminar se activa sola. El clasificador de permisos NO deja cambiar machine_version_id vía PATCH (decisión del usuario en UI).
+- Todos los modelos requeridos ya estaban en el volumen (Q6_K 21GB, VAEs, gemma sikaworld, supergemma4-26b Q4_K_M + mmproj en LLM/, z_image_turbo, upscalers). El "vocoder 24K" que aparece al grep del JSON es metadata residual en `extra.prompt`, NO es nodo activo.
+- ComfyUI de la máquina: v0.23.0 (commit a88e02b1) — cubre nodos core nuevos (ComfySwitchNode, ManualSigmas, ResizeImageMaskNode).
+- El usuario corre sesiones interactivas con GPU **L40S** (no la A10G por defecto). `run_timeout` API = 300s.
+
+**IMPORTANTE — supergemma4 es arquitectura Gemma 4:** el modelo `supergemma4-26b-uncensored-fast-v2-Q4_K_M.gguf` (HF: juan1995-dev/..., origen Jiunsong/supergemma4-26b-uncensored-gguf-v2, MoE 26B-A4B) requiere llama.cpp RECIENTE. La 0.3.19 de abetlen importa pero falla "Failed to load GGUF model". Solución (v26): rueda del fork **JamePeng/llama-cpp-python** release `v0.3.40-cu131-linux-20260607`, archivo `llama_cpp_python-0.3.40+cu131-cp311-cp311-linux_x86_64.whl` (CUDA 13 = la de la imagen torch cu130). Instalar con --no-deps + registrar en ld.so.conf los dirs nvidia/{cuda_runtime,cublas}/lib (cu12 y cu13) + torch/lib. JamePeng publica cu124/126/128/131 linux+win, cp310-313 — es LA fuente de ruedas llama-cpp modernas.
+
+**Fix llama-cpp-python en ComfyDeploy (torch cu130) — receta anterior (v25, insuficiente por versión):**
+La imagen usa torch 2.12+cu130 y NO expone librerías CUDA 12 en el path del sistema. Las ruedas CUDA de abetlen (índice whl/cu124, máx 0.3.19 para cp311) fallan al importar con `libcudart.so.12: cannot open shared object file`. PyPI gana la resolución con versión más nueva (0.3.32 CPU) si se usa --extra-index-url → usar `--index-url` (solo el índice de abetlen) + `--no-deps`. Fix completo: instalar `nvidia-cuda-runtime-cu12 nvidia-cublas-cu12` por pip y registrar `/usr/local/lib/python3.11/site-packages/nvidia/{cuda_runtime,cublas}/lib` en `/etc/ld.so.conf.d/` + `ldconfig`. Verificable en build sin GPU con `ldconfig -p | grep libcudart.so.12`. El import de llama_cpp NO se puede testear en build (no hay GPU/driver). El nodo VRGDG_LlamaCppDoctor del pack da el traceback exacto en sesión. Los builds de esta máquina tardan 1-3 h y el build_log/updated_at no se actualizan hasta el final.
+
+**Trucos aprendidos (importantes):**
+- La página de detalle de máquina en app.comfydeploy.com CONGELA el renderer de Chrome (screenshots fallan con "still loading" para siempre). Solución: usar la API interna same-origin con cookies: `GET /api/machine/{id}`, `PATCH /api/machine/serverless/{id}` (acepta parcial, dispara rebuild), `GET /api/machine/serverless/{id}/versions?offset=0&limit=N`, `GET /api/volume/private-models` (inventario del volumen). Navegar directo a la URL del API en una pestaña y leer con get_page_text, o fetch vía javascript_tool desde cualquier página de la app.
+- Para subir workflows sin file picker: en `workflows?view=import`, inyectar el JSON con javascript_tool (fetch desde raw.githubusercontent + DataTransfer + input.files + dispatchEvent change). Escribir el nombre DESPUÉS de que cargue la página (se regenera aleatorio al hidratar).
+
+**Estado final 5 jul 2026:** v26 ready y FUNCIONANDO — Parte 1 (Prompt Creator) generó los prompts de Naia Cruz; Parte 2 (I2V V5.2) configurada (modelos ok, id-lora talkvid 0.8 two-pass, 1080×1920, FPS 24) y lanzada. Handoff portable en `Downloads\HANDOFF_MVC_ARAQUE.md`. Pendientes: LoRA Z-Image de Naia (dataset 40 fotos GPT Images 2 en este PC, 9:16, ~6000 steps), Video Builder UI (flow_automation), importar remake_mode. El error "prompt count does not match SRT scene count" se arregla re-corriendo (semilla nueva) o recortando el silencio final del audio. NO usar el JSON _remake_mode como principal (trae modelos personales del creador).
+
+Relacionado: [[project_kenza]], [[project_araque_solutions]], [[project_nora]]

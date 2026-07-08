@@ -77,6 +77,10 @@ no extra limbs, no face warp, no identity change, no multiple people in shot 1, 
 ```
 HOOK y CTA: ejecución simple de un solo shot (sin transición), prompt estilo piloto-002 SEG4.
 
+## ✅ IMÁGENES GENERADAS Y APROBADAS (QA 2026-07-08, en Downloads del PC actual)
+
+`HOOKOK.png` (hook/CTA, habitación+maleta) · `NAIAPIRAMIDES1.png` (Giza) · `NAIAMURALLA.png` (Muralla) · `PETRAOK.png` · `ROMAOK.png` (Coliseo) · `TAJOK.png` · `MACHUOK.png` · `MEXICOOK.png` (Chichén). Identidad y outfit consistentes en las 8, encuadre frontal. **Respaldar por WhatsApp/Drive.**
+
 ## ✅ GATE OK (2026-07-05) — VARIABLES POR PARADA para el template
 
 Rellenar el template con estas 4 variables por parada. IMG: mismo template de imagen, solo cambia [LOCACIÓN].

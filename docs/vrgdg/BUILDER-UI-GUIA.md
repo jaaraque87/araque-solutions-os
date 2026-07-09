@@ -67,6 +67,8 @@ Otras mejoras relevantes (requieren actualizar pack a ≥4cfc788):
 `AttributeError: 'NoneType' object has no attribute 'get'` en nodo 755 `VRGDG_ShowText` (VRGDG_GeneralNodes2.py:1451): el Builder de esa versión envía los prompts SIN `extra_pnginfo` y tanto el nodo ShowText como el jobs.py del core asumen que existe. **NO es arreglable con archivos de contexto** (se probó: desmarcar "Use VRGDG text context files" + rellenar ConceptPrompts/MotionNotes/subject/theme/story — el error persiste; esos archivos igual deben existir para otros pasos). **FIX: actualizar el pack vrgamedevgirl a ≥`4cfc788`** (head rama v9, incluye además fix de scene recovery y doble post-proceso). Rebuild de máquina: 15 min-3 h, corre sin sesión.
 Progreso NO perdido: el proyecto (escenas+audios+imágenes+prompts) queda guardado con Quick Save y se recarga con Load Project.
 
+**✅ FIX APLICADO (2026-07-09 04:34 UTC, por Claude vía API interna):** PATCH del paso vrgamedevgirl a `4cfc7883ac8146d5f8a3f8f861c4b8400ace80c9` → **versión 30 de la máquina en building**. Al estar ready: sesión → Load Project `maravillas7` → Render All. (Receta del PATCH remoto: GET /api/machine/{id} → modificar docker_command_steps solo en el paso del pack → PATCH /api/machine/serverless/{id}; la página de la máquina congela Chrome, usar fetch same-origin desde una página liviana.)
+
 ## Verificar en vivo (huecos que las capturas no muestran)
 - Dónde exactamente se selecciona el LoRA Z-Image en Image Settings del Builder (¿mismo panel que I2V V5.2?)
 - Si Flow/GPT (motores browser) aparece deshabilitado en cloud (esperado: sí)

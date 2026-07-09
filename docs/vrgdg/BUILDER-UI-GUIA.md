@@ -34,6 +34,19 @@ El Builder corre DENTRO de la sesión ComfyDeploy (no requirió update de pack).
 8. **Image All** → QA de frames (identidad) → re-tirar sueltos si hace falta
 9. **Render All** → **Stitch Preview** → **Build Full Video** (en re-builds: Keep current video seeds)
 
+## Changelog del creador (Discord, commit `4cfc788` — POSTERIOR al pack de la máquina)
+
+**🔑 MÉTODO MSR — cita textual: "But now you don't need a ltx lora! Just use this method!"** — Reference-to-Video con start frame (= I2V) + **character ref sheet** que mantiene al personaje consistente en toda escena: si el start frame es un close-up y la cámara abre, LTX inventa el cuerpo/outfit — el ref sheet se lo dicta. Sustituye el LoRA de personaje para video. El Reference Builder ahora genera sheets de 3 paneles estrictos (cara close-up / cintura / cuerpo completo).
+
+Otras mejoras relevantes (requieren actualizar pack a ≥4cfc788):
+- **Instrucciones Gemma editables** por escena/globales/presets reusables para T2I, I2V, T2V, RTV, Ingredients
+- **Advanced Node Settings por modo de video** (samplers, manual sigmas, I2V inplace strength/bypass) — cada modo guarda lo suyo
+- **No-lip-sync mejorado**: los prompts ya no fuerzan canto/lipsync en escenas visuales
+- **Fix scene-video recovery**: renders completados que quedaban en carpeta temporal sin cargar al proyecto (≈ nuestro síntoma "run 100% sin video final")
+- **Fix doble post-procesado** en stitching (LUT/grain aplicados dos veces = escenas desaturadas)
+- **Fix Ernie** usando imágenes de proyectos viejos
+- Beat mode en transcripción · previews grandes en Reference Builder · link a guía de soporte
+
 ## Verificar en vivo (huecos que las capturas no muestran)
 - Dónde exactamente se selecciona el LoRA Z-Image en Image Settings del Builder (¿mismo panel que I2V V5.2?)
 - Si Flow/GPT (motores browser) aparece deshabilitado en cloud (esperado: sí)

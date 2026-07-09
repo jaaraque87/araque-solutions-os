@@ -62,6 +62,11 @@ Otras mejoras relevantes (requieren actualizar pack a ≥4cfc788):
 - **Instrucciones LLM editables** (T2I/I2V/T2V/RTV/Ingredients + presets): "Gemma isn't the smartest model" — instrucciones CORTAS y simples.
 - **FlowGPT manual mode**: botón **"Import Latest Download"** asigna la última descarga del navegador a la escena activa y avanza — puente semi-manual para meter imágenes de ChatGPT escena por escena (verificar si funciona con sesión cloud).
 
+## 🐛 BUG BLOQUEANTE con pack d6dde1fd (04-jul) + ComfyUI 0.23.0 — Render All imposible
+
+`AttributeError: 'NoneType' object has no attribute 'get'` en nodo 755 `VRGDG_ShowText` (VRGDG_GeneralNodes2.py:1451): el Builder de esa versión envía los prompts SIN `extra_pnginfo` y tanto el nodo ShowText como el jobs.py del core asumen que existe. **NO es arreglable con archivos de contexto** (se probó: desmarcar "Use VRGDG text context files" + rellenar ConceptPrompts/MotionNotes/subject/theme/story — el error persiste; esos archivos igual deben existir para otros pasos). **FIX: actualizar el pack vrgamedevgirl a ≥`4cfc788`** (head rama v9, incluye además fix de scene recovery y doble post-proceso). Rebuild de máquina: 15 min-3 h, corre sin sesión.
+Progreso NO perdido: el proyecto (escenas+audios+imágenes+prompts) queda guardado con Quick Save y se recarga con Load Project.
+
 ## Verificar en vivo (huecos que las capturas no muestran)
 - Dónde exactamente se selecciona el LoRA Z-Image en Image Settings del Builder (¿mismo panel que I2V V5.2?)
 - Si Flow/GPT (motores browser) aparece deshabilitado en cloud (esperado: sí)

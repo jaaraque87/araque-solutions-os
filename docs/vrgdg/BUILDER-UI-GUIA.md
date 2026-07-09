@@ -47,6 +47,21 @@ Otras mejoras relevantes (requieren actualizar pack a ≥4cfc788):
 - **Fix Ernie** usando imágenes de proyectos viejos
 - Beat mode en transcripción · previews grandes en Reference Builder · link a guía de soporte
 
+## RECETA MSR (Reference-to-Video sin LoRA de personaje) — del video del creador 07-07
+
+1. Reference Builder → subject → **Reference Type: "MSR LoRA Reference"** → cargar/generar **character sheet de 3 paneles** (cara close-up / torso / cuerpo completo — "imperativo" según el creador)
+2. Pestaña Video → modo **Reference to Video** → Video Settings → ✅ **"Use scene image as 2nd ref image"** (la imagen de la escena entra como segunda referencia = actúa de start frame)
+3. **Warm up Frames = 0** (evita distorsión inicial y sincroniza el primer frame con la imagen)
+4. Create Video. Resultado: identidad y outfit estables aunque la cámara abra el plano (el defecto del I2V puro: LTX pierde identidad en paneos verticales sin referencia global del cuerpo)
+⚠ Requiere el archivo del MSR LoRA en el volumen — el botón HF de la UI está DESACTUALIZADO; el link correcto está en el Discord (o usar "Download Models" del Builder).
+
+## Otras perlas de los 5 demos (docs local-*.md de esta carpeta)
+- **ID-LoRA pipeline** (id lora.mp4): cortos con diálogo multi-personaje + **clonación de voz por muestra de audio** por personaje; Scene Casting con auto-duración desde los diálogos. Orden obligatorio: Story Layer/diálogos ANTES de Scene Casting. Usar el ID-LoRA principal (caldescenes), NO el de celebridades. Botones superiores del Storyboard = obsoletos, ignorar.
+- **Beat Mode** (Line Mapping → Create Scenes From Lines): segment mode Beat, resolution 0.7, include instrumental gaps — "no perfecto pero suficiente para LTX".
+- **Generación de referencias in-UI**: usar motor **Z-Image para fotorrealismo** — el creador advierte que Flow/GPT y Nano Banana tienden a caricaturizar los sheets.
+- **Instrucciones LLM editables** (T2I/I2V/T2V/RTV/Ingredients + presets): "Gemma isn't the smartest model" — instrucciones CORTAS y simples.
+- **FlowGPT manual mode**: botón **"Import Latest Download"** asigna la última descarga del navegador a la escena activa y avanza — puente semi-manual para meter imágenes de ChatGPT escena por escena (verificar si funciona con sesión cloud).
+
 ## Verificar en vivo (huecos que las capturas no muestran)
 - Dónde exactamente se selecciona el LoRA Z-Image en Image Settings del Builder (¿mismo panel que I2V V5.2?)
 - Si Flow/GPT (motores browser) aparece deshabilitado en cloud (esperado: sí)

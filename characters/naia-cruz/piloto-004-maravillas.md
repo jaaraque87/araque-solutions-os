@@ -1,5 +1,22 @@
 # PILOTO 004 — "7 MARAVILLAS" (formato SECUENCIA, ~48s, multi-shot por ejecución)
 
+## ✅ ENTREGADO 2026-07-09: `MARAVILLAS-FINAL-PARA-PUBLICAR.mp4` (44.93s, 1080×1920)
+
+**RECETA FINAL TAO V2 (tras 3 iteraciones de QA — CANON para talking-heads en Director):**
+- **La cámara NUNCA viaja y el sujeto NUNCA gira**: drift sobre el hombro = distorsión; giro de cabeza = distorsión. Único movimiento seguro: **zoom-in muy sutil + actuación facial** (cejas/sonrisa/mirada). El fondo hace el trabajo escénico.
+- **"hushed tone / sharing a secret" MATA el lipsync** (el modelo susurra sin mover la boca). Usar "soft but clearly spoken" + "Her lips and jaw move visibly and expressively with every syllable".
+- Duración segmento = mp3 + 0.3 · mp3 en DIALOGUE con Start/Duration explícitos · 720×1280 (LTX entrega 896×1664 @24).
+
+**RECETA DE ENSAMBLAJE (validada):**
+1. Master de audio = trozos CRUDOS + apad 0.1s en los primeros 8 → los crossfades comen el resto
+2. Video: trim cada clip a trozo+0.3 → cadena `xfade=fade:duration=0.2` con offsets acumulados (junction_k = Σtrozos_{<k} + 0.1k) → cuadre perfecto voz/escena
+3. **Ambiente exterior sintético**: `anoisesrc=pink → lowpass 380 → tremolo 0.25 → vol 0.045`, con fades, solo durante las maravillas (adelay hasta el fin del hook) — la casa queda limpia
+4. Overlays content-reel-lab (textos sin spoiler del reveal: el CTA card "nada de esto fue filmado" cae alineado con la confesión hablada)
+5. **Outro logo 1.8s**: color 0x0a0a10 + araque-logo-final.png 780px centrado + fade in/out DEL VIDEO COMPLETO — ⚠ NO usar fade con alpha=1 encadenado sobre el PNG (produce frame negro); fade simple post-overlay
+6. afade out del audio 0.7s antes del outro · concat final @30fps
+
+QA aceptado: identidad consistente en los 9 clips; único lunar = final de Giza (reveal sin Naia + borrón de mano, disimulado por el crossfade — candidato a re-roll futuro).
+
 **Concepto:** Naia "recorre" las 7 maravillas en un día. Cada parada = dato curioso a cámara + toma dron/zoom de la maravilla. Cierre de INTRIGA (no venta): ella nunca salió de casa. Pieza de portafolio/awareness para @araquesolutions.
 
 **Hipótesis del scorecard:** el formato viaje+datos retiene por curiosidad serial (cada maravilla es un re-hook) y el reveal final convierte awareness en DMs sin CTA de venta dura. Métricas: retención >40% al s30, saves/shares (formato coleccionable), DMs espontáneos.

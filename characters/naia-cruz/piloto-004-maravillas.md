@@ -17,6 +17,8 @@
 
 QA aceptado: identidad consistente en los 9 clips; único lunar = final de Giza (reveal sin Naia + borrón de mano, disimulado por el crossfade — candidato a re-roll futuro).
 
+**CAPTIONS (decisión ejecutiva 2026-07-09, avalada por el canon `avatar-reel-editing` + `hf-talking-head-director` "muchos mutean"):** SÍ llevan captions — chunks de 1-3 palabras, MAYÚSCULAS, blanco con outline negro, sin caja, 58px, y=1120 (y=990 durante la card del hook para no chocar), puntuación terminal como frontera dura. **Timing EXACTO desde el alignment.json de ElevenLabs** (superior a Whisper: cero ASR) remapeado al timeline ensamblado. Script reusable: `tools/content-reel-lab/scripts/build-captions-from-alignment.mjs` → genera `captions_canon.ass` → quemar DESPUÉS de los overlays (ffmpeg filtro ass) → re-concat con el outro.
+
 **Concepto:** Naia "recorre" las 7 maravillas en un día. Cada parada = dato curioso a cámara + toma dron/zoom de la maravilla. Cierre de INTRIGA (no venta): ella nunca salió de casa. Pieza de portafolio/awareness para @araquesolutions.
 
 **Hipótesis del scorecard:** el formato viaje+datos retiene por curiosidad serial (cada maravilla es un re-hook) y el reveal final convierte awareness en DMs sin CTA de venta dura. Métricas: retención >40% al s30, saves/shares (formato coleccionable), DMs espontáneos.

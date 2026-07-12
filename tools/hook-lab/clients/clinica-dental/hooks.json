@@ -1,0 +1,118 @@
+{
+  "cliente": "clinica-dental",
+  "fecha": "2026-07-12",
+  "research": "niche-radar YouTube (@Dentalk 1.25M subs + @UnDentista) — datos verificables en radar/",
+  "nota": "Rubro salud: educar > vender, cero claims absolutos. Tuteo venezolano. CTA conversion suave por WhatsApp. Formato corto (15-45s) gana en el nicho hispano.",
+  "hooks": [
+    {
+      "id": "h01",
+      "linea": "Si tus dientes se mueven así, para todo y mira esto.",
+      "overlay": "esto NO es normal",
+      "visual_frame1": "Close-up de dientes moviéndose (video viral o clínico) con la doctora/vocera entrando a reaccionar",
+      "patron": "auto-diagnóstico + alarma",
+      "angulo": "react con suspenso",
+      "respaldo": "37K @UnDentista",
+      "score": 10,
+      "seleccionado": true
+    },
+    {
+      "id": "h02",
+      "linea": "El error que comete casi todo el mundo cuando le duele una muela... y que lo empeora.",
+      "overlay": "no hagas ESTO con el dolor de muela",
+      "visual_frame1": "Persona tomando remedio casero / aplicando calor en la cara, gesto de dolor",
+      "patron": "miedo al error",
+      "angulo": "urgencia por error propio",
+      "respaldo": "38K @Dentalk",
+      "score": 10,
+      "seleccionado": true
+    },
+    {
+      "id": "h03",
+      "linea": "¿Te truena la mandíbula cuando abres la boca? Te explico qué es en veinte segundos.",
+      "overlay": "¿te truena? mira esto",
+      "visual_frame1": "Primer plano abriendo la boca con la mano en la mandíbula",
+      "patron": "auto-diagnóstico + promesa rápida",
+      "angulo": "síntoma cotidiano ignorado",
+      "respaldo": "26K @UnDentista",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h04",
+      "linea": "¿Tu lengua tiene estas marcas? Puede ser la señal de que rechinas los dientes dormido.",
+      "overlay": "mírate la lengua AHORA",
+      "visual_frame1": "Lengua con marcas dentadas en primer plano + flecha señalando",
+      "patron": "auto-diagnóstico corporal",
+      "angulo": "el viewer se revisa en vivo",
+      "respaldo": "11-17K @Dentalk (8.8% eng)",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h05",
+      "linea": "—Doctora, ¿y las carillas duelen? —La pregunta que TODOS hacen antes de transformar su sonrisa.",
+      "overlay": "¿duelen las carillas?",
+      "visual_frame1": "Dramatización consulta: paciente nerviosa en el sillón, doctora sonriendo",
+      "patron": "dramatización de consulta",
+      "angulo": "objeción principal del tratamiento estrella",
+      "respaldo": "17K @UnDentista (formato consulta)",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h06",
+      "linea": "¿Por qué te quieren sacar la muela del juicio si ni siquiera te duele?",
+      "overlay": "¿y si no me duele?",
+      "visual_frame1": "Radiografía panorámica señalando la muela del juicio",
+      "patron": "curiosity gap",
+      "angulo": "desconfianza del paciente convertida en educación",
+      "respaldo": "22K @Dentalk (winner en español)",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h07",
+      "linea": "Pocos dentistas te dicen esta verdad sobre el blanqueamiento.",
+      "overlay": "la verdad del blanqueamiento",
+      "visual_frame1": "Doctora/vocera bajando la voz a cámara, gesto de confidencia",
+      "patron": "insider/contrarian",
+      "angulo": "secreto del gremio",
+      "respaldo": "14K @UnDentista",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h08",
+      "linea": "Así se ve una sonrisa perfecta según la ciencia. ¿La tuya cumple?",
+      "overlay": "¿tu sonrisa cumple?",
+      "visual_frame1": "Grilla de proporciones sobre una sonrisa (línea de sonrisa, simetría)",
+      "patron": "ciencia + self-check",
+      "angulo": "estética aspiracional medible",
+      "respaldo": "16K @UnDentista",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h09",
+      "linea": "Retiro de brackets en quince segundos. El video más satisfactorio que vas a ver hoy.",
+      "overlay": "ASMR dental 😌",
+      "visual_frame1": "Procedimiento real del cliente en primer plano (con consentimiento)",
+      "patron": "satisfying/ASMR",
+      "angulo": "material clínico real = prueba social",
+      "respaldo": "13K en 12s @UnDentista",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h10",
+      "linea": "Eso que tienes en las encías cuando te cepillas... NO es normal.",
+      "overlay": "sangrar NO es normal",
+      "visual_frame1": "Cepillo con rastro rosado en el lavamanos",
+      "patron": "anti-normalización",
+      "angulo": "síntoma normalizado = urgencia",
+      "respaldo": "17-19K @UnDentista (patrón NOT normal)",
+      "score": 9,
+      "seleccionado": true
+    }
+  ]
+}

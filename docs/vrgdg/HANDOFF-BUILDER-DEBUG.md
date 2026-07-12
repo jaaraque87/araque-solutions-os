@@ -69,6 +69,10 @@ El **workspace de ComfyDeploy** (iframe que envuelve ComfyUI) no serializa el gr
 
 **✅ Test C EJECUTADO (2026-07-12 01:42 UTC, Claude, autorizado por el dueño, script diseñado por Codex):** step `vrgdg-null-workflow-fix` insertado tras `vrgdg-v9-cmd` (idx 51→52), 61 steps confirmados, commit del pack intacto (4cfc788). **Versión v31 (`7e7b6431-c0ea-491c-ab66-19013738dceb`) en building.** Al estar ready: buscar `PATCH-755-APPLIED:2` en el build log; luego prueba mínima de UNA escena (diseño a cargo de Codex) antes de gastar en batch. Datos verificados pre-ejecución: 2 ocurrencias exactas del patrón en el raw de GitHub; steps `commands` SÍ llevan prefijo `RUN `.
 
+**✅ RESULTADO TEST v31 (Codex, 2026-07-12):** el parche 755 FUNCIONÓ — el render pasó el nodo 755, completó samplers + upscale + VAE decode + recorte y llegó al **93%**; falló solo en `VHS_VideoCombine` (nodo 273) al empaquetar el MP4, por el mismo `workflow=null` (VideoHelperSuite lee el metadata antes de consultar `save_metadata`). **Causa raíz confirmada al 100%: el Builder envía `/prompt` SIN `extra_data`.**
+
+**⚙ FIX RAÍZ v32→v34 (diseño Codex, ejecución Claude, 2026-07-12):** step `vrgdg-prompt-metadata-fix` tras el 755-fix — inyecta `extra_data.extra_pnginfo.workflow={nodes:[],extra:{}}` en el body de queuePrompt de los 4 JS del pack (verificadas 4 apariciones exactas en 4cfc788: MusicVideoBuilderUI, MusicVideoPromptCreatorUI, VideoEditorUI, WorkflowRunnerUI). **LECCIÓN de builds:** v32 y v33 fallaron a los 2-4 min con la sintaxis original (`find -exec` + `--include` + `$(... | wc -l)`); reescrito v34 SOLO con las primitivas que ya pasaron en v31 (`test -f && sed -i && grep -qF` explícito por archivo, sin subshells/pipes/find) → v34 superó la ventana de fallo. **Regla: en steps `commands` de esta máquina usar únicamente test/sed/grep/echo encadenados con && .** v34: 62 steps, commit 4cfc788 intacto, sin GPU. Al estar ready: prueba única de UNA escena (Codex) y apagar L40S.
+
 **Test C — Parche quirúrgico (referencia original):**
 Agregar un step tipo `commands` en el build de la máquina, inmediatamente DESPUÉS del step del pack (índice ~51 de 60):
 ```

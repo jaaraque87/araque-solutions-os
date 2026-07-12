@@ -1,0 +1,4 @@
+interface:
+  display_name: "FACS Acting Direction"
+  short_description: "Emotion maps for expressive image prompts"
+  default_prompt: "Use $facs-acting-direction to build a cinematic image prompt with anatomically precise emotion."

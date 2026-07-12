@@ -4,18 +4,80 @@ Modelo: `bytedance/seed-audio-1.0` en fal — genera escenas de audio completas 
 
 Helper: `python3 scripts/seed_audio_gen.py --prompt-file prompt.txt --out out.mp3` (lee `FAL_API_KEY` de `.env`, submit + poll + descarga MP3 y JSON de metadata).
 
-## Estructura canónica del prompt (7 partes, en este orden)
+## Estructura canónica del prompt (formato guion intercalado)
 
-El prompt es un **mini guion de audio**, no un brief. Escribilo en inglés con el diálogo en el idioma target.
+El prompt es un **mini guion de audio en prosa**, no un brief con secciones etiquetadas. Patrón validado 2026-07-07 con dos ejemplos calificados "perfectos" por Paul (verbatim en la sección siguiente): párrafos cortos que alternan ambiente, diálogo dirigido y SFX puntuales, **en el orden exacto en que suenan** — el orden del texto ES el timeline. Escribilo en inglés con el diálogo en el idioma target.
 
-1. **Idioma + acento + duración realista.** El acento se refuerza acá con negativos explícitos:
-   `Generate a realistic audio scene of about X seconds in Spanish. Both voices must have a strong, unmistakable Rioplatense Argentine accent from Buenos Aires (porteño): Argentine intonation and melody. Never a neutral Latin American accent, never Mexican, never Castilian.`
-2. **Escena + tratamiento acústico por voz.** Quién está físicamente en el espacio (full-frequency, integrado al ambiente) vs. quién suena mediado por un dispositivo (teléfono/TV/radio → thin, boxy, band-limited, high-pass, con la reverb del cuarto). Decir explícitamente qué voz NO filtrar. **Repetir la nacionalidad/acento en la descripción de CADA personaje** (tercera capa de refuerzo).
-3. **Diálogo línea por línea** con etiqueta de personaje, emoción y delivery, más marcadores de pausa/eventos no verbales (`Short pause, listening.` / `A sharp shocked gasp.`).
-4. **Background:** UNA cama sonora continua fuerte + 1-2 eventos puntuales con jerarquía de volumen explícita (`very low`, `distant`, `noticeable but distant`). Si un evento entra en un momento específico, decirlo (`Right after the woman screams, police sirens approach...`).
-5. **Style:** el carácter de la grabación (`imperfect smartphone recording`, `realistic domestic night scene, believable daily-life realism`).
-6. **Avoid:** negative prompt — qué voces no filtrar, qué no debe tapar el diálogo, no music/no robotic voices.
-7. **Duración y cierre explícito:** cuál es la última línea, qué sonido queda después y por cuánto, y `Never repeat any dialogue line.`
+### Cuerpo del guion
+
+1. **Apertura = la escena sonora en una oración, sin voces.** Lugar + cama continua + movimiento espacial y dinámica ligada a la acción: `School bell rings from near to far, with after-school hallway ambience: distant footsteps, student chatter, locker clacks, and soft hallway reverb.` La cama no se describe estática — se le da comportamiento (`tens of thousands of fans roar throughout the background, swelling whenever the action peaks`).
+2. **Diálogo línea por línea, cada línea en su propio párrafo**, con la fórmula:
+   `Nombre (demografía, acento, textura de voz, personalidad) <verbo de delivery + matiz>: "línea"`
+   - **Primera aparición** de cada personaje: descriptor completo — edad/género + acento + textura de voz + personalidad (`teenage male, American accent, bright youthful voice, sunny and cocky`).
+   - **Líneas siguientes**: tag corto + la emoción de ESA línea. La dirección evoluciona línea a línea y dibuja el arco: `coaxing, dragging the words with a grin` → `gentler, more sincere` → `excited and triumphant`; o en voz única, escalada de intensidad: `extremely exhilarated` → `voice soaring higher, almost hoarse with excitement` → `full-throated and breathless`. Nunca la misma emoción estática en todo el guion.
+   - **Verbo de delivery específico**, nunca "says" pelado: teases playfully, mutters, lowers her voice flustered, offers, shouts rapidly, stretches the word.
+   - **La prosodia se escribe dentro de la línea**: vocales estiradas (`"What a goooal!"`), dudas con puntos suspensivos (`"Uh... I still haven't finished my homework."`, `"...Fine, just half a day, okay?"`).
+3. **SFX como líneas `Sound effect:` intercaladas** en el beat exacto del guion donde suenan (no agrupadas en una sección Background aparte), con onomatopeya + distancia de mic + gatillo narrativo: `Sound effect: a backpack zipper goes "zzzip" close to the mic.` / `Sound effect: the crowd erupts at the moment of the goal, with whistles, applause, and chanting continuing to the end.`
+4. **Cierre = línea `Ending sound:`** con el último sonido y cómo decae: `Ending sound: both sets of footsteps fade down the hallway as the school ambience softens.` Es la implementación canónica del cierre explícito anti-relleno.
+
+### Armadura técnica (se suma al guion cuando aplica)
+
+Los ejemplos canónicos son escenas inglesas cortas y no la necesitan; estas capas siguen vigentes y validadas:
+
+- **Idioma + acento reforzado 3 veces** (escenas en español): instrucción general con negativos explícitos (`strong, unmistakable Rioplatense Argentine accent from Buenos Aires (porteño)... Never a neutral Latin American accent, never Mexican, never Castilian`) + nacionalidad/acento repetido en el descriptor de CADA personaje + léxico local en el diálogo si alguno sigue neutro.
+- **Duración realista** (pedir ~20% menos del target) + `Never repeat any dialogue line.` al final.
+- **Tratamiento acústico por voz** cuando alguien suena mediado por un dispositivo (teléfono/TV/radio → thin, boxy, band-limited, high-pass, con la reverb del cuarto) + decir explícitamente qué voz NO filtrar.
+- **Style / Avoid** cuando hacen falta: carácter de la grabación (`imperfect smartphone recording`) y negative prompt (no music, no robotic voices, qué no debe tapar el diálogo).
+- **Evento pico**: declararlo al principio como la razón de ser de la pieza + contraste explícito de mezcla (ver sección siguiente).
+- **Marcadores no verbales** entre líneas cuando el beat lo pide: `Short pause, listening.` / `A sharp shocked gasp.`
+
+## Ejemplos canónicos (aprobados por Paul, 2026-07-07)
+
+**Diálogo dos personajes + SFX intercalados (pasillo de escuela):**
+
+```
+School bell rings from near to far, with after-school hallway ambience: distant footsteps, student chatter, locker clacks, and soft hallway reverb.
+
+Jake (teenage male, American accent, bright youthful voice, sunny and cocky) teases playfully: "Hey, Emma, you free Saturday? My treat, that new amusement park!"
+
+Sound effect: a backpack zipper goes "zzzip" close to the mic.
+
+Emma (teenage female, American accent, sweet soft airy voice, shy) lowers her voice, flustered: "Uh... I still haven't finished my homework."
+
+Jake (teenage male, coaxing, dragging the words with a grin) says: "You can do it Sunday. It's just half a day!"
+
+Emma (teenage female, hesitant but softening) mutters: "But... it's due Monday."
+
+Jake (teenage male, gentler, more sincere) offers: "I'll do it with you, then we head out. Deal?"
+
+Emma (teenage female, unable to hide a laugh, shyly giving in) says: "...Fine, just half a day, okay?"
+
+Jake (teenage male, excited and triumphant) replies: "Deal!"
+
+Ending sound: both sets of footsteps fade down the hallway as the school ambience softens.
+```
+
+**Voz única con arco de intensidad + cama reactiva (estadio):**
+
+```
+Inside a huge football stadium, tens of thousands of fans roar throughout the background, swelling whenever the action peaks.
+
+Commentator (middle-aged male, British accent, rich penetrating voice, classic sports commentary, extremely exhilarated) shouts rapidly: "Oh, he scores!"
+
+Commentator (middle-aged male, voice soaring higher, almost hoarse with excitement) stretches the word: "What a goooal!"
+
+Commentator (middle-aged male, full-throated and breathless) continues: "He beats two men and buries it in the top corner. Unbelievable! The stadium is on its feet!"
+
+Sound effect: the crowd erupts at the moment of the goal, with whistles, applause, and chanting continuing to the end.
+```
+
+## Escenas sound-design con evento pico y/o línea única (run detective)
+
+- **El diálogo enterrado en el timeline NO se genera.** Aunque sea una sola línea al final, va en bloque `Dialogue:` separado con personaje, emoción y delivery. El timeline solo referencia el momento ("then the dialogue line").
+- **Evento pico**: declararlo al principio como la razón de ser de la pieza ("The piece exists for ONE violent moment...") + contraste explícito en términos de mezcla ("peaking near full scale; everything else at least 10 decibels quieter") + pre-evento "hushed/restrained". Sin esto sale plano (validado: 4-6 dB de contraste sin el refuerzo, ~30 dB con él).
+- **Sesgo de adelanto ~2s**: el evento pico dispara 1-4s antes de lo pedido, e instrucciones tipo "never earlier than 9 seconds" NO lo frenan. Pedirlo 1-2s más tarde del beat deseado, medir dónde cayó realmente (volumedetect por ventanas de 1s) y remapear los shots — el audio manda.
+- **Límite de prompt 2.048 chars es duro** y el fallo es traicionero: el submit devuelve 200, el status llega a COMPLETED rápido (~5s) y el 422 aparece recién al buscar el response. `scripts/seed_audio_gen.py` tiene guard preventivo.
+- QA de escenas con pico: perfil de niveles segundo a segundo; el pico debe estar ≥8 dB sobre el resto y en el beat esperado. Whisper sobre tramos ayuda a ubicar la línea (los timestamps globales de Whisper en piezas SFX-heavy son poco confiables — transcribir por segmentos extraídos).
 
 ## Gotchas validados (2026-07-03)
 

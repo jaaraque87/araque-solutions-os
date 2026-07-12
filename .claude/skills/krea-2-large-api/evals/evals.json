@@ -1,0 +1,32 @@
+{
+  "skill_name": "krea-2-large-api",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Quiero generar una imagen con Krea 2 Large via API: editorial photoreal portrait, 4:5, high creativity. No pongas la key en el codigo.",
+      "expected_output": "Produces a Krea 2 Large request or command using KREA_API_KEY from the environment, with aspect_ratio 4:5, resolution 1K, creativity high, and no exposed secret.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Tengo un LoRA entrenado en Krea con id abc123. Como lo uso con Krea 2 Large y que hago si no aparece desde la API?",
+      "expected_output": "Explains the styles array, style strength, style discovery via /styles, workspace sharing, and compatibility fallback to style references or moodboards.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Necesito usar un moodboard de Krea en una generacion 16:9 con Krea 2 Large y pollear hasta que termine.",
+      "expected_output": "Uses moodboards with one id/strength object, submits to /generate/image/krea/krea-2/large, then polls /jobs/{job_id} until completed/failed/cancelled.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Generame a mi en estilo RONALDINHO, pero cambiando solo location y vestuario. No quiero que la identidad se vuelva demasiado perfecta ni que pierda expresion/estilo.",
+      "expected_output": "Uses the saved RONALDINHO colored-pencil caricature style preset, maps Creativity 65 to creativity high with intensity 10 and complexity 15, uses the saved style reference around 0.65-0.72, and applies the optional Paul identity transfer workflow with style/expression priority over literal face replacement.",
+      "files": [
+        "/Users/pauldelavallaz/Documents/MORFEO/MORFEO IDENTIDAD/YO/Face_living_simple_01_serio_neutral_00001_.png",
+        "/Users/pauldelavallaz/Documents/MORFEO/MORFEO IDENTIDAD/YO/CARICATURA/omni-8bdc5120-edea-4554-a5b7-0c3f93ab036a.png"
+      ]
+    }
+  ]
+}

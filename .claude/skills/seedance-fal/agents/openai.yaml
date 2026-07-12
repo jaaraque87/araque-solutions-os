@@ -1,0 +1,8 @@
+interface:
+  display_name: "Seedance fal"
+  short_description: "Run Seedance 2.0 through fal with dry-run payload previews."
+  brand_color: "#0F172A"
+  default_prompt: "Usá $seedance-fal para preparar y ejecutar un clip de Seedance 2.0 vía fal, mostrándome las variables antes de enviarlo."
+
+policy:
+  allow_implicit_invocation: true

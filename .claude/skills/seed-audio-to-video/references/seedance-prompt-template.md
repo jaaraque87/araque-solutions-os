@@ -47,9 +47,18 @@ wrong language, gibberish, translated dialogue.
 
 Agregar los específicos de la escena (p. ej. `police officers or vehicles visible`, `full-range TV anchor voice`).
 
-## Ejemplo validado completo
+## Referencias múltiples (validado)
 
-`scratch/seed-audio-probes/seedance_prompt_noticiero_dolares.txt` — escena noticiero/grito, 4 shots clavados a beats [0-5] anchor, [5-6] gasp, [6-10] grito, [10-13] sirenas. Enviado a fal en 1080p 9:16 13s.
+El endpoint acepta varias imágenes: `@Image1` = storyboard (composición), `@Image2` = foto canónica del personaje (identidad de cara) — declarar el rol de cada una en el párrafo inicial ("as the exact face and identity reference"). Con ambas, la identidad se sostiene entre shots mucho mejor que con el storyboard solo.
+
+## Cortes sincronizados a sonido (validado)
+
+Para que un corte caiga sobre un evento del audio: "Matching panel N, cut ON the crash sound at exactly 6.0s: ...". El evento visual y el sonoro quedan atados.
+
+## Ejemplos validados completos
+
+- **Canónico**: `outputs/ugc/detective-sherlock-20260703-140402/seedance/prompt.txt` — 6 shots a beats medidos, 3 referencias (storyboard + cara + audio), corte ON crash, línea final con lip-sync. 1080p 9:16 13s.
+- Histórico: `scratch/seed-audio-probes/seedance_prompt_noticiero_dolares.txt` — escena noticiero/grito, 4 shots, primera validación del formato.
 
 ## Envío (default fal)
 

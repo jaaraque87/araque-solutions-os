@@ -67,7 +67,9 @@ El **workspace de ComfyDeploy** (iframe que envuelve ComfyUI) no serializa el gr
 
 **Test B — si A falla igual:** el null lo produce el propio JS del Builder. Inspeccionar en el repo del pack (rama v9) cómo arma la submission: buscar `queuePrompt`, `extra_pnginfo`, `api.queuePrompt` en los .js del pack (carpeta `web/` o similar). Confirmar si manda `workflow: null` por diseño cuando somete workflows internos (los JSON de escena que no están en el canvas).
 
-**Test C — Parche quirúrgico (FUNCIONA CON A O B; pendiente del "sí" del dueño):**
+**✅ Test C EJECUTADO (2026-07-12 01:42 UTC, Claude, autorizado por el dueño, script diseñado por Codex):** step `vrgdg-null-workflow-fix` insertado tras `vrgdg-v9-cmd` (idx 51→52), 61 steps confirmados, commit del pack intacto (4cfc788). **Versión v31 (`7e7b6431-c0ea-491c-ab66-19013738dceb`) en building.** Al estar ready: buscar `PATCH-755-APPLIED:2` en el build log; luego prueba mínima de UNA escena (diseño a cargo de Codex) antes de gastar en batch. Datos verificados pre-ejecución: 2 ocurrencias exactas del patrón en el raw de GitHub; steps `commands` SÍ llevan prefijo `RUN `.
+
+**Test C — Parche quirúrgico (referencia original):**
 Agregar un step tipo `commands` en el build de la máquina, inmediatamente DESPUÉS del step del pack (índice ~51 de 60):
 ```
 find /comfyui/custom_nodes/comfyui-vrgamedevgirl -name "*.py" -exec sed -i 's/workflow = extra_pnginfo\[0\]\["workflow"\]/workflow = extra_pnginfo[0].get("workflow") or {"nodes": []}/g' {} + && echo PATCH-755-APPLIED

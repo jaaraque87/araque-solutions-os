@@ -1,5 +1,5 @@
 # Producción 001 — "¿Te truena la mandíbula?" (hook h03, score 9, respaldo 26K @UnDentista)
-_Cliente: clínica dental/estética · Presentadora: Naia Cruz · Formato: corto <30s vertical (síntesis del radar: empezar CORTO) · 2026-07-12_
+_Cliente: clínica dental/estética · Presentadora: **Dra. Camila Rey** (vocera propia del nicho — ver characters/dra-camila-rey/PERFIL.md; decisión 2026-07-12: Naia no presta la cara a voces ajenas) · Formato: corto <30s vertical (síntesis del radar: empezar CORTO) · 2026-07-12_
 
 ## Guion (método Kallaway: hook auto-diagnóstico + promesa rápida → romper normalización → CTA)
 > "¿Te truena la mandíbula cuando abres la boca? Quédate... te lo explico en veinte segundos. Ese clic es tu articulación avisando que el disco no está en su lugar. Y si además se te traba, o te duele al masticar... eso NO es normal. La buena noticia: detectado a tiempo se trata fácil, sin cirugía. Hazte el chequeo... agenda tu valoración gratis, link en la bio."

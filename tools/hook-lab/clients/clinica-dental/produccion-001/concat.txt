@@ -1,0 +1,5 @@
+file 's1_hook.wav'
+file 's2_promesa.wav'
+file 's3_explica.wav'
+file 's4_alerta.wav'
+file 's5_cta.wav'

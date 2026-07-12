@@ -55,6 +55,8 @@ AttributeError: 'NoneType' object has no attribute 'get'
 
 El **workspace de ComfyDeploy** (iframe que envuelve ComfyUI) no serializa el grafo del canvas → cuando el JS del Builder llama queuePrompt, `extra_pnginfo.workflow` va como `null`. El creador desarrolla sobre ComfyUI vanilla, donde `app.graph` siempre serializa bien → por eso a ella nunca le pasa.
 
+**⚠ ACTUALIZACIÓN 2026-07-11:** el creador empujó 4 commits nuevos hoy (head `c26550f`: lyric/visual scene mapping, project branching, reference autosave, overlay/blank-project workflows — demo de 15 min analizado en `docs/vrgdg/local-7-11-26-upates.md`). **Verificado contra el raw: la línea rota de `notify` SIGUE SIN GUARD en el head** — actualizar el pack trae features pero NO arregla el bug 755. El plan de abajo sigue vigente completo; el Test D (reportar al creador) sube de prioridad.
+
 ## 5. PLAN DE ATAQUE (en orden — ejecutar y documentar resultado aquí)
 
 **Test A — Tunnel URL (NO ejecutado todavía, 5 min, $0):**

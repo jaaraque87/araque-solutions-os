@@ -97,6 +97,16 @@ def main():
         ri = post(T, "/vrgdg/music_builder/save_scene_image",
                   {"source_path": "", "image_data": data_url(s["img"]),
                    "project_folder": pf, "scene_number": s["n"]})
+        # CRITICO (lección SameFileError): subir TAMBIEN como preview de escena.
+        # Render All copia "imagen seleccionada" -> zimage_approved; si la seleccionada
+        # ES la approved (custom vacío o reescrito por el rehydrate del load_session),
+        # shutil.copy2 revienta con "are the same file". La preview vive en
+        # scene_image_previews/ y el Builder la re-inyecta al image_history en cada
+        # load -> fuente de render distinta del destino, a prueba de guardados.
+        rp = post(T, "/vrgdg/music_builder/archive_scene_image",
+                  {"project_folder": pf, "scene_number": s["n"],
+                   "image_data": data_url(s["img"])}, timeout=300)
+        s["preview_saved"] = rp.get("saved_path", "")
         ra = post(T, "/vrgdg/music_builder/save_scene_audio",
                   {"project_folder": pf, "scene_number": s["n"],
                    "audio_data": data_url(s["aud"]),
@@ -114,6 +124,9 @@ def main():
                     "duration": s["dur"], "end": round(t0 + s["dur"], 2),
                     "i2v_prompt": s["prompt"], "prompt": s["prompt"],
                     "approved_image_path": s["img_saved"],
+                    "image_history": [s["preview_saved"]] if s.get("preview_saved") else [],
+                    "image_history_index": 0 if s.get("preview_saved") else -1,
+                    "custom_image_path": "", "custom_image_name": "",
                     "custom_audio_path": s["aud_saved"],
                     "custom_audio_name": os.path.basename(s["aud"]),
                     "custom_audio_duration": s["aud_dur_real"],

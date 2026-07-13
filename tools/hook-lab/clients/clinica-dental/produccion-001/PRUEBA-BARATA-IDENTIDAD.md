@@ -40,3 +40,23 @@ Mandar los 2-3 clips de prueba a Claude → hace el mosaico **fuente-vs-render**
 
 ## Reglas de gasto
 Una sola sesión L40S, sólo estas 2-3 escenas cortas, Quick Save, descargar clips, **apagar L40S**. Presupuesto ~$15.
+
+---
+
+## ✅ RESULTADO (2026-07-13, sesión L40S, esc4+esc5 con seed 69 fixed)
+
+**El Lever 1 (seed fijo) FUNCIONÓ — mejora dramática, sin tocar sigmas.**
+
+| Métrica | Render viejo (seed random) | Render nuevo (seed 69 fixed) |
+|---|---|---|
+| Identidad vs still fuente | ❌ mujer distinta por escena | ✅ ~85-90% fiel (esc5 casi calcada) |
+| Consistencia esc4 ↔ esc5 | ❌ dos mujeres diferentes | ✅ misma mujer, reconocible |
+| Estabilidad dentro del clip | media | ✅ estable frame a frame |
+| Duraciones | rotas (bug timeline_start) | ✅ exactas (5.50 / 4.62) |
+| Movimiento | vivo | ✅ vivo + gestos del prompt v2 (palma, señalar) |
+
+Residual (menor): en esc4 la actuación exagera algo la expresión en picos (cara ligeramente más joven/caricaturizada en 1-2 frames). En movimiento a velocidad real es poco perceptible.
+
+**Decisión**: pipeline VENDIBLE sin LoRA para producción normal. Regla nueva de producción: **seed FIJO (69) en todos los renders de una misma vocera/serie** — el orquestador ya lo inyecta en `i2v_video_settings` al montar. El LoRA de personaje queda como upgrade de "premium consistency" (misma cara entre VIDEOS distintos y ángulos extremos), no como bloqueante.
+
+Lever 2 (sigmas pass2 0.909→0.6): NO fue necesario. Guardado como perilla de refinado si algún cliente exige fidelidad extra.

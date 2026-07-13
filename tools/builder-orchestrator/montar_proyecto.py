@@ -61,6 +61,8 @@ def main():
     ap.add_argument("--tunnel", required=True)
     ap.add_argument("--kit", required=True)
     ap.add_argument("--project", default="")
+    ap.add_argument("--name", default="CAMILA_PROD001_AUTO",
+                    help="nombre del proyecto nuevo (si no se pasa --project)")
     ap.add_argument("--dump", action="store_true")
     a = ap.parse_args()
     T = a.tunnel.rstrip("/")
@@ -82,7 +84,7 @@ def main():
         pf = a.project
     else:
         np_ = post(T, "/vrgdg/music_builder/new_project",
-                   {"project_folder": "CAMILA_PROD001_AUTO"})
+                   {"project_folder": a.name})
         pf = np_.get("project_folder", "")
         print("[3] proyecto:", pf)
     if not pf: sys.exit("sin project_folder")

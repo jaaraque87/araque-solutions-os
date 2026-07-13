@@ -60,3 +60,14 @@ Residual (menor): en esc4 la actuación exagera algo la expresión en picos (car
 **Decisión**: pipeline VENDIBLE sin LoRA para producción normal. Regla nueva de producción: **seed FIJO (69) en todos los renders de una misma vocera/serie** — el orquestador ya lo inyecta en `i2v_video_settings` al montar. El LoRA de personaje queda como upgrade de "premium consistency" (misma cara entre VIDEOS distintos y ángulos extremos), no como bloqueante.
 
 Lever 2 (sigmas pass2 0.909→0.6): NO fue necesario. Guardado como perilla de refinado si algún cliente exige fidelidad extra.
+
+### ⚠️ HALLAZGO SECUNDARIO (13 jul) — esc5 SIN lipsync: la sonrisa fija bloquea la articulación
+Revisión frame-a-frame de la boca (dense mouth strip):
+- **esc4**: boca articula de verdad (abre/cierra/frunce por frame) = lipsync OK.
+- **esc5**: boca mantiene la MISMA sonrisa con dientes los 4.6s = NO lipsync.
+
+**Causa raíz (NO es el seed, es un eje distinto):** el still fuente de esc5 (`esc5_cta`) es una **sonrisa amplia con dientes** + el prompt decía "big genuine warm smile". LTX I2V, cuando el still de partida es una sonrisa cerrada fuerte, **conserva la sonrisa y el audio no logra articular** los labios (el conditioning de audio es más débil que la expresión impuesta). esc4 sí articuló porque su still tenía boca neutra/entreabierta.
+
+**REGLA DE PRODUCCIÓN (talking-head):** en escenas HABLADAS el still fuente debe tener la **boca neutra, relajada y levemente entreabierta ("mid-speech")** — NUNCA una sonrisa amplia con dientes. La sonrisa grande se reserva para un beat SIN audio (freeze final, tarjeta CTA estática) o se genera aparte. Además ajustar el prompt de la escena hablada: cambiar "big genuine warm smile" por "speaking warmly to camera, natural mouth movement, lips parted mid-sentence, relaxed friendly expression".
+
+**Fix concreto para esc5:** regenerar el still del CTA en GPT Images con boca de hablar (labios relajados, apenas separados, energía cálida pero NO sonrisa congelada) + prompt I2V5 ajustado. Re-render solo esa escena. El resto del kit (esc1-esc4) queda igual.

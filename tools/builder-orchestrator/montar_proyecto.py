@@ -131,7 +131,9 @@ def main():
                     "custom_audio_name": os.path.basename(s["aud"]),
                     "custom_audio_duration": s["aud_dur_real"],
                     "custom_audio_full_duration": s["aud_dur_real"],
-                    "custom_audio_timeline_start": round(t0, 2),
+                    # BUG CAZADO 2026-07-13: timeline_start debe ser 0 (offset DENTRO del audio de la escena,
+                    # no posicion global). Con t0 global: esc2 lipsync desincronizado, esc3+ mudas con zoom default.
+                    "custom_audio_timeline_start": 0,
                     "custom_audio_source_start": 0})
         segs.append(seg); t0 += s["dur"]
     session["segments"] = segs

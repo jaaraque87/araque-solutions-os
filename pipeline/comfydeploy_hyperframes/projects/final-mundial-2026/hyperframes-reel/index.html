@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, height=1920">    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #09070c; }
+      body { font-family: "Inter", sans-serif; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #09070c; }
+      .ltx-shot { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; object-position: center center; }
+      #vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 42%, transparent 42%, rgba(7, 4, 10, .44) 100%); }
+      #grain { position: absolute; inset: 0; pointer-events: none; opacity: .12; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E"); mix-blend-mode: soft-light; }
+      #cut-flash { position: absolute; inset: 0; pointer-events: none; background: #fff8fb; opacity: 0; mix-blend-mode: screen; }
+      #progress { position: absolute; top: 0; left: 0; width: 1080px; height: 10px; background: rgba(9,7,12,.42); overflow: hidden; }
+      #progress-bar { width: 1080px; height: 10px; transform-origin: left center; background: #ff2b8d; box-shadow: 0 0 24px rgba(255,43,141,.75); }
+      #brand-chip { position: absolute; top: 54px; left: 60px; padding: 14px 22px; color: #fff8fb; background: rgba(9,7,12,.58); border: 2px solid rgba(255,255,255,.28); border-radius: 999px; font-size: 23px; font-weight: 900; letter-spacing: 2px; backdrop-filter: blur(10px); }
+      #watermark { position: absolute; top: 54px; right: 56px; width: 215px; height: auto; filter: drop-shadow(0 3px 12px rgba(0,0,0,.65)); }
+      .caption-clip { position: absolute; inset: 0; pointer-events: none; }
+      .caption-zone { position: absolute; left: 54px; right: 54px; top: 1090px; min-height: 310px; display: flex; align-items: flex-start; justify-content: center; text-align: center; }
+      .caption-body { color: #fff8fb; font-size: 106px; line-height: .9; font-weight: 900; letter-spacing: -4px; text-transform: uppercase; white-space: nowrap; -webkit-text-stroke: 6px #09070c; paint-order: stroke fill; text-shadow: 0 9px 0 rgba(9,7,12,.82), 0 18px 42px rgba(0,0,0,.8); transform-origin: center center; }
+      .caption-body.big { font-size: 132px; }
+      .caption-body.long { font-size: 78px; letter-spacing: -3px; }
+      #cap-08 .caption-body { font-size: 68px; }
+      .caption-body.brand { font-size: 92px; }
+      .key { color: #ff2b8d; }
+      .gold { color: #ffc83d; }
+      .caption-body.brand .key { color: #fff8fb; background: #ff2b8d; padding: 8px 22px 13px; border-radius: 18px; -webkit-text-stroke: 0; box-shadow: 0 10px 38px rgba(255,43,141,.45); }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-c6r1" id="root" data-composition-id="main" data-no-timeline="" data-start="0" data-duration="22" data-width="1080" data-height="1920">
+      <video data-hf-id="hf-ltx01" id="ltx-01-hook" class="clip ltx-shot" src="assets/ltx-01-hook.mp4" data-start="0" data-duration="4.62" data-track-index="0" muted playsinline></video>
+      <video data-hf-id="hf-ltx02" id="ltx-02-tactica" class="clip ltx-shot" src="assets/ltx-02-tactica.mp4" data-start="4.62" data-duration="5.28" data-track-index="0" muted playsinline></video>
+      <video data-hf-id="hf-ltx03" id="ltx-03-seg3" class="clip ltx-shot" src="assets/ltx-03-seg3.mp4" data-start="9.9" data-duration="5.685" data-track-index="0" muted playsinline></video>
+      <video data-hf-id="hf-ltx04" id="ltx-04-estadio" class="clip ltx-shot" src="assets/ltx-04-estadio.mp4" data-start="15.585" data-duration="4.06" data-track-index="0" muted playsinline></video>
+      <video data-hf-id="hf-ltx05" id="ltx-05-cierre" class="clip ltx-shot" src="assets/ltx-05-cierre.mp4" data-start="19.645" data-media-start="3.874" data-duration="2.355" data-track-index="0" muted playsinline></video>
+      <audio data-hf-id="hf-n9ag" id="voice-master" class="clip" src="assets/voice-master.mp3" data-start="0" data-duration="19.645" data-track-index="10" data-volume="1"></audio>
+      <audio data-hf-id="hf-ltx05a" id="ltx-05-cierre-audio" class="clip" src="assets/ltx-05-cierre.mp4" data-start="19.645" data-media-start="3.874" data-duration="2.355" data-track-index="10" data-volume="1"></audio>
+      <audio data-hf-id="hf-cgwn" id="stadium-bed" class="clip" src="assets/stadium-ambience.wav" data-start="0" data-duration="21.936" data-track-index="11" data-volume="1"></audio>
+      <div data-hf-id="hf-h7i3" id="vignette"></div><div data-hf-id="hf-f6d6" id="grain"></div><div data-hf-id="hf-k16m" id="cut-flash"></div>
+      <div data-hf-id="hf-o6ww" id="progress"><div data-hf-id="hf-09bk" id="progress-bar"></div></div>
+      <div data-hf-id="hf-n96q" id="brand-chip">@ARAQUESOLUTIONS</div>
+      <img data-hf-id="hf-cmiy" id="watermark" class="clip" src="assets/araque-watermark.png" data-start="0" data-duration="22" data-track-index="5" alt="Araque Solutions">
+      <div data-hf-id="hf-jept" id="caption-clip-01" class="clip caption-clip" data-start="0.133" data-duration="0.387" data-track-index="20"><div data-hf-id="hf-eti7" id="cap-01" class="caption-zone"><div data-hf-id="hf-4r5y" class="caption-body big">LA <span data-hf-id="hf-6h52" class="key">FINAL</span></div></div></div>
+      <div data-hf-id="hf-lyd3" id="caption-clip-02" class="clip caption-clip" data-start="0.533" data-duration="0.507" data-track-index="21"><div data-hf-id="hf-65mc" id="cap-02" class="caption-zone"><div data-hf-id="hf-hcbx" class="caption-body">NO SE GANA</div></div></div>
+      <div data-hf-id="hf-b1s7" id="caption-clip-03" class="clip caption-clip" data-start="1.093" data-duration="1.027" data-track-index="22"><div data-hf-id="hf-6xa5" id="cap-03" class="caption-zone"><div data-hf-id="hf-kqdb" class="caption-body">EN <span data-hf-id="hf-mep2" class="gold">90</span> MINUTOS</div></div></div>
+      <div data-hf-id="hf-onyp" id="caption-clip-04" class="clip caption-clip" data-start="2.373" data-duration="0.567" data-track-index="23"><div data-hf-id="hf-pozu" id="cap-04" class="caption-zone"><div data-hf-id="hf-1v04" class="caption-body">SE GANA</div></div></div>
+      <div data-hf-id="hf-rxbs" id="caption-clip-05" class="clip caption-clip" data-start="3.000" data-duration="1.400" data-track-index="24"><div data-hf-id="hf-tn3v" id="cap-05" class="caption-zone"><div data-hf-id="hf-agox" class="caption-body big">MUCHO <span data-hf-id="hf-dzij" class="key">ANTES</span></div></div></div>
+      <div data-hf-id="hf-y83i" id="caption-clip-06" class="clip caption-clip" data-start="5.514" data-duration="0.906" data-track-index="25"><div data-hf-id="hf-kz80" id="cap-06" class="caption-zone"><div data-hf-id="hf-w6ct" class="caption-body">CON <span data-hf-id="hf-rbtz" class="key">ESTRATEGIA</span></div></div></div>
+      <div data-hf-id="hf-e8ae" id="caption-clip-07" class="clip caption-clip" data-start="6.603" data-duration="0.717" data-track-index="26"><div data-hf-id="hf-lqvt" id="cap-07" class="caption-zone"><div data-hf-id="hf-skt0" class="caption-body big gold">DATOS</div></div></div>
+      <div data-hf-id="hf-ou8n" id="caption-clip-08" class="clip caption-clip" data-start="7.420" data-duration="1.830" data-track-index="27"><div data-hf-id="hf-2azq" id="cap-08" class="caption-zone"><div data-hf-id="hf-ogwl" class="caption-body long">ENTRENAMIENTO + <span data-hf-id="hf-spsh" class="key">EJECUCIÓN</span></div></div></div>
+      <div data-hf-id="hf-mw8x" id="caption-clip-09" class="clip caption-clip" data-start="10.218" data-duration="0.432" data-track-index="28"><div data-hf-id="hf-8gpj" id="cap-09" class="caption-zone"><div data-hf-id="hf-37pc" class="caption-body">TU NEGOCIO</div></div></div>
+      <div data-hf-id="hf-yoc5" id="caption-clip-10" class="clip caption-clip" data-start="10.672" data-duration="0.798" data-track-index="29"><div data-hf-id="hf-cauh" id="cap-10" class="caption-zone"><div data-hf-id="hf-8p7c" class="caption-body">NO ES <span data-hf-id="hf-nqf4" class="key">DISTINTO</span></div></div></div>
+      <div data-hf-id="hf-334v" id="caption-clip-11" class="clip caption-clip" data-start="11.578" data-duration="0.902" data-track-index="30"><div data-hf-id="hf-bj6o" id="cap-11" class="caption-zone"><div data-hf-id="hf-1yxl" class="caption-body">EL TALENTO</div></div></div>
+      <div data-hf-id="hf-48w7" id="caption-clip-12" class="clip caption-clip" data-start="12.498" data-duration="1.132" data-track-index="31"><div data-hf-id="hf-meob" id="cap-12" class="caption-zone"><div data-hf-id="hf-lxrr" class="caption-body long">LLAMA LA <span data-hf-id="hf-2cyc" class="gold">ATENCIÓN</span></div></div></div>
+      <div data-hf-id="hf-wqtb" id="caption-clip-13" class="clip caption-clip" data-start="13.797" data-duration="0.763" data-track-index="32"><div data-hf-id="hf-igka" id="cap-13" class="caption-zone"><div data-hf-id="hf-arv0" class="caption-body long">PERO EL <span data-hf-id="hf-cy6e" class="key">SISTEMA</span></div></div></div>
+      <div data-hf-id="hf-moi1" id="caption-clip-14" class="clip caption-clip" data-start="14.565" data-duration="0.815" data-track-index="33"><div data-hf-id="hf-zoul" id="cap-14" class="caption-zone"><div data-hf-id="hf-o5j2" class="caption-body big gold">CONVIERTE</div></div></div>
+      <div data-hf-id="hf-jd8b" id="caption-clip-15" class="clip caption-clip" data-start="16.061" data-duration="0.379" data-track-index="34"><div data-hf-id="hf-yx6s" id="cap-15" class="caption-zone"><div data-hf-id="hf-hvkl" class="caption-body">HOY JUEGAN</div></div></div>
+      <div data-hf-id="hf-r9a7" id="caption-clip-16" class="clip caption-clip" data-start="16.453" data-duration="1.117" data-track-index="35"><div data-hf-id="hf-7l2n" id="cap-16" class="caption-zone"><div data-hf-id="hf-0q1g" class="caption-body long"><span data-hf-id="hf-d9pg" class="gold">ARGENTINA</span> × <span data-hf-id="hf-r1r3" class="key">ESPAÑA</span></div></div></div>
+      <div data-hf-id="hf-680t" id="caption-clip-17" class="clip caption-clip" data-start="17.658" data-duration="1.102" data-track-index="36"><div data-hf-id="hf-3mym" id="cap-17" class="caption-zone"><div data-hf-id="hf-e5mm" class="caption-body">MAÑANA JUEGA</div></div></div>
+      <div data-hf-id="hf-uob3" id="caption-clip-18" class="clip caption-clip" data-start="18.778" data-duration="0.642" data-track-index="37"><div data-hf-id="hf-5y1t" id="cap-18" class="caption-zone"><div data-hf-id="hf-og56" class="caption-body big">TU <span data-hf-id="hf-f68e" class="key">MARCA</span></div></div></div>
+      <div data-hf-id="hf-u1z8" id="caption-clip-19" class="clip caption-clip" data-start="20.185" data-duration="0.815" data-track-index="38"><div data-hf-id="hf-2ys8" id="cap-19" class="caption-zone"><div data-hf-id="hf-vols" class="caption-body brand"><span data-hf-id="hf-5qkp" class="key">ARAQUE SOLUTIONS</span></div></div></div>
+      <div data-hf-id="hf-8pt4" id="caption-clip-20" class="clip caption-clip" data-start="21.085" data-duration="0.915" data-track-index="39"><div data-hf-id="hf-7594" id="cap-20" class="caption-zone"><div data-hf-id="hf-np4d" class="caption-body long">JUEGA CON <span data-hf-id="hf-v77a" class="gold">VENTAJA</span></div></div></div>
+    </div>
+    <script>
+      const pause = (animation) => { animation.pause(); return animation; };
+      pause(document.getElementById("progress-bar").animate(
+        [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+        { duration: 22000, easing: "linear", fill: "both", iterations: 1 }
+      ));
+      pause(document.getElementById("brand-chip").animate(
+        [{ opacity: 0, transform: "translateX(-24px)" }, { opacity: 1, transform: "translateX(0)" }],
+        { duration: 420, delay: 180, easing: "cubic-bezier(.2,.8,.2,1)", fill: "both", iterations: 1 }
+      ));
+      pause(document.getElementById("watermark").animate(
+        [{ opacity: 0, transform: "translateY(-18px)" }, { opacity: .88, transform: "translateY(0)" }],
+        { duration: 450, delay: 220, easing: "cubic-bezier(.2,.8,.2,1)", fill: "both", iterations: 1 }
+      ));
+      document.querySelectorAll(".caption-clip").forEach((clip, index) => {
+        const body = clip.querySelector(".caption-body");
+        const key = clip.querySelector(".key, .gold");
+        const start = Number(clip.dataset.start) * 1000;
+        const duration = Number(clip.dataset.duration) * 1000;
+        const rotation = [-4, 3, -2, 4][index % 4];
+        const enterOffset = Math.min(.38, 220 / duration);
+        const exitOffset = Math.max(enterOffset, 1 - Math.min(.22, 120 / duration));
+        pause(body.animate([
+          { opacity: 0, transform: `translateY(86px) scale(.64) rotate(${rotation}deg)`, offset: 0 },
+          { opacity: 1, transform: "translateY(0) scale(1) rotate(0deg)", offset: enterOffset },
+          { opacity: 1, transform: "translateY(0) scale(1) rotate(0deg)", offset: exitOffset },
+          { opacity: 0, transform: "translateY(-42px) scale(1.12) rotate(0deg)", offset: 1 }
+        ], { duration, delay: start, easing: "cubic-bezier(.2,.8,.2,1)", fill: "both", iterations: 1 }));
+        if (key) pause(key.animate(
+          [{ transform: "scale(.82)" }, { transform: "scale(1.08)" }, { transform: "scale(1)" }],
+          { duration: Math.min(320, duration * .45), delay: start + 30, easing: "cubic-bezier(.2,.9,.25,1)", fill: "both", iterations: 1 }
+        ));
+      });
+      [4.62, 9.90, 15.585, 19.645].forEach((time) => {
+        pause(document.getElementById("cut-flash").animate(
+          [{ opacity: 0 }, { opacity: .48, offset: .3 }, { opacity: 0 }],
+          { duration: 120, delay: time * 1000, easing: "linear", fill: "both", iterations: 1 }
+        ));
+      });
+    </script>
+  </body>
+</html>

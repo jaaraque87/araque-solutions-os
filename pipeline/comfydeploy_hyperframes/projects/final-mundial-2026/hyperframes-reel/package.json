@@ -1,0 +1,12 @@
+{
+  "name": "hyperframes-reel",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.7.64 preview",
+    "check": "npx --yes hyperframes@0.7.64 check",
+    "render": "npx --yes hyperframes@0.7.64 render",
+    "render:final": "npx --yes hyperframes@0.7.64 render --quality high --fps 30 --workers 1 --output renders/araque-final-mundial-synced.mp4",
+    "publish": "npx --yes hyperframes@0.7.64 publish"
+  }
+}

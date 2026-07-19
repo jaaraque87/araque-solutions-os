@@ -1,0 +1,8 @@
+{"id":"image_001","type":"image","path":"assets/araque-watermark.png","source":"existing","description":"araque watermark","width":757,"height":655,"provenance":{"provider":"local","adopted":true}}
+{"id":"video_001","type":"video","path":"assets/ltx-01-hook.mp4","source":"existing","description":"ltx 01 hook","duration":5.1,"width":1024,"height":1856,"provenance":{"provider":"local","adopted":true}}
+{"id":"video_002","type":"video","path":"assets/ltx-02-tactica.mp4","source":"existing","description":"ltx 02 tactica","duration":5.4,"width":1024,"height":1856,"provenance":{"provider":"local","adopted":true}}
+{"id":"video_003","type":"video","path":"assets/ltx-03-seg3.mp4","source":"existing","description":"ltx 03 seg3","duration":5.7,"width":1024,"height":1856,"provenance":{"provider":"local","adopted":true}}
+{"id":"video_004","type":"video","path":"assets/ltx-04-estadio.mp4","source":"existing","description":"ltx 04 estadio","duration":5.7,"width":1024,"height":1856,"provenance":{"provider":"local","adopted":true}}
+{"id":"video_005","type":"video","path":"assets/ltx-05-cierre.mp4","source":"existing","description":"ltx 05 cierre","duration":6.8,"width":896,"height":1664,"provenance":{"provider":"local","adopted":true}}
+{"id":"bgm_001","type":"bgm","path":"assets/stadium-ambience.wav","source":"existing","description":"stadium ambience","duration":21.9,"provenance":{"provider":"local","adopted":true}}
+{"id":"bgm_002","type":"bgm","path":"assets/voice-master.mp3","source":"existing","description":"voice master","duration":22,"provenance":{"provider":"local","adopted":true}}

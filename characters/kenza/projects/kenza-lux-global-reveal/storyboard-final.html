@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kenza Lux — Definitive Storyboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #080808; color: #f2eee8; }
+    body {
+      width: 1600px;
+      min-height: 2600px;
+      padding: 72px 76px 88px;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 92% 2%, rgba(242,41,135,.16), transparent 25%),
+        linear-gradient(180deg, #111 0, #080808 30%, #050505 100%);
+    }
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 32px;
+      border-bottom: 2px solid #f22987;
+      padding-bottom: 30px;
+      margin-bottom: 38px;
+    }
+    .eyebrow {
+      color: #f22987;
+      font: 700 19px/1.2 "Courier New", monospace;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0;
+      font: 900 74px/.88 Impact, "Arial Narrow", sans-serif;
+      letter-spacing: .035em;
+      text-transform: uppercase;
+    }
+    .subtitle {
+      color: #c9c3bd;
+      margin-top: 15px;
+      font: 500 22px/1.35 Arial, sans-serif;
+    }
+    .meta {
+      text-align: right;
+      font: 700 18px/1.55 "Courier New", monospace;
+      color: #c9c3bd;
+    }
+    .meta strong { color: #fff; }
+    main {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px 24px;
+    }
+    article {
+      position: relative;
+      min-width: 0;
+      border: 1px solid #34302f;
+      background: #111;
+      box-shadow: 0 18px 34px rgba(0,0,0,.35);
+      overflow: hidden;
+    }
+    .frame {
+      position: relative;
+      aspect-ratio: 9 / 16;
+      background: #0b0b0b;
+      overflow: hidden;
+      border-bottom: 1px solid #34302f;
+    }
+    .frame img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .frame.hero img { object-position: 48% center; }
+    .time {
+      position: absolute;
+      top: 13px;
+      left: 13px;
+      z-index: 2;
+      padding: 7px 9px;
+      background: rgba(5,5,5,.86);
+      color: #fff;
+      border-left: 4px solid #f22987;
+      font: 700 14px/1 "Courier New", monospace;
+      letter-spacing: .03em;
+    }
+    .shot {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      z-index: 2;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #f22987;
+      color: #080808;
+      font: 900 16px/1 Arial, sans-serif;
+    }
+    .copy {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      z-index: 2;
+      text-transform: uppercase;
+      font: 900 28px/.94 Impact, "Arial Narrow", sans-serif;
+      letter-spacing: .025em;
+      text-shadow: 0 3px 16px #000, 0 1px 2px #000;
+    }
+    .copy small {
+      display: block;
+      margin-top: 8px;
+      color: #f22987;
+      font: 700 11px/1.25 "Courier New", monospace;
+      letter-spacing: .12em;
+    }
+    .info { padding: 16px 17px 18px; min-height: 152px; }
+    h2 {
+      margin: 0 0 8px;
+      font: 900 21px/1 Impact, "Arial Narrow", sans-serif;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    p {
+      margin: 0;
+      color: #c9c3bd;
+      font: 500 14px/1.45 Arial, sans-serif;
+    }
+    .rule {
+      display: inline-block;
+      margin-top: 11px;
+      color: #f22987;
+      font: 700 11px/1.25 "Courier New", monospace;
+      letter-spacing: .045em;
+      text-transform: uppercase;
+    }
+    .cta {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 34px;
+      background:
+        radial-gradient(circle at 50% 47%, rgba(242,41,135,.22), transparent 28%),
+        linear-gradient(135deg, #050505, #111 58%, #050505);
+    }
+    .cta::before {
+      content: "";
+      position: absolute;
+      left: 22%;
+      right: 22%;
+      top: 30%;
+      height: 2px;
+      background: #f22987;
+      box-shadow: 0 0 24px #f22987;
+    }
+    .cta .brand {
+      font: 900 54px/.9 Impact, "Arial Narrow", sans-serif;
+      letter-spacing: .06em;
+    }
+    .cta .descriptor {
+      margin-top: 16px;
+      color: #d7d2cc;
+      font: 700 12px/1.4 "Courier New", monospace;
+      letter-spacing: .13em;
+    }
+    .cta .follow {
+      margin-top: 44px;
+      color: #f22987;
+      font: 900 27px/1 Impact, "Arial Narrow", sans-serif;
+      letter-spacing: .05em;
+    }
+    footer {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 28px;
+      margin-top: 38px;
+      padding-top: 25px;
+      border-top: 1px solid #34302f;
+    }
+    footer h3 {
+      color: #f22987;
+      font: 700 13px/1 "Courier New", monospace;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin: 0 0 9px;
+    }
+    footer p { font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="eyebrow">Definitive Production Storyboard</div>
+      <h1>Kenza Lux<br>Global Reveal</h1>
+      <div class="subtitle">Premium UGC · Miami biker luxury · Identity-safe LTX production</div>
+    </div>
+    <div class="meta">
+      <strong>20.0 SEC</strong><br>
+      1080 × 1920<br>
+      24 FPS · EN<br>
+      KENZA-BUSA-01
+    </div>
+  </header>
+
+  <main>
+    <article>
+      <div class="frame">
+        <img src="assets/storyboard-final/01-ignition.png" alt="">
+        <div class="time">00:00–02.20</div><div class="shot">1</div>
+        <div class="copy">THE FUTURE<small>IGNITION / PATTERN INTERRUPT</small></div>
+      </div>
+      <div class="info"><h2>Ignition Hook</h2><p>Faro, carenado negro y línea fucsia despiertan el Reel.</p><span class="rule">LTX: luz + humo · moto bloqueada</span></div>
+    </article>
+
+    <article>
+      <div class="frame">
+        <img src="assets/storyboard-final/02-canon-reveal.png" alt="">
+        <div class="time">00:02.20–05.20</div><div class="shot">2</div>
+        <div class="copy">KENZA LUX<small>MIAMI / VIRTUAL / BIKER</small></div>
+      </div>
+      <div class="info"><h2>Canon Face Reveal</h2><p>Único plano facial dominante: cercano, descansado y reconocible.</p><span class="rule">LTX: parpadeo + respiración mínima</span></div>
+    </article>
+
+    <article>
+      <div class="frame">
+        <img src="assets/storyboard-final/03-glove-control.png" alt="">
+        <div class="time">00:05.20–06.40</div><div class="shot">3</div>
+        <div class="copy">LUXURY.<small>GLOVE / CONTROL</small></div>
+      </div>
+      <div class="info"><h2>Glove Control</h2><p>Ergonomía real: mano apoyada, puño y embrague coherentes.</p><span class="rule">LTX: micro presión · no deformar controles</span></div>
+    </article>
+
+    <article>
+      <div class="frame">
+        <img src="assets/storyboard-final/04-boot-machine.png" alt="">
+        <div class="time">00:06.40–07.60</div><div class="shot">4</div>
+        <div class="copy">SPEED.<small>BOOT / MACHINE</small></div>
+      </div>
+      <div class="info"><h2>Boot + Wheel</h2><p>Bota con peso real junto al rin fucsia y asfalto mojado.</p><span class="rule">LTX: reflejo · rueda sin rotación</span></div>
+    </article>
+
+    <article>
+      <div class="frame">
+        <img src="assets/storyboard-final/05-helmet-visor.png" alt="">
+        <div class="time">00:07.60–09.20</div><div class="shot">5</div>
+        <div class="copy">ATTITUDE.<small>HELMET / VISOR</small></div>
+      </div>
+      <div class="info"><h2>Helmet Reflection</h2><p>El fucsia viaja sobre el visor; la cara queda fuera de riesgo.</p><span class="rule">LTX: reflection travel · 2.5D only</span></div>
+    </article>
+
+    <article>
+      <div class="frame hero">
+        <img src="assets/storyboard-final/06-kenza-busa-signature.png" alt="">
+        <div class="time">00:09.20–12.80</div><div class="shot">6</div>
+        <div class="copy">KENZA × BUSA<small>SIGNATURE FRAME</small></div>
+      </div>
+      <div class="info"><h2>Signature Shot</h2><p>Kenza cercana y tres cuartos de moto, sin plano general facial.</p><span class="rule">Si deriva la cara: casco o crop más cerrado</span></div>
+    </article>
+
+    <article>
+      <div class="frame">
+        <img src="assets/storyboard-final/07-origin-global.png" alt="">
+        <div class="time">00:12.80–16.30</div><div class="shot">7</div>
+        <div class="copy">GLOBAL STAGE.<small>VENEZUELAN FIRE. / MIAMI NIGHTS.</small></div>
+      </div>
+      <div class="info"><h2>Origin to Global</h2><p>Casco y silueta protegen identidad mientras escala el mundo.</p><span class="rule">LTX: drift lento · nunca orbitar la moto</span></div>
+    </article>
+
+    <article>
+      <div class="frame">
+        <div class="cta">
+          <div class="brand">KENZA<br>LUX</div>
+          <div class="descriptor">MIAMI'S VIRTUAL<br>BIKER ICON</div>
+          <div class="follow">FOLLOW THE RIDE</div>
+          <div class="descriptor">@KENZALUX.OFFICIAL</div>
+        </div>
+        <div class="time">00:16.30–20.00</div><div class="shot">8</div>
+      </div>
+      <div class="info"><h2>Brand Lockup</h2><p>Negro, una traza fucsia y CTA limpio para reconocimiento.</p><span class="rule">HyperFrames only · no LTX</span></div>
+    </article>
+  </main>
+
+  <footer>
+    <div><h3>Identity Lock</h3><p>Rostro canónico solo en close-up. Sin bolsas u ojeras marcadas. Planos abiertos: casco, perfil o silueta.</p></div>
+    <div><h3>Product Lock</h3><p>KENZA-BUSA-01 permanece geométricamente fija. LTX anima luz, humo, reflejos y parallax adyacente.</p></div>
+    <div><h3>Brand Lock</h3><p>Sin sponsors en este Reel. Logos futuros se aplican después de LTX mediante tracking y composición.</p></div>
+  </footer>
+</body>
+</html>

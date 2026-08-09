@@ -14,6 +14,36 @@ Goal: run the same pipeline from any computer, RunPod, VPS, Codex session, or Cl
 
 If ComfyDeploy is not configured yet, it can run in `--mock-assets` mode so Codex/Claude can still generate the HyperFrames project structure and test the pipeline shape.
 
+## MVP one-click: una imagen a preview sin créditos
+
+El entrypoint seguro toma una imagen local, la asocia con un corpus ya investigado
+en `tools/hook-lab/clients`, selecciona los tres hooks con mejor score, escribe un
+brief y un scorecard automáticos, y construye un proyecto HyperFrames alrededor de
+la imagen. No hace llamadas de red, no enciende GPU y no renderiza MP4:
+
+```powershell
+python .\one_click.py ..\..\brand\araque\araque-profile.jpg
+```
+
+Si la ruta de la imagen no permite inferir el cliente, declara el corpus:
+
+```powershell
+python .\one_click.py C:\assets\producto.png --client araque-solutions
+```
+
+La salida incluye `hooks.scored.json`, `brief.auto.json`, `manifest.json` y el
+proyecto `hyperframes/`. Desde esa carpeta se revisa sin créditos:
+
+```powershell
+npx hyperframes check
+npx hyperframes preview
+```
+
+La corrida real está cerrada por defecto. Para habilitarla hacen falta a la vez
+`--execute-real`, la confirmación `--confirm-cost SPEND_COMFYDEPLOY_CREDITS`,
+`ARAQUE_ALLOW_GPU_EXECUTION=1`, los secretos `COMFYDEPLOY_*` y una URL pública de
+la imagen con `--source-image-url`. No habilites esos gates durante desarrollo.
+
 ## Requirements
 
 - Git
@@ -56,7 +86,8 @@ python .\run.py --brief .\examples\brief.example.json --mock-assets --skip-rende
 ## Real run
 
 ```powershell
-python .\run.py --brief .\examples\brief.example.json
+$env:ARAQUE_ALLOW_GPU_EXECUTION="1"
+python .\run.py --brief .\examples\brief.example.json --execute-real --confirm-cost SPEND_COMFYDEPLOY_CREDITS
 ```
 
 ## Continue from another PC
@@ -85,4 +116,3 @@ The folder contains:
 - `hyperframes/package.json`: local Node package metadata
 - `hyperframes/assets/`: assets copied or downloaded for the composition
 - `hyperframes/output.mp4`: final render when rendering is enabled
-

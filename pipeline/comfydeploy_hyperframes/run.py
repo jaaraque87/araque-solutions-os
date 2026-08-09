@@ -14,6 +14,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 PIPELINE_ROOT = ROOT.parent
 RUNS_DIR = ROOT / "runs"
+REAL_CONFIRMATION = "SPEND_COMFYDEPLOY_CREDITS"
+REAL_ENV_GATE = "ARAQUE_ALLOW_GPU_EXECUTION"
 
 
 def load_env_file(path: Path) -> None:
@@ -146,6 +148,17 @@ def call_comfydeploy(payload: dict) -> dict:
         return json.loads(response.read().decode("utf-8"))
 
 
+def assert_real_execution_allowed(confirm_cost: str = None) -> None:
+    if confirm_cost != REAL_CONFIRMATION:
+        raise RuntimeError(
+            f"Corrida real bloqueada: usa --confirm-cost {REAL_CONFIRMATION}."
+        )
+    if os.getenv(REAL_ENV_GATE, "").strip() != "1":
+        raise RuntimeError(
+            f"Corrida real bloqueada: define {REAL_ENV_GATE}=1 sólo durante producción aprobada."
+        )
+
+
 def extract_asset_urls(response: dict) -> list[str]:
     urls = []
 
@@ -239,9 +252,9 @@ def generate_hyperframes_project(run_dir: Path, brief: dict, assets: list[dict])
         width: 100%;
         height: 100%;
         background: #101114;
-        font-family: Inter, Arial, sans-serif;
+        font-family: Inter, sans-serif;
       }}
-      [data-composition-id="main"] {{
+      #root {{
         width: {width}px;
         height: {height}px;
         overflow: hidden;
@@ -300,33 +313,38 @@ def generate_hyperframes_project(run_dir: Path, brief: dict, assets: list[dict])
       }}
       .caption-layer {{
         position: absolute;
-        left: 0;
-        right: 0;
-        bottom: {int(height * 0.09)}px;
+        left: {int(width * 0.06)}px;
+        right: {int(width * 0.06)}px;
+        bottom: {int(height * 0.055)}px;
+        height: {int(height * 0.19)}px;
         z-index: 5;
-        display: flex;
-        justify-content: center;
-        pointer-events: none;
       }}
       .caption-contrast {{
         position: absolute;
         left: {int(width * 0.06)}px;
         right: {int(width * 0.06)}px;
-        bottom: {int(height * 0.07)}px;
-        height: {int(height * 0.11)}px;
+        bottom: {int(height * 0.055)}px;
+        height: {int(height * 0.19)}px;
         border-radius: 28px;
         background: rgba(0, 0, 0, 0.48);
         backdrop-filter: blur(12px);
         z-index: 4;
       }}
       .caption {{
-        max-width: {int(width * 0.86)}px;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 {int(width * 0.03)}px;
         text-align: center;
-        font-size: {max(42, int(width * 0.058))}px;
+        font-size: {max(38, int(width * 0.046))}px;
         line-height: 1.05;
         font-weight: 900;
         color: #ffffff;
         text-shadow: 0 4px 22px rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
         opacity: 0;
         transform: translateY(18px) scale(0.98);
       }}
@@ -342,7 +360,7 @@ def generate_hyperframes_project(run_dir: Path, brief: dict, assets: list[dict])
     </style>
   </head>
   <body>
-    <div data-composition-id="main" data-width="{width}" data-height="{height}" data-duration="{duration}" data-track-index="0">
+    <div id="root" data-composition-id="main" data-no-timeline data-start="0" data-width="{width}" data-height="{height}" data-duration="{duration}" data-track-index="0">
       <img id="bg" class="bg" src="{background_src}" />
       <div class="shade"></div>
       <div class="content">
@@ -356,9 +374,7 @@ def generate_hyperframes_project(run_dir: Path, brief: dict, assets: list[dict])
       <div class="caption-contrast"></div>
       <div id="caption-layer" class="caption-layer"></div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <script>
-      window.__timelines = window.__timelines || {{}};
       const captions = {captions_json};
       const layer = document.getElementById("caption-layer");
       captions.forEach((group, idx) => {{
@@ -369,22 +385,59 @@ def generate_hyperframes_project(run_dir: Path, brief: dict, assets: list[dict])
         layer.appendChild(el);
       }});
 
-      const tl = gsap.timeline({{ paused: true }});
-      tl.from("#bg", {{ scale: 1.08, duration: {duration}, ease: "none" }}, 0);
-      tl.from(".brand", {{ y: -28, opacity: 0, duration: 0.6, ease: "power3.out" }}, 0.2);
-      tl.from("#title", {{ y: 42, opacity: 0, duration: 0.7, ease: "expo.out" }}, 0.45);
-      tl.from("#subtitle", {{ y: 32, opacity: 0, duration: 0.55, ease: "power2.out" }}, 0.75);
-      tl.from("#footer", {{ x: -28, opacity: 0, duration: 0.5, ease: "back.out(1.4)" }}, 1.1);
+      const durationMs = {duration * 1000};
+      function animateHeldEntrance(selector, delaySec, enterSec, x, y) {{
+        const delay = delaySec / {duration};
+        const entered = (delaySec + enterSec) / {duration};
+        const exit = Math.max(entered, ({duration} - 0.45) / {duration});
+        const transform = `translate3d(${{x}}px, ${{y}}px, 0)`;
+        const animation = document.querySelector(selector).animate(
+          [
+            {{ opacity: 0, transform, offset: 0 }},
+            {{ opacity: 0, transform, offset: delay }},
+            {{ opacity: 1, transform: "translate3d(0, 0, 0)", offset: entered }},
+            {{ opacity: 1, transform: "translate3d(0, 0, 0)", offset: exit }},
+            {{ opacity: 0, transform: "translate3d(0, -12px, 0)", offset: 1 }},
+          ],
+          {{ duration: durationMs, easing: "linear", fill: "both", iterations: 1 }},
+        );
+        animation.pause();
+      }}
+
+      const backgroundAnimation = document.getElementById("bg").animate(
+        [
+          {{ transform: "scale(1.08)", offset: 0 }},
+          {{ transform: "scale(1)", offset: 1 }},
+        ],
+        {{ duration: durationMs, easing: "linear", fill: "both", iterations: 1 }},
+      );
+      backgroundAnimation.pause();
+      animateHeldEntrance(".brand", 0.2, 0.6, 0, -28);
+      animateHeldEntrance("#title", 0.45, 0.7, 0, 42);
+      animateHeldEntrance("#subtitle", 0.75, 0.55, 0, 32);
+      animateHeldEntrance("#footer", 1.1, 0.5, -28, 0);
+
       captions.forEach((group, idx) => {{
-        const selector = "#caption-" + idx;
         const start = Number(group.start || 0);
         const end = Number(group.end || start + 1.8);
-        tl.to(selector, {{ opacity: 1, y: 0, scale: 1, duration: 0.16, ease: "back.out(1.8)" }}, start);
-        tl.to(selector, {{ opacity: 0, y: -12, scale: 0.98, duration: 0.12, ease: "power2.in" }}, Math.max(start, end - 0.12));
-        tl.set(selector, {{ opacity: 0, visibility: "hidden" }}, end);
+        const captionDuration = Math.max(0.3, end - start);
+        const animation = document.getElementById("caption-" + idx).animate(
+          [
+            {{ opacity: 0, transform: "translate3d(0, 18px, 0) scale(0.98)", offset: 0 }},
+            {{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)", offset: Math.min(0.12, 0.16 / captionDuration) }},
+            {{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)", offset: Math.max(0.7, 1 - 0.12 / captionDuration) }},
+            {{ opacity: 0, transform: "translate3d(0, -12px, 0) scale(0.98)", offset: 1 }},
+          ],
+          {{
+            duration: captionDuration * 1000,
+            delay: start * 1000,
+            easing: "linear",
+            fill: "both",
+            iterations: 1,
+          }},
+        );
+        animation.pause();
       }});
-      tl.to(["#title", "#subtitle", ".brand", "#footer"], {{ opacity: 0, duration: 0.35, ease: "power2.in" }}, {max(0, duration - 0.45)});
-      window.__timelines["main"] = tl;
     </script>
   </body>
 </html>
@@ -396,7 +449,7 @@ def generate_hyperframes_project(run_dir: Path, brief: dict, assets: list[dict])
         "private": True,
         "scripts": {
             "lint": "hyperframes lint",
-            "validate": "hyperframes validate",
+            "check": "hyperframes check",
             "preview": "hyperframes preview",
             "render": "hyperframes render --output output.mp4",
         },
@@ -418,6 +471,8 @@ def main() -> int:
     parser.add_argument("--run-id", default=None, help="Reuse a specific run id")
     parser.add_argument("--mock-assets", action="store_true", help="Use generated placeholder assets instead of ComfyDeploy")
     parser.add_argument("--skip-render", action="store_true", help="Build HyperFrames project but do not render MP4")
+    parser.add_argument("--execute-real", action="store_true", help="Allow a real ComfyDeploy POST after safety gates")
+    parser.add_argument("--confirm-cost", default=None, help="Required acknowledgement for credit spending")
     args = parser.parse_args()
 
     load_env_file(PIPELINE_ROOT / ".env")
@@ -433,6 +488,11 @@ def main() -> int:
     # Para una corrida real necesitamos las claves de ComfyDeploy. Si faltan y
     # hay terminal, se piden de forma segura (no afecta el modo --mock-assets).
     if not args.mock_assets:
+        if not args.execute_real:
+            raise RuntimeError(
+                "Corrida real bloqueada por defecto. Usa --execute-real sólo en producción aprobada."
+            )
+        assert_real_execution_allowed(args.confirm_cost)
         require_secret("COMFYDEPLOY_API_KEY")
         require_secret("COMFYDEPLOY_DEPLOYMENT_ID")
 
@@ -475,4 +535,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

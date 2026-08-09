@@ -42,8 +42,26 @@ Despues:
 
 ```powershell
 cd .\pipeline\comfydeploy_hyperframes
-python .\run.py --brief .\examples\brief.example.json
+$env:ARAQUE_ALLOW_GPU_EXECUTION="1"
+python .\run.py --brief .\examples\brief.example.json --execute-real --confirm-cost SPEND_COMFYDEPLOY_CREDITS
 ```
+
+La variable, la bandera y la frase son un gate conjunto. No se definen durante
+desarrollo: sin las tres condiciones el runner falla antes de hacer el POST que
+puede iniciar una GPU en ComfyDeploy.
+
+## MVP one-click desde una imagen
+
+Desde `pipeline/comfydeploy_hyperframes`:
+
+```powershell
+python .\one_click.py ..\..\brand\araque\araque-profile.jpg
+```
+
+Esto selecciona tres hooks ya puntuados desde `tools/hook-lab/clients`, genera
+`brief.auto.json` y deja un proyecto HyperFrames listo para `check` y `preview`.
+El modo predeterminado declara cero llamadas de red, no renderiza y no ejecuta
+ComfyDeploy.
 
 ## Ejecutar HyperFrames
 
@@ -76,4 +94,3 @@ Trabaja en el repo araque-solutions-os. Revisa docs/ejecutar-con-codex-o-claude.
 - Nunca commitear `.env`, tokens, renders, videos, modelos o zips.
 - Si HyperFrames falla por Node, actualizar a Node 22 en esa maquina.
 - Si ComfyDeploy cambia su API, ajustar solo `COMFYDEPLOY_RUN_URL` o el adaptador en `pipeline/comfydeploy_hyperframes/run.py`.
-

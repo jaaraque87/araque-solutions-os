@@ -1,0 +1,118 @@
+{
+  "cliente": "agua-pura-vida",
+  "fecha": "2026-08-09",
+  "research": "imagen del cliente + web actual de categoría; fuentes en swipe.md",
+  "nota": "Vender el micro-momento de pausa e hidratación cotidiana. Claims técnicos, médicos y comparativos bloqueados hasta recibir respaldo del cliente.",
+  "hooks": [
+    {
+      "id": "h01",
+      "linea": "Tu entrenamiento no termina cuando paras. Termina cuando te hidratas.",
+      "overlay": "CIERRA TU RUTINA",
+      "visual_frame1": "Botella Agua Pura Vida en primer plano; una mano cansada entra, toma la boquilla y la levanta después de entrenar.",
+      "patron": "reframe + resultado primero",
+      "angulo": "la hidratación como cierre visible de la rutina",
+      "respaldo": "lema del envase + tendencia 2026 de disciplina e hidratación cotidiana",
+      "score": 10,
+      "seleccionado": true
+    },
+    {
+      "id": "h02",
+      "linea": "POV: terminaste la rutina y este primer sorbo era todo el plan.",
+      "overlay": "EL PRIMER SORBO",
+      "visual_frame1": "Plano selfie después del esfuerzo; respiración bajando, mano abre la boquilla azul y acerca la botella.",
+      "patron": "POV + recompensa sensorial",
+      "angulo": "deseo inmediato después del esfuerzo",
+      "respaldo": "campañas 2026 que convierten el agua de obligación en deseo",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h03",
+      "linea": "No entrenas como profesional. Tu pausa de hidratación igual cuenta.",
+      "overlay": "TU PAUSA CUENTA",
+      "visual_frame1": "Persona común en ropa deportiva sentada al borde de una cancha; la botella real ocupa el primer plano.",
+      "patron": "contrarian + inclusión",
+      "angulo": "atleta cotidiano, no perfección fitness",
+      "respaldo": "movimiento 2026 de atletas élite hacia hidratación para personas comunes",
+      "score": 9,
+      "seleccionado": true
+    },
+    {
+      "id": "h04",
+      "linea": "Este es el sonido de terminar la rutina: tapa, sorbo y aire.",
+      "overlay": "TAPA · SORBO · AIRE",
+      "visual_frame1": "Close-up ASMR de la boquilla azul abriéndose, agua moviéndose y condensación sobre la botella.",
+      "patron": "demostración sensorial",
+      "angulo": "ritual audible y reconocible",
+      "respaldo": "venta sensorial de agua observada en campañas de categoría 2026",
+      "score": 9,
+      "seleccionado": false
+    },
+    {
+      "id": "h05",
+      "linea": "La parte de tu rutina que casi nadie graba empieza cuando bajas el ritmo.",
+      "overlay": "CUANDO BAJAS EL RITMO",
+      "visual_frame1": "Cámara baja después del ejercicio; manos sobre las rodillas y botella entrando al cuadro.",
+      "patron": "curiosity gap",
+      "angulo": "mostrar el momento omitido",
+      "respaldo": "pausa reencuadrada como momento emocional en marketing deportivo 2026",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h06",
+      "linea": "No es la foto del entrenamiento. Es lo que pasa justo después.",
+      "overlay": "JUSTO DESPUÉS",
+      "visual_frame1": "Pantalla parece una foto final de entrenamiento; corte a mano buscando Agua Pura Vida.",
+      "patron": "open loop + reveal",
+      "angulo": "el después importa más que la pose",
+      "respaldo": "narrativa de disciplina y humanidad alrededor de pausas deportivas",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h07",
+      "linea": "La botella más sencilla puede tener el mejor momento de la rutina.",
+      "overlay": "EL MEJOR MOMENTO",
+      "visual_frame1": "Botella real sobre banca sencilla, luz lateral y mano acercándose sin estética de comercial perfecto.",
+      "patron": "contraste + deseo",
+      "angulo": "producto cotidiano, momento valioso",
+      "respaldo": "categoría de agua convertida en estilo de vida y deseo",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h08",
+      "linea": "Ejercítate. Nosotros ponemos la pausa fría.",
+      "overlay": "NOSOTROS TE HIDRATAMOS",
+      "visual_frame1": "El lema de la etiqueta entra nítido mientras la botella fría se coloca junto a tenis deportivos.",
+      "patron": "brand promise comprimida",
+      "angulo": "adaptación directa del lema confirmado",
+      "respaldo": "texto visible en el envase aportado por el usuario",
+      "score": 8,
+      "seleccionado": false
+    },
+    {
+      "id": "h09",
+      "linea": "Tu botella también tiene un lugar en la rutina.",
+      "overlay": "PARTE DE LA RUTINA",
+      "visual_frame1": "Botella junto a toalla y cronómetro; composición UGC sin alterar la etiqueta.",
+      "patron": "pertenencia + hábito",
+      "angulo": "integración cotidiana",
+      "respaldo": "hidratación presentada como mantenimiento diario, no sólo deporte élite",
+      "score": 7,
+      "seleccionado": false
+    },
+    {
+      "id": "h10",
+      "linea": "El esfuerzo se ve fuerte. La pausa se ve así de simple.",
+      "overlay": "ASÍ DE SIMPLE",
+      "visual_frame1": "Corte de movimiento intenso a encuadre quieto de la botella y una mano recuperando el aliento.",
+      "patron": "contraste visual",
+      "angulo": "intensidad versus simplicidad",
+      "respaldo": "estética deportiva intensa contrastada con el momento humano de hidratación",
+      "score": 8,
+      "seleccionado": false
+    }
+  ]
+}

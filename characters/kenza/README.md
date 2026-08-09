@@ -8,7 +8,10 @@
 ## Identidad visual
 
 - **Foto ganadora base:** `BANANA_PRO_00006_.png` — Miami waterfront, crochet top blanco + denim, full body, golden hour, iPhone UGC
-- **Character sheet:** `turnaround_00001_.png` — 3 ángulos, linen beige + LV tote
+- **Character sheet oficial:** `projects/kenza-lux-global-reveal/assets/keyframes/kenza-character-sheet-v2-official.png` — Kenza adulta de 23 años, frente, 3/4, perfil y espalda; identidad canónica aprobada por el usuario.
+- **Rostro maestro hiperrealista:** `projects/kenza-lux-global-reveal/assets/portraits/kenza-master-face-v1-official.png` — variante B aprobada, camiseta negra básica de tiras finas estilo Naia; referencia principal para rostro y talking head.
+- **Validación oficial en estudio de pódcast:** `projects/kenza-lux-global-reveal/assets/keyframes/kenza-podcast-identity-validation-v1.png` — vistas frontal, 3/4, lateral, perfil detallado y cuerpo completo; aprobada por el usuario.
+- **Canon corporal estable:** figura reloj de arena, cintura marcada, hombros y caderas equilibrados, busto prominente pero proporcionado, piernas atléticas y anatomía natural. Mantener estos rasgos sin exageración ni deriva entre escenas.
 
 ## Prompts base
 

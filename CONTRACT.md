@@ -1,45 +1,67 @@
 # OUTPUT CONTRACT
 
-> **Single source of truth** for where files are written. If a `SKILL.md`, a `contract.json` or memory says otherwise, **this file wins.**
+> **Single source of truth** for where files are written. If a `SKILL.md`, `contract.json`, or memory says otherwise, this file wins.
 
-This pack ships with the `avatar` flow. If you add more flows later, extend the table and the validator.
+The repository ships with the `avatar` and `realistic_ugc` flows. Extend this contract and the validator when adding another flow.
 
-## The 3 critical rules (non-negotiable)
+## The 3 critical rules
 
-1. **Every deliverable of a run lives in `outputs/<flow>/<run_slug>/`.** Never the repo root, never `brands/`.
-2. **`run_slug` = `<kebab-description>-<YYYYMMDD-HHMMSS>`.** Lowercase, dashes, timestamp at the end. One run = one folder.
-3. **Probes, experiments, comparisons and temporaries do NOT go in `outputs/`.** They go in `scratch/` (experiments) or `<run>/tmp/` (deletable per-run intermediates).
+1. Every deliverable lives in `outputs/<flow>/<run_slug>/`; never in the repo root or `brands/`.
+2. `run_slug` is `<kebab-description>-<YYYYMMDD-HHMMSS>`.
+3. Probes and experiments go in `scratch/`; regenerable run intermediates go in `<run>/tmp/`.
 
-## Structure
+## Flow map
 
-```
+```text
 outputs/
-└── avatar/<run_slug>/     # flow avatar_reel
+├── avatar/<run_slug>/     # avatar_reel
+└── ugc/<run_slug>/        # realistic_ugc and gated UGC production
 ```
 
-### Inside a run
+Every run requires `run.json` and `logs/events.ndjson`. Its canonical deliverable is `final.mp4`.
 
-```
+### Avatar run
+
+```text
 outputs/avatar/my-reel-20260101-143000/
-├── run.json                 # canonical run state (required)
-├── logs/events.ndjson       # append-only event stream (required)
-├── final.mp4                # final deliverable, canonical name
-├── source_assets/           # inputs (downloads, refs)
-└── tmp/                      # regenerable intermediates — deletable without notice
+├── run.json
+├── logs/events.ndjson
+├── final.mp4
+├── source_assets/
+└── tmp/
 ```
 
-## Intermediates and temporaries
+### Realistic UGC run
 
-- **Per-run intermediates** (previews, crops, discarded frames): `outputs/avatar/<run_slug>/tmp/`. Deletable any time.
-- **Experiments / probes / comparison batches / one-off scripts**: `scratch/`. Never in `outputs/`.
-- **Downloaded references / external analysis**: `_research/`.
-- **Reusable automation**: `scripts/`.
-- **Shared SFX (all flows)**: `sfx/<category>/<slug>.mp3` + an entry in `sfx/library.json`. The only SFX library; a run copies what it uses into `<run>/sfx/`.
+```text
+outputs/ugc/my-product-ugc-20260101-143000/
+├── run.json
+├── logs/events.ndjson
+├── source_assets/
+├── research/
+├── script/
+├── assets/
+├── video/
+├── qa/
+├── finishing/
+├── tmp/
+└── final.mp4
+```
+
+Generated client assets stay inside the run. Promote an approved reusable character to `characters/` only through an explicit separate operation.
+
+## Intermediates and shared resources
+
+- Per-run previews, crops, discarded frames, and temporary audio: `outputs/<flow>/<run_slug>/tmp/`.
+- Experiments and comparison batches: `scratch/`.
+- Downloaded research references: `_research/`.
+- Reusable automation: `scripts/` and `pipeline/`.
+- Shared SFX: `sfx/<category>/<slug>.mp3` plus `sfx/library.json`; copy used files into the run.
 
 ## Before closing a run
 
 ```bash
-bash scripts/validate-outputs.sh
+python scripts/validate_outputs.py
 ```
 
-If it reports files out of structure, move them to the right place **before** closing the run.
+Resolve every reported contract violation before delivery.

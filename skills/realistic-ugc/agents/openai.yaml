@@ -1,0 +1,4 @@
+interface:
+  display_name: "Realistic UGC"
+  short_description: "Produce UGC realista premium de 30 segundos"
+  default_prompt: "Use $realistic-ugc to plan and produce a gated premium UGC ad for this client."

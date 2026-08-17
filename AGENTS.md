@@ -14,7 +14,9 @@ The repo should contain code, docs, prompts, workflows, templates, and agent ins
 - `docs/ejecutar-con-codex-o-claude.md`: how to run this repo from any machine/agent.
 - `docs/sincronizacion-pcs.md`: sync workflow between PCs.
 - `pipeline/`: Python production pipeline.
+- `pipeline/flows/realistic_ugc/`: gated premium phone-native UGC production.
 - `pipeline/comfydeploy_hyperframes/`: portable ComfyDeploy + HyperFrames pipeline.
+- `skills/`: portable, versioned skills shared across supported agents.
 - `workflows/`: ComfyUI workflow JSON files.
 - `characters/`: character/influencer profiles.
 - `memory/`: project memory and operating notes.
@@ -32,6 +34,7 @@ The repo should contain code, docs, prompts, workflows, templates, and agent ins
 8. If working on ComfyDeploy, keep API endpoint details configurable through `COMFYDEPLOY_RUN_URL`.
 9. **NO content gets produced without the conversion methodology first.** Araque sells content that CONVERTS: before producing any piece (own or client), run niche research (`niche-radar`/`hook-lab` skills) for the client's industry, pick scored hooks from proven patterns (swipe files in `tools/hook-lab/clients/`), write scripts through `guion-ugc` + `script-framework`, and attach a scorecard hypothesis BEFORE publishing. User-supplied marketing material (hooks, swipes, methodologies) is PRIORITY source material. Be critical: only proven, currently-trending patterns that bill — never produce from memory for a new industry.
 10. **TTS audio (Naia or any voice): ALWAYS ElevenLabs model `eleven_v3` + audio tags, called via the `with-timestamps` endpoint** (it validates the generation arrived complete and returns per-character timestamps for phrase cuts — no Whisper needed). NEVER `eleven_multilingual_v2`, turbo or flash: validated 2026-07-04 (piloto 002), v2 sounds like a scripted announcer, not UGC. Canonical voice settings: `brand/araque/voice/elevenlabs.v3.example.json`. Audio tags go in the text but are not spoken, so LTX prompts that quote the spoken lines stay valid.
+11. Paid `realistic_ugc` provider calls remain dry-run until the user explicitly approves the stage and `--execute` is supplied.
 
 ## Portable pipeline quick test
 
@@ -53,6 +56,14 @@ cd .\pipeline\comfydeploy_hyperframes
 python .\run.py --brief .\examples\brief.example.json
 ```
 
+## Premium realistic UGC
+
+Read `skills/realistic-ugc/SKILL.md`. The CLI is dry-run by default:
+
+```powershell
+python -m pipeline.flows.realistic_ugc.run --help
+```
+
 ## Handoff format
 
 When handing work between Claude and Codex, leave a short note in `memory/` or the relevant docs:
@@ -61,4 +72,3 @@ When handing work between Claude and Codex, leave a short note in `memory/` or t
 - what was tested
 - what remains blocked
 - which machine/environment was used
-
